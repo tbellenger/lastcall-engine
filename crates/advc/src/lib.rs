@@ -1,0 +1,1431 @@
+//! Compile an authoring folder into a package the core can load.
+
+use lastcall_core::cond;
+use lastcall_core::geom::{self, flood, in_mask};
+use lastcall_core::imageutil::{self, RgbaImage};
+use lastcall_core::model::{
+    ActorDef, Animation, Costume, Dir, Effect, FrameDef, GameDef, ItemDef, PriorityDef, RoomDef,
+    Rule, Vocab, WalkDef, SCREEN_H, SCREEN_W,
+};
+use lastcall_core::pak::{self, sha256_hex, ActorPart, PackageParts, RoomPart};
+use lastcall_core::parser::VocabIndex;
+use lastcall_core::render;
+use lastcall_core::walk::{run_walk, WalkHost};
+use lastcall_core::{Engine, Error, Result};
+use serde::Deserialize;
+use serde_json::Value;
+use std::collections::{BTreeMap, BTreeSet};
+use std::fs;
+use std::path::{Path, PathBuf};
+
+pub fn validate_dir(dir: &Path) -> Result<PackageParts> {
+    let parts = load_dir(dir)?;
+    let bytes = pak::build_pak(&parts)?;
+    let _loaded = pak::load_pak(&bytes)?;
+    Ok(parts)
+}
+
+pub fn pack_dir(dir: &Path, output: &Path) -> Result<()> {
+    let parts = validate_dir(dir)?;
+    let bytes = pak::build_pak(&parts)?;
+    if let Some(parent) = output.parent() {
+        if !parent.as_os_str().is_empty() {
+            fs::create_dir_all(parent)?;
+        }
+    }
+    fs::write(output, bytes)?;
+    Ok(())
+}
+
+pub fn test_dir(dir: &Path, update_snapshots: bool) -> Result<()> {
+    let parts = validate_dir(dir)?;
+    let bytes = pak::build_pak(&parts)?;
+    let boot = Engine::load(&bytes)?;
+    check_boot(dir, &boot.frame_hash(), update_snapshots)?;
+    let walks = walk_files(dir)?;
+    if walks.is_empty() {
+        return Err(Error::msg(format!("no .walk scripts in {}", dir.display())));
+    }
+    let mut failures = Vec::new();
+    for walk in walks {
+        let script = fs::read_to_string(&walk)?;
+        let mut engine = Engine::load(&bytes)?;
+        let mut host = SnapshotHost {
+            root: dir.join("tests").join("snapshots"),
+            update: update_snapshots,
+        };
+        if let Err(err) = run_walk(&mut engine, &script, &mut host) {
+            failures.push(format!("{}: {err}", walk.display()));
+        }
+    }
+    if failures.is_empty() {
+        Ok(())
+    } else {
+        Err(Error::msg(failures.join("\n")))
+    }
+}
+
+fn load_dir(dir: &Path) -> Result<PackageParts> {
+    let game_schema = compiled_schema("game.schema.json")?;
+    let vocab_schema = compiled_schema("vocab.schema.json")?;
+    let items_schema = compiled_schema("items.schema.json")?;
+    let room_schema = compiled_schema("room.schema.json")?;
+    let walk_schema = compiled_schema("walk.schema.json")?;
+    let priority_schema = compiled_schema("priority.schema.json")?;
+    let actor_schema = compiled_schema("actor.schema.json")?;
+
+    let game_value = read_json(&dir.join("game.json"))?;
+    check_schema("game.json", &game_schema, &game_value)?;
+    let source_game: SourceGame = serde_json::from_value(game_value)
+        .map_err(|err| Error::msg(format!("game.json: {err}")))?;
+    if source_game.resolution != [SCREEN_W, SCREEN_H] {
+        return Err(Error::msg(format!(
+            "resolution must be {SCREEN_W}x{SCREEN_H}"
+        )));
+    }
+    let (major, minor, _) = pak::parse_semver(&source_game.format_version)?;
+    if major != 0 {
+        return Err(Error::msg(format!(
+            "unsupported format major {major}; this tool writes 0.x packages"
+        )));
+    }
+    if minor > 1 {
+        eprintln!(
+            "advc: warning: format {} is newer than this tool",
+            source_game.format_version
+        );
+    }
+
+    let vocab_value = read_json(&dir.join("vocab.json"))?;
+    check_schema("vocab.json", &vocab_schema, &vocab_value)?;
+    let vocab: Vocab = serde_json::from_value(vocab_value)
+        .map_err(|err| Error::msg(format!("vocab.json: {err}")))?;
+    VocabIndex::build(&vocab).map_err(Error::msg)?;
+
+    let items_value = read_json(&dir.join("items.json"))?;
+    check_schema("items.json", &items_schema, &items_value)?;
+    let items: Vec<ItemDef> = serde_json::from_value(items_value)
+        .map_err(|err| Error::msg(format!("items.json: {err}")))?;
+
+    let mut actors = Vec::new();
+    let actors_root = dir.join("actors");
+    if actors_root.is_dir() {
+        let mut folders = child_dirs(&actors_root)?;
+        folders.sort();
+        for folder in folders {
+            let path = folder.join("actor.json");
+            if !path.is_file() {
+                continue;
+            }
+            let value = read_json(&path)?;
+            check_schema(&path.display().to_string(), &actor_schema, &value)?;
+            let source: SourceActor = serde_json::from_value(value)
+                .map_err(|err| Error::msg(format!("{}: {err}", path.display())))?;
+            let folder_name = folder.file_name().and_then(|s| s.to_str()).unwrap_or("");
+            if source.id != folder_name {
+                return Err(Error::msg(format!(
+                    "actor folder {folder_name} does not match id {}",
+                    source.id
+                )));
+            }
+            actors.push(compile_actor(&folder, source)?);
+        }
+    }
+
+    let mut rooms = Vec::new();
+    let mut room_sources = Vec::new();
+    let rooms_root = dir.join("rooms");
+    let mut folders = child_dirs(&rooms_root)?;
+    folders.sort();
+    for folder in folders {
+        let path = folder.join("room.json");
+        if !path.is_file() {
+            continue;
+        }
+        let value = read_json(&path)?;
+        check_schema(&path.display().to_string(), &room_schema, &value)?;
+        let source: SourceRoom = serde_json::from_value(value)
+            .map_err(|err| Error::msg(format!("{}: {err}", path.display())))?;
+        let folder_name = folder.file_name().and_then(|s| s.to_str()).unwrap_or("");
+        if source.id != folder_name {
+            return Err(Error::msg(format!(
+                "room folder {folder_name} does not match id {}",
+                source.id
+            )));
+        }
+        let walk_path = folder.join("walk.json");
+        let walk_value = read_json(&walk_path)?;
+        check_schema(&walk_path.display().to_string(), &walk_schema, &walk_value)?;
+        let walk: WalkDef = serde_json::from_value(walk_value)
+            .map_err(|err| Error::msg(format!("{}: {err}", walk_path.display())))?;
+        let pri_path = folder.join("priority.json");
+        let pri_value = read_json(&pri_path)?;
+        check_schema(
+            &pri_path.display().to_string(),
+            &priority_schema,
+            &pri_value,
+        )?;
+        let priority: PriorityDef = serde_json::from_value(pri_value)
+            .map_err(|err| Error::msg(format!("{}: {err}", pri_path.display())))?;
+        room_sources.push((folder, source, walk, priority));
+    }
+
+    let mut game_rules = Vec::new();
+    for (index, rule) in source_game.rules.iter().enumerate() {
+        game_rules.push(compile_rule(rule, &format!("game:{index}"))?);
+    }
+    let game = GameDef {
+        id: source_game.id,
+        title: source_game.title,
+        version: source_game.version,
+        format_version: source_game.format_version,
+        engine_min: source_game.engine_min,
+        resolution: source_game.resolution,
+        start_room: source_game.start_room,
+        start_spawn: source_game.start_spawn,
+        hero: source_game.hero,
+        score_max: source_game.score_max,
+        rng_seed: source_game.rng_seed,
+        reach: source_game.reach,
+        intro: source_game.intro,
+        rules: game_rules,
+    };
+
+    for (folder, source, walk, priority) in room_sources {
+        rooms.push(compile_room(&folder, source, walk, priority)?);
+    }
+
+    let parts = PackageParts {
+        game,
+        vocab,
+        items,
+        rooms,
+        actors,
+    };
+    check_refs(&parts)?;
+    Ok(parts)
+}
+
+fn compile_room(
+    folder: &Path,
+    source: SourceRoom,
+    walk_def: WalkDef,
+    mut priority: PriorityDef,
+) -> Result<RoomPart> {
+    let picture = load_rgba(&folder.join("picture.png"))?;
+    if picture.w != SCREEN_W || picture.h != SCREEN_H {
+        return Err(Error::msg(format!(
+            "room {} picture is {}x{}, expected {SCREEN_W}x{SCREEN_H}",
+            source.id, picture.w, picture.h
+        )));
+    }
+    priority.bands.sort_by_key(|band| band.y);
+    let paint_path = folder.join("priority.png");
+    let paint = if paint_path.is_file() {
+        let image = load_gray(&paint_path)?;
+        if image.w != SCREEN_W || image.h != SCREEN_H {
+            return Err(Error::msg(format!(
+                "room {} priority paint is not {SCREEN_W}x{SCREEN_H}",
+                source.id
+            )));
+        }
+        Some(image.pixels)
+    } else {
+        None
+    };
+    let merged = render::merge_priority(
+        SCREEN_W as i32,
+        SCREEN_H as i32,
+        &priority.bands,
+        paint.as_deref(),
+    );
+    let mask = geom::rasterize(SCREEN_W as i32, SCREEN_H as i32, &walk_def.polygons);
+    let props = if source.props.is_empty() {
+        None
+    } else {
+        let path = folder.join("props.png");
+        if !path.is_file() {
+            return Err(Error::msg(format!(
+                "room {} has props but no props.png",
+                source.id
+            )));
+        }
+        let atlas = load_rgba(&path)?;
+        for prop in &source.props {
+            imageutil::crop(
+                &atlas,
+                prop.frame.x,
+                prop.frame.y,
+                prop.frame.w,
+                prop.frame.h,
+                prop.frame.ax,
+                prop.frame.ay,
+            )
+            .map_err(|err| Error::msg(format!("room {} prop {}: {err}", source.id, prop.id)))?;
+        }
+        Some(atlas)
+    };
+
+    let mut on_enter = Vec::new();
+    for (index, rule) in source.on_enter.iter().enumerate() {
+        on_enter.push(compile_rule(rule, &format!("{}:enter:{index}", source.id))?);
+    }
+    let mut rules = Vec::new();
+    for (index, rule) in source.rules.iter().enumerate() {
+        rules.push(compile_rule(rule, &format!("{}:{index}", source.id))?);
+    }
+    check_mask_points(&source.id, &mask, &source, &on_enter, &rules)?;
+
+    Ok(RoomPart {
+        def: RoomDef {
+            id: source.id,
+            name: source.name,
+            look: source.look,
+            picture: String::new(),
+            spawns: source.spawns,
+            exits: source.exits,
+            hotspots: source.hotspots,
+            actors: source.actors,
+            props: source.props,
+            on_enter,
+            rules,
+            bands: priority.bands,
+        },
+        picture,
+        walk: lastcall_core::imageutil::GrayImage {
+            w: SCREEN_W,
+            h: SCREEN_H,
+            pixels: mask,
+        },
+        priority: lastcall_core::imageutil::GrayImage {
+            w: SCREEN_W,
+            h: SCREEN_H,
+            pixels: merged,
+        },
+        props,
+    })
+}
+
+fn check_mask_points(
+    room: &str,
+    mask: &[u8],
+    source: &SourceRoom,
+    on_enter: &[Rule],
+    rules: &[Rule],
+) -> Result<()> {
+    let w = SCREEN_W as i32;
+    let h = SCREEN_H as i32;
+    if source.spawns.is_empty() {
+        return Err(Error::msg(format!("room {room} has no spawns")));
+    }
+    for (name, spot) in &source.spawns {
+        if !in_mask(mask, w, h, spot[0], spot[1]) {
+            return Err(Error::msg(format!(
+                "room {room} spawn {name} at {},{} is not on the walk mask",
+                spot[0], spot[1]
+            )));
+        }
+    }
+    let mut reached: Vec<Vec<bool>> = Vec::new();
+    for (name, spot) in &source.spawns {
+        let seen = flood(mask, w, h, (spot[0], spot[1]));
+        for (other, other_spot) in &source.spawns {
+            if !seen[(other_spot[1] * w + other_spot[0]) as usize] {
+                return Err(Error::msg(format!(
+                    "room {room} spawn {other} is not reachable from {name}"
+                )));
+            }
+        }
+        reached.push(seen);
+    }
+    let require = |seen: &[Vec<bool>], x: i32, y: i32, what: &str| -> Result<()> {
+        if !in_mask(mask, w, h, x, y) {
+            return Err(Error::msg(format!(
+                "room {room} {what} at {x},{y} is not on the walk mask"
+            )));
+        }
+        for seen in seen {
+            if !seen[(y * w + x) as usize] {
+                return Err(Error::msg(format!(
+                    "room {room} {what} at {x},{y} is not reachable from every spawn"
+                )));
+            }
+        }
+        Ok(())
+    };
+    for hotspot in &source.hotspots {
+        if let Some(stand) = hotspot.stand {
+            require(
+                &reached,
+                stand[0],
+                stand[1],
+                &format!("hotspot {} stand", hotspot.id),
+            )?;
+        }
+    }
+    for exit in &source.exits {
+        if let Some(approach) = exit.approach {
+            require(
+                &reached,
+                approach[0],
+                approach[1],
+                &format!("exit {} approach", exit.id),
+            )?;
+        }
+        let mut ok = false;
+        for seen in &reached {
+            let mut local = false;
+            for y in exit.trigger[1]..exit.trigger[1] + exit.trigger[3] {
+                for x in exit.trigger[0]..exit.trigger[0] + exit.trigger[2] {
+                    if in_mask(mask, w, h, x, y) && seen[(y * w + x) as usize] {
+                        local = true;
+                    }
+                }
+            }
+            if !local {
+                return Err(Error::msg(format!(
+                    "room {room} exit {} is not reachable from every spawn",
+                    exit.id
+                )));
+            }
+            ok = true;
+        }
+        if !ok {
+            return Err(Error::msg(format!(
+                "room {room} exit {} has no walkable trigger",
+                exit.id
+            )));
+        }
+    }
+    for rule in on_enter.iter().chain(rules.iter()) {
+        for effect in &rule.effects {
+            if let Effect::WalkTo { x, y } = effect {
+                require(&reached, *x, *y, &format!("rule {} walkTo", rule.id))?;
+            }
+        }
+    }
+    Ok(())
+}
+
+fn compile_actor(folder: &Path, source: SourceActor) -> Result<ActorPart> {
+    let mut costumes = BTreeMap::new();
+    let mut cache: BTreeMap<(String, u32), FrameDef> = BTreeMap::new();
+    let mut blits: Vec<Blit> = Vec::new();
+    let mut x = 0u32;
+    let mut y = 0u32;
+    let mut row_h = 0u32;
+    let mut used_w = 1u32;
+    let mut used_h = 1u32;
+    const MAX_W: u32 = 1024;
+
+    for (costume_id, costume) in &source.costumes {
+        let sheet = load_rgba(&folder.join(&costume.sheet))?;
+        if costume.frame_w == 0
+            || costume.frame_h == 0
+            || sheet.h != costume.frame_h
+            || sheet.w % costume.frame_w != 0
+        {
+            return Err(Error::msg(format!(
+                "actor {} costume {costume_id} sheet must be a horizontal strip of {}x{} frames",
+                source.id, costume.frame_w, costume.frame_h
+            )));
+        }
+        if costume.ax < 0
+            || costume.ay < 0
+            || costume.ax >= costume.frame_w as i32
+            || costume.ay >= costume.frame_h as i32
+        {
+            return Err(Error::msg(format!(
+                "actor {} costume {costume_id} anchor is outside the frame",
+                source.id
+            )));
+        }
+        let count = sheet.w / costume.frame_w;
+        let mut animations = BTreeMap::new();
+        for (anim_id, anim) in &costume.animations {
+            let mut frames = Vec::new();
+            for index in &anim.frames {
+                if *index >= count {
+                    return Err(Error::msg(format!(
+                        "actor {} animation {anim_id} frame {index} is outside the sheet",
+                        source.id
+                    )));
+                }
+                let key = (costume_id.clone(), *index);
+                let frame = if let Some(existing) = cache.get(&key) {
+                    existing.clone()
+                } else {
+                    if x + costume.frame_w > MAX_W {
+                        x = 0;
+                        y += row_h;
+                        row_h = 0;
+                    }
+                    let frame = FrameDef {
+                        x,
+                        y,
+                        w: costume.frame_w,
+                        h: costume.frame_h,
+                        ax: costume.ax,
+                        ay: costume.ay,
+                    };
+                    blits.push(Blit {
+                        sheet: sheet.clone(),
+                        sx: index * costume.frame_w,
+                        dx: x,
+                        dy: y,
+                        w: costume.frame_w,
+                        h: costume.frame_h,
+                    });
+                    x += costume.frame_w;
+                    row_h = row_h.max(costume.frame_h);
+                    used_w = used_w.max(x);
+                    used_h = used_h.max(y + row_h);
+                    cache.insert(key, frame.clone());
+                    frame
+                };
+                frames.push(frame);
+            }
+            animations.insert(
+                anim_id.clone(),
+                Animation {
+                    fps: anim.fps.max(1),
+                    looped: anim.looped,
+                    frames,
+                },
+            );
+        }
+        costumes.insert(costume_id.clone(), Costume { animations });
+    }
+
+    let mut rgba = vec![0u8; (used_w * used_h * 4) as usize];
+    for blit in &blits {
+        for row in 0..blit.h {
+            let src = (((row) * blit.sheet.w + blit.sx) * 4) as usize;
+            let dst = (((blit.dy + row) * used_w + blit.dx) * 4) as usize;
+            let n = (blit.w * 4) as usize;
+            rgba[dst..dst + n].copy_from_slice(&blit.sheet.rgba[src..src + n]);
+        }
+    }
+    Ok(ActorPart {
+        def: ActorDef {
+            id: source.id,
+            costumes,
+        },
+        atlas: RgbaImage {
+            w: used_w,
+            h: used_h,
+            rgba,
+        },
+    })
+}
+
+struct Blit {
+    sheet: RgbaImage,
+    sx: u32,
+    dx: u32,
+    dy: u32,
+    w: u32,
+    h: u32,
+}
+
+fn check_refs(parts: &PackageParts) -> Result<()> {
+    let verbs: BTreeSet<&str> = parts
+        .vocab
+        .verbs
+        .iter()
+        .map(|verb| verb.id.as_str())
+        .collect();
+    let nouns: BTreeSet<&str> = parts
+        .vocab
+        .nouns
+        .iter()
+        .map(|noun| noun.id.as_str())
+        .collect();
+    let items: BTreeSet<&str> = parts.items.iter().map(|item| item.id.as_str()).collect();
+    let room_ids: BTreeSet<&str> = parts
+        .rooms
+        .iter()
+        .map(|room| room.def.id.as_str())
+        .collect();
+    let actor_ids: BTreeSet<&str> = parts
+        .actors
+        .iter()
+        .map(|actor| actor.def.id.as_str())
+        .collect();
+
+    if !room_ids.contains(parts.game.start_room.as_str()) {
+        return Err(Error::msg(format!(
+            "start room {} is missing",
+            parts.game.start_room
+        )));
+    }
+    let start = parts
+        .rooms
+        .iter()
+        .find(|room| room.def.id == parts.game.start_room)
+        .unwrap();
+    if !start.def.spawns.contains_key(&parts.game.start_spawn) {
+        return Err(Error::msg(format!(
+            "start spawn {} is missing from {}",
+            parts.game.start_spawn, parts.game.start_room
+        )));
+    }
+    if !actor_ids.contains(parts.game.hero.as_str()) {
+        return Err(Error::msg(format!(
+            "hero actor {} is missing",
+            parts.game.hero
+        )));
+    }
+    let hero = parts
+        .actors
+        .iter()
+        .find(|actor| actor.def.id == parts.game.hero)
+        .unwrap();
+    let costume = hero.def.costumes.get("default").ok_or_else(|| {
+        Error::msg(format!(
+            "hero {} needs a costume named default",
+            parts.game.hero
+        ))
+    })?;
+    if !costume.animations.contains_key("stand_s") {
+        return Err(Error::msg("hero costume default needs a stand_s animation"));
+    }
+
+    let mut seen_rules = BTreeSet::new();
+    let mut scores: BTreeMap<String, i32> = BTreeMap::new();
+    let mut all_rules: Vec<&Rule> = parts.game.rules.iter().collect();
+    for room in &parts.rooms {
+        if room.def.spawns.is_empty() {
+            return Err(Error::msg(format!("room {} has no spawns", room.def.id)));
+        }
+        for exit in &room.def.exits {
+            if !room_ids.contains(exit.to.as_str()) {
+                return Err(Error::msg(format!(
+                    "room {} exit {} leads to unknown room {}",
+                    room.def.id, exit.id, exit.to
+                )));
+            }
+            let dest = parts
+                .rooms
+                .iter()
+                .find(|other| other.def.id == exit.to)
+                .unwrap();
+            if !dest.def.spawns.contains_key(&exit.spawn) {
+                return Err(Error::msg(format!(
+                    "room {} exit {} uses missing spawn {} in {}",
+                    room.def.id, exit.id, exit.spawn, exit.to
+                )));
+            }
+            if let Some(cond) = &exit.blocked_if {
+                cond::parse_cond(cond)?;
+            }
+        }
+        for hotspot in &room.def.hotspots {
+            for noun in &hotspot.nouns {
+                if !nouns.contains(noun.as_str()) {
+                    return Err(Error::msg(format!(
+                        "room {} hotspot {} uses unknown noun {noun}",
+                        room.def.id, hotspot.id
+                    )));
+                }
+            }
+        }
+        for prop in &room.def.props {
+            if let Some(cond) = &prop.show_if {
+                cond::parse_cond(cond)?;
+            }
+        }
+        for place in &room.def.actors {
+            if !actor_ids.contains(place.actor.as_str()) {
+                return Err(Error::msg(format!(
+                    "room {} places unknown actor {}",
+                    room.def.id, place.actor
+                )));
+            }
+            let actor = parts
+                .actors
+                .iter()
+                .find(|actor| actor.def.id == place.actor)
+                .unwrap();
+            let costume_id = place.costume.as_deref().unwrap_or("default");
+            let costume = actor.def.costumes.get(costume_id).ok_or_else(|| {
+                Error::msg(format!(
+                    "room {} actor {} has no costume {costume_id}",
+                    room.def.id, place.id
+                ))
+            })?;
+            if let Some(anim) = &place.anim {
+                if !costume.animations.contains_key(anim) {
+                    return Err(Error::msg(format!(
+                        "room {} actor {} animation {anim} is missing",
+                        room.def.id, place.id
+                    )));
+                }
+            }
+            for state in &place.states {
+                if !costume.animations.contains_key(&state.anim) {
+                    return Err(Error::msg(format!(
+                        "room {} actor {} state animation {} is missing",
+                        room.def.id, place.id, state.anim
+                    )));
+                }
+                for cond in &state.if_conds {
+                    cond::parse_cond(cond)?;
+                }
+            }
+        }
+        all_rules.extend(room.def.rules.iter());
+        all_rules.extend(room.def.on_enter.iter());
+    }
+
+    for rule in &all_rules {
+        if rule.id.is_empty() || !seen_rules.insert(rule.id.as_str()) {
+            return Err(Error::msg(format!(
+                "duplicate or empty rule id {}",
+                rule.id
+            )));
+        }
+        if let Some(verb) = &rule.verb {
+            if !verbs.contains(verb.as_str()) {
+                return Err(Error::msg(format!(
+                    "rule {} uses unknown verb {verb}",
+                    rule.id
+                )));
+            }
+        }
+        for noun in [&rule.noun, &rule.second].into_iter().flatten() {
+            if !nouns.contains(noun.as_str()) {
+                return Err(Error::msg(format!(
+                    "rule {} uses unknown noun {noun}",
+                    rule.id
+                )));
+            }
+        }
+        for cond in &rule.req {
+            cond::parse_cond(cond)?;
+        }
+        note_effects(rule, &items, &room_ids, parts, &mut scores)?;
+    }
+
+    let total: i32 = scores.values().sum();
+    if total != parts.game.score_max {
+        return Err(Error::msg(format!(
+            "score awards sum to {total}, scoreMax is {}",
+            parts.game.score_max
+        )));
+    }
+    Ok(())
+}
+
+fn note_effects(
+    rule: &Rule,
+    items: &BTreeSet<&str>,
+    rooms: &BTreeSet<&str>,
+    parts: &PackageParts,
+    scores: &mut BTreeMap<String, i32>,
+) -> Result<()> {
+    for effect in &rule.effects {
+        match effect {
+            Effect::Take { id } | Effect::Give { id } => {
+                if !items.contains(id.as_str()) {
+                    return Err(Error::msg(format!(
+                        "rule {} uses unknown item {id}",
+                        rule.id
+                    )));
+                }
+            }
+            Effect::Score { id, points } => {
+                if let Some(prev) = scores.insert(id.clone(), *points) {
+                    if prev != *points {
+                        return Err(Error::msg(format!(
+                            "score id {id} is awarded as both {prev} and {points}"
+                        )));
+                    }
+                }
+            }
+            Effect::Goto { room, spawn } => {
+                if !rooms.contains(room.as_str()) {
+                    return Err(Error::msg(format!(
+                        "rule {} goes to unknown room {room}",
+                        rule.id
+                    )));
+                }
+                let dest = parts
+                    .rooms
+                    .iter()
+                    .find(|other| other.def.id == *room)
+                    .unwrap();
+                if !dest.def.spawns.contains_key(spawn) {
+                    return Err(Error::msg(format!(
+                        "rule {} goes to missing spawn {spawn}",
+                        rule.id
+                    )));
+                }
+            }
+            _ => {}
+        }
+    }
+    Ok(())
+}
+
+fn compile_rule(rule: &SourceRule, auto_id: &str) -> Result<Rule> {
+    let id = if rule.id.is_empty() {
+        auto_id.to_string()
+    } else {
+        rule.id.clone()
+    };
+    if rule.effects.is_some() && has_compact(rule) {
+        return Err(Error::msg(format!(
+            "rule {id} has both effects and compact fields"
+        )));
+    }
+    let mut effects = if let Some(effects) = &rule.effects {
+        effects.clone()
+    } else {
+        compact_effects(rule).map_err(|err| Error::msg(format!("rule {id}: {err}")))?
+    };
+    let marked = effects
+        .iter()
+        .any(|effect| matches!(effect, Effect::MarkOnce { id: existing } if existing == &id));
+    if rule.once && !marked {
+        effects.insert(0, Effect::MarkOnce { id: id.clone() });
+    }
+    Ok(Rule {
+        id,
+        verb: rule.verb.clone(),
+        noun: rule.noun.clone(),
+        second: rule.second.clone(),
+        req: rule.req.clone(),
+        once: rule.once,
+        effects,
+    })
+}
+
+fn has_compact(rule: &SourceRule) -> bool {
+    rule.text.is_some()
+        || !rule.texts.is_empty()
+        || rule.say.is_some()
+        || rule.take.is_some()
+        || rule.give.is_some()
+        || rule.set.is_some()
+        || rule.clear.is_some()
+        || rule.inc.is_some()
+        || rule.set_var.is_some()
+        || rule.score.is_some()
+        || rule.sfx.is_some()
+        || rule.checkpoint.is_some()
+        || rule.goto.is_some()
+        || rule.death.is_some()
+        || rule.ending.is_some()
+        || rule.wait.is_some()
+        || rule.face.is_some()
+        || rule.walk_to.is_some()
+}
+
+fn compact_effects(rule: &SourceRule) -> std::result::Result<Vec<Effect>, String> {
+    let mut effects = Vec::new();
+    if let Some(point) = rule.walk_to {
+        effects.push(Effect::WalkTo {
+            x: point[0],
+            y: point[1],
+        });
+    }
+    if let Some(face) = &rule.face {
+        let dir = Dir::from_name(face).ok_or_else(|| format!("unknown facing {face}"))?;
+        effects.push(Effect::Face { dir });
+    }
+    if let Some(id) = &rule.take {
+        effects.push(Effect::Take { id: id.clone() });
+    }
+    if let Some(id) = &rule.give {
+        effects.push(Effect::Give { id: id.clone() });
+    }
+    if let Some(flags) = &rule.set {
+        for flag in flags.clone().list() {
+            effects.push(Effect::Set { flag });
+        }
+    }
+    if let Some(flags) = &rule.clear {
+        for flag in flags.clone().list() {
+            effects.push(Effect::Clear { flag });
+        }
+    }
+    if let Some(inc) = &rule.inc {
+        effects.push(Effect::Inc {
+            var: inc.var.clone(),
+            by: inc.by,
+        });
+    }
+    if let Some(set) = &rule.set_var {
+        effects.push(Effect::SetVar {
+            var: set.var.clone(),
+            value: set.value,
+        });
+    }
+    if let Some(score) = &rule.score {
+        effects.push(Effect::Score {
+            id: score.id.clone(),
+            points: score.points,
+        });
+    }
+    if let Some(id) = &rule.sfx {
+        effects.push(Effect::Sfx { id: id.clone() });
+    }
+    if let Some(text) = &rule.say {
+        effects.push(Effect::Say { text: text.clone() });
+    }
+    if let Some(text) = &rule.text {
+        effects.push(Effect::Say { text: text.clone() });
+    }
+    for text in &rule.texts {
+        effects.push(Effect::Say { text: text.clone() });
+    }
+    if let Some(name) = &rule.checkpoint {
+        effects.push(Effect::Checkpoint { name: name.clone() });
+    }
+    if let Some(goto) = &rule.goto {
+        effects.push(Effect::Goto {
+            room: goto.room.clone(),
+            spawn: goto.spawn.clone(),
+        });
+    }
+    if rule.death == Some(true) {
+        effects.push(Effect::SetDead);
+    }
+    if let Some(id) = &rule.ending {
+        effects.push(Effect::SetEnding { id: id.clone() });
+    }
+    if let Some(ticks) = rule.wait {
+        effects.push(Effect::Wait { ticks });
+    }
+    Ok(effects)
+}
+
+fn check_boot(dir: &Path, hash: &str, update: bool) -> Result<()> {
+    let path = dir.join("tests").join("boot.sha256");
+    if update {
+        if let Some(parent) = path.parent() {
+            fs::create_dir_all(parent)?;
+        }
+        fs::write(&path, format!("{hash}\n"))?;
+        return Ok(());
+    }
+    let expected = fs::read_to_string(&path).map_err(|_| {
+        Error::msg(format!(
+            "missing {} (run advc test --update-snapshots)",
+            path.display()
+        ))
+    })?;
+    if expected.trim() != hash {
+        return Err(Error::msg(format!(
+            "boot frame hash mismatch\n  expected {}\n  actual   {hash}",
+            expected.trim()
+        )));
+    }
+    Ok(())
+}
+
+fn walk_files(dir: &Path) -> Result<Vec<PathBuf>> {
+    let root = dir.join("tests");
+    if !root.is_dir() {
+        return Ok(Vec::new());
+    }
+    let mut files = Vec::new();
+    for entry in fs::read_dir(&root)? {
+        let entry = entry?;
+        let path = entry.path();
+        if path.extension().and_then(|ext| ext.to_str()) == Some("walk") {
+            files.push(path);
+        }
+    }
+    files.sort();
+    Ok(files)
+}
+
+struct SnapshotHost {
+    root: PathBuf,
+    update: bool,
+}
+
+impl WalkHost for SnapshotHost {
+    fn snapshot(
+        &mut self,
+        name: &str,
+        rgba: &[u8],
+        w: u32,
+        h: u32,
+    ) -> std::result::Result<(), String> {
+        if name.is_empty() || name.contains('/') || name.contains('\\') || name.contains("..") {
+            return Err(format!("bad snapshot name {name}"));
+        }
+        let hash = sha256_hex(rgba);
+        let hash_path = self.root.join(format!("{name}.sha256"));
+        let png_path = self.root.join(format!("{name}.png"));
+        let image = RgbaImage {
+            w,
+            h,
+            rgba: rgba.to_vec(),
+        };
+        let encoded = imageutil::encode_rgba(&image).map_err(|err| err.to_string())?;
+        if self.update {
+            fs::create_dir_all(&self.root).map_err(|err| err.to_string())?;
+            fs::write(&hash_path, format!("{hash}\n")).map_err(|err| err.to_string())?;
+            fs::write(&png_path, encoded).map_err(|err| err.to_string())?;
+            return Ok(());
+        }
+        let expected = fs::read_to_string(&hash_path)
+            .map_err(|_| format!("missing snapshot {name} (run advc test --update-snapshots)"))?;
+        if expected.trim() == hash {
+            return Ok(());
+        }
+        let actual_dir = self.root.join("_actual");
+        let diff_dir = self.root.join("_diff");
+        fs::create_dir_all(&actual_dir).map_err(|err| err.to_string())?;
+        fs::create_dir_all(&diff_dir).map_err(|err| err.to_string())?;
+        fs::write(actual_dir.join(format!("{name}.png")), &encoded)
+            .map_err(|err| err.to_string())?;
+        if let Ok(bytes) = fs::read(&png_path) {
+            if let Ok(decoded) = imageutil::decode_png(&bytes) {
+                let golden = decoded.into_rgba();
+                if let Ok(diff) = diff_image(&golden, rgba, w, h) {
+                    let _ = fs::write(diff_dir.join(format!("{name}.png")), diff);
+                }
+            }
+        }
+        Err(format!("snapshot {name} mismatch"))
+    }
+
+    fn save_slot(&mut self, name: &str, data: &[u8]) -> std::result::Result<(), String> {
+        let path = self.root.join(format!("_saves/{name}.json"));
+        if let Some(parent) = path.parent() {
+            fs::create_dir_all(parent).map_err(|err| err.to_string())?;
+        }
+        fs::write(path, data).map_err(|err| err.to_string())
+    }
+
+    fn load_slot(&mut self, name: &str) -> std::result::Result<Vec<u8>, String> {
+        fs::read(self.root.join(format!("_saves/{name}.json"))).map_err(|err| err.to_string())
+    }
+}
+
+fn diff_image(golden: &RgbaImage, actual: &[u8], w: u32, h: u32) -> Result<Vec<u8>> {
+    let mut rgba = vec![0u8; (w * h * 4) as usize];
+    for i in 0..(w * h) as usize {
+        let g = golden
+            .pixel((i as u32 % w) as i32, (i as u32 / w) as i32)
+            .unwrap_or([0, 0, 0, 255]);
+        let base = i * 4;
+        let same = actual.len() >= base + 4
+            && g[0] == actual[base]
+            && g[1] == actual[base + 1]
+            && g[2] == actual[base + 2]
+            && g[3] == actual[base + 3];
+        if same {
+            rgba[base] = g[0] / 3;
+            rgba[base + 1] = g[1] / 3;
+            rgba[base + 2] = g[2] / 3;
+            rgba[base + 3] = 255;
+        } else {
+            rgba[base] = 255;
+            rgba[base + 1] = 0;
+            rgba[base + 2] = 0;
+            rgba[base + 3] = 255;
+        }
+    }
+    imageutil::encode_rgba(&RgbaImage { w, h, rgba })
+}
+
+fn load_rgba(path: &Path) -> Result<RgbaImage> {
+    let bytes = fs::read(path).map_err(|err| Error::msg(format!("{}: {err}", path.display())))?;
+    imageutil::decode_png(&bytes)
+        .map(|decoded| decoded.into_rgba())
+        .map_err(|err| Error::msg(format!("{}: {err}", path.display())))
+}
+
+fn load_gray(path: &Path) -> Result<lastcall_core::imageutil::GrayImage> {
+    let bytes = fs::read(path).map_err(|err| Error::msg(format!("{}: {err}", path.display())))?;
+    imageutil::decode_png(&bytes)
+        .map(|decoded| decoded.into_gray())
+        .map_err(|err| Error::msg(format!("{}: {err}", path.display())))
+}
+
+fn child_dirs(path: &Path) -> Result<Vec<PathBuf>> {
+    if !path.is_dir() {
+        return Err(Error::msg(format!("missing directory {}", path.display())));
+    }
+    let mut out = Vec::new();
+    for entry in fs::read_dir(path)? {
+        let entry = entry?;
+        if entry.path().is_dir() {
+            out.push(entry.path());
+        }
+    }
+    Ok(out)
+}
+
+fn read_json(path: &Path) -> Result<Value> {
+    let text =
+        fs::read_to_string(path).map_err(|err| Error::msg(format!("{}: {err}", path.display())))?;
+    serde_json::from_str(&text).map_err(|err| Error::msg(format!("{}: {err}", path.display())))
+}
+
+fn compiled_schema(name: &str) -> Result<Value> {
+    let mut value: Value = serde_json::from_str(schema_source(name)?)
+        .map_err(|err| Error::msg(format!("{name}: {err}")))?;
+    inline_refs(&mut value, 0)?;
+    Ok(value)
+}
+
+fn check_schema(label: &str, schema: &Value, instance: &Value) -> Result<()> {
+    let validator =
+        jsonschema::validator_for(schema).map_err(|err| Error::msg(format!("{label}: {err}")))?;
+    let mut errors = Vec::new();
+    for err in validator.iter_errors(instance) {
+        errors.push(err.to_string());
+        if errors.len() == 8 {
+            break;
+        }
+    }
+    if errors.is_empty() {
+        Ok(())
+    } else {
+        Err(Error::msg(format!("{label}: {}", errors.join("; "))))
+    }
+}
+
+fn schema_source(name: &str) -> Result<&'static str> {
+    Ok(match name {
+        "game.schema.json" => include_str!("../../../schemas/game.schema.json"),
+        "vocab.schema.json" => include_str!("../../../schemas/vocab.schema.json"),
+        "items.schema.json" => include_str!("../../../schemas/items.schema.json"),
+        "room.schema.json" => include_str!("../../../schemas/room.schema.json"),
+        "walk.schema.json" => include_str!("../../../schemas/walk.schema.json"),
+        "priority.schema.json" => include_str!("../../../schemas/priority.schema.json"),
+        "actor.schema.json" => include_str!("../../../schemas/actor.schema.json"),
+        "rule.schema.json" => include_str!("../../../schemas/rule.schema.json"),
+        "effect.schema.json" => include_str!("../../../schemas/effect.schema.json"),
+        "inc.schema.json" => include_str!("../../../schemas/inc.schema.json"),
+        "set-var.schema.json" => include_str!("../../../schemas/set-var.schema.json"),
+        "score.schema.json" => include_str!("../../../schemas/score.schema.json"),
+        "goto.schema.json" => include_str!("../../../schemas/goto.schema.json"),
+        "point.schema.json" => include_str!("../../../schemas/point.schema.json"),
+        "frame.schema.json" => include_str!("../../../schemas/frame.schema.json"),
+        "manifest.schema.json" => include_str!("../../../schemas/manifest.schema.json"),
+        other => return Err(Error::msg(format!("unknown schema {other}"))),
+    })
+}
+
+fn inline_refs(value: &mut Value, depth: u32) -> Result<()> {
+    if depth > 16 {
+        return Err(Error::msg("schema $ref nested too deeply"));
+    }
+    match value {
+        Value::Array(items) => {
+            for item in items {
+                inline_refs(item, depth + 1)?;
+            }
+        }
+        Value::Object(map) => {
+            if map.len() == 1 {
+                if let Some(Value::String(reference)) = map.get("$ref").cloned() {
+                    if !reference.starts_with('#') && !reference.contains("://") {
+                        let mut inner: Value = serde_json::from_str(schema_source(&reference)?)
+                            .map_err(|err| Error::msg(format!("{reference}: {err}")))?;
+                        if let Some(object) = inner.as_object_mut() {
+                            object.remove("$schema");
+                            object.remove("$id");
+                            object.remove("title");
+                        }
+                        inline_refs(&mut inner, depth + 1)?;
+                        *value = inner;
+                        return Ok(());
+                    }
+                }
+            }
+            for child in map.values_mut() {
+                inline_refs(child, depth + 1)?;
+            }
+        }
+        _ => {}
+    }
+    Ok(())
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct SourceGame {
+    id: String,
+    title: String,
+    version: String,
+    #[serde(default = "default_format")]
+    format_version: String,
+    #[serde(default = "default_engine")]
+    engine_min: String,
+    #[serde(default = "default_resolution")]
+    resolution: [u32; 2],
+    start_room: String,
+    #[serde(default = "default_spawn")]
+    start_spawn: String,
+    hero: String,
+    #[serde(default)]
+    score_max: i32,
+    #[serde(default = "default_seed")]
+    rng_seed: u64,
+    #[serde(default = "default_reach")]
+    reach: i32,
+    #[serde(default)]
+    intro: Vec<String>,
+    #[serde(default)]
+    rules: Vec<SourceRule>,
+}
+
+fn default_format() -> String {
+    "0.1.0".into()
+}
+fn default_engine() -> String {
+    "0.1.0".into()
+}
+fn default_resolution() -> [u32; 2] {
+    [SCREEN_W, SCREEN_H]
+}
+fn default_spawn() -> String {
+    "default".into()
+}
+fn default_seed() -> u64 {
+    1
+}
+fn default_reach() -> i32 {
+    42
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct SourceRoom {
+    id: String,
+    name: String,
+    #[serde(default)]
+    look: String,
+    #[serde(default)]
+    spawns: BTreeMap<String, [i32; 2]>,
+    #[serde(default)]
+    exits: Vec<lastcall_core::model::ExitDef>,
+    #[serde(default)]
+    hotspots: Vec<lastcall_core::model::HotspotDef>,
+    #[serde(default)]
+    actors: Vec<lastcall_core::model::ActorPlace>,
+    #[serde(default)]
+    props: Vec<lastcall_core::model::PropDef>,
+    #[serde(default)]
+    on_enter: Vec<SourceRule>,
+    #[serde(default)]
+    rules: Vec<SourceRule>,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct SourceRule {
+    #[serde(default)]
+    id: String,
+    #[serde(default)]
+    verb: Option<String>,
+    #[serde(default)]
+    noun: Option<String>,
+    #[serde(default)]
+    second: Option<String>,
+    #[serde(default)]
+    req: Vec<String>,
+    #[serde(default)]
+    once: bool,
+    #[serde(default)]
+    effects: Option<Vec<Effect>>,
+    #[serde(default)]
+    text: Option<String>,
+    #[serde(default)]
+    texts: Vec<String>,
+    #[serde(default)]
+    say: Option<String>,
+    #[serde(default)]
+    take: Option<String>,
+    #[serde(default)]
+    give: Option<String>,
+    #[serde(default)]
+    set: Option<OneOrMany>,
+    #[serde(default)]
+    clear: Option<OneOrMany>,
+    #[serde(default)]
+    inc: Option<IncDef>,
+    #[serde(default)]
+    set_var: Option<SetVarDef>,
+    #[serde(default)]
+    score: Option<ScoreDef>,
+    #[serde(default)]
+    sfx: Option<String>,
+    #[serde(default)]
+    checkpoint: Option<String>,
+    #[serde(default)]
+    goto: Option<GotoDef>,
+    #[serde(default)]
+    death: Option<bool>,
+    #[serde(default)]
+    ending: Option<String>,
+    #[serde(default)]
+    wait: Option<u32>,
+    #[serde(default)]
+    face: Option<String>,
+    #[serde(default)]
+    walk_to: Option<[i32; 2]>,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(untagged)]
+enum OneOrMany {
+    One(String),
+    Many(Vec<String>),
+}
+
+impl OneOrMany {
+    fn list(self) -> Vec<String> {
+        match self {
+            OneOrMany::One(value) => vec![value],
+            OneOrMany::Many(values) => values,
+        }
+    }
+}
+
+#[derive(Debug, Clone, Deserialize)]
+struct IncDef {
+    var: String,
+    #[serde(default = "one_i32")]
+    by: i32,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+struct SetVarDef {
+    var: String,
+    value: i32,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+struct ScoreDef {
+    id: String,
+    points: i32,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+struct GotoDef {
+    room: String,
+    spawn: String,
+}
+
+fn one_i32() -> i32 {
+    1
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct SourceActor {
+    id: String,
+    costumes: BTreeMap<String, SourceCostume>,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct SourceCostume {
+    sheet: String,
+    frame_w: u32,
+    frame_h: u32,
+    ax: i32,
+    ay: i32,
+    animations: BTreeMap<String, SourceAnim>,
+}
+
+#[derive(Debug, Deserialize)]
+struct SourceAnim {
+    #[serde(default = "default_fps")]
+    fps: u32,
+    #[serde(rename = "loop", default = "yes")]
+    looped: bool,
+    frames: Vec<u32>,
+}
+
+fn default_fps() -> u32 {
+    1
+}
+fn yes() -> bool {
+    true
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn compact_once_orders_mark_take_score_say_and_death_last() {
+        let rule = SourceRule {
+            id: "take_key".into(),
+            verb: Some("take".into()),
+            noun: Some("key".into()),
+            second: None,
+            req: vec!["!has:key".into()],
+            once: true,
+            effects: None,
+            text: Some("You pocket the brass key.".into()),
+            texts: Vec::new(),
+            say: None,
+            take: Some("key".into()),
+            give: None,
+            set: None,
+            clear: None,
+            inc: None,
+            set_var: None,
+            score: Some(ScoreDef {
+                id: "found_key".into(),
+                points: 5,
+            }),
+            sfx: None,
+            checkpoint: None,
+            goto: None,
+            death: None,
+            ending: None,
+            wait: None,
+            face: None,
+            walk_to: None,
+        };
+        let compiled = compile_rule(&rule, "take_key").unwrap();
+        assert!(matches!(compiled.effects[0], Effect::MarkOnce { .. }));
+        assert!(matches!(compiled.effects[1], Effect::Take { .. }));
+        assert!(matches!(compiled.effects[2], Effect::Score { .. }));
+        assert!(matches!(compiled.effects[3], Effect::Say { .. }));
+
+        let death = SourceRule {
+            id: "climb_well".into(),
+            verb: None,
+            noun: None,
+            second: None,
+            req: Vec::new(),
+            once: false,
+            effects: None,
+            text: Some("down".into()),
+            texts: Vec::new(),
+            say: None,
+            take: None,
+            give: None,
+            set: None,
+            clear: None,
+            inc: None,
+            set_var: None,
+            score: None,
+            sfx: None,
+            checkpoint: None,
+            goto: None,
+            death: Some(true),
+            ending: None,
+            wait: None,
+            face: None,
+            walk_to: None,
+        };
+        let compiled = compile_rule(&death, "climb_well").unwrap();
+        assert!(matches!(compiled.effects[0], Effect::Say { .. }));
+        assert!(matches!(compiled.effects[1], Effect::SetDead));
+    }
+}

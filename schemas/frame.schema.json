@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["x", "y", "w", "h", "ax", "ay"],
+  "properties": {
+    "x": { "type": "integer", "minimum": 0 },
+    "y": { "type": "integer", "minimum": 0 },
+    "w": { "type": "integer", "minimum": 1 },
+    "h": { "type": "integer", "minimum": 1 },
+    "ax": { "type": "integer", "minimum": 0 },
+    "ay": { "type": "integer", "minimum": 0 }
+  }
+}

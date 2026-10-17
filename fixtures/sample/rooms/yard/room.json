@@ -1,0 +1,34 @@
+{
+  "id": "yard",
+  "name": "Yard",
+  "look": "An open yard behind the gatehouse. An iron fence closes the lane.",
+  "spawns": {
+    "default": [80, 185]
+  },
+  "exits": [
+    {
+      "id": "to_porch",
+      "trigger": [0, 150, 24, 61],
+      "to": "porch",
+      "spawn": "from_yard",
+      "approach": [48, 185]
+    }
+  ],
+  "hotspots": [
+    {
+      "id": "fence",
+      "rect": [40, 96, 300, 60],
+      "nouns": ["fence"],
+      "look": "Iron bars. The lane is on the other side.",
+      "stand": [200, 170],
+      "face": "n"
+    }
+  ],
+  "onEnter": [
+    {
+      "id": "yard_enter",
+      "texts": ["The yard is quiet. The lane waits beyond an iron fence."]
+    }
+  ],
+  "rules": []
+}

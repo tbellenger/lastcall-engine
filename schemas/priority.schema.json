@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lastcall.engine/schemas/priority.schema.json",
+  "title": "Priority bands",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["bands"],
+  "properties": {
+    "bands": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["y", "priority"],
+        "properties": {
+          "y": { "type": "integer" },
+          "priority": { "type": "integer", "minimum": 0, "maximum": 255 }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lastcall.engine/schemas/manifest.schema.json",
+  "title": "Package manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["formatVersion", "engineMin", "gameId", "gameVersion", "contentHash", "resources"],
+  "properties": {
+    "formatVersion": { "type": "string" },
+    "engineMin": { "type": "string" },
+    "gameId": { "type": "string" },
+    "gameVersion": { "type": "string" },
+    "contentHash": { "type": "string", "minLength": 64, "maxLength": 64 },
+    "resources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256", "size"],
+        "properties": {
+          "path": { "type": "string", "minLength": 1 },
+          "sha256": { "type": "string", "minLength": 64, "maxLength": 64 },
+          "size": { "type": "integer", "minimum": 0 }
+        }
+      }
+    }
+  }
+}

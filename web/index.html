@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Last Call</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <main>
+      <canvas id="screen" width="384" height="216" role="img" aria-label="Game picture"></canvas>
+      <p id="live" aria-live="polite"></p>
+      <div class="bar">
+        <button type="button" id="save" data-slot="1">Save 1</button>
+        <button type="button" id="load" data-slot="1">Load 1</button>
+        <button type="button" id="autosave">Load autosave</button>
+        <span id="note"></span>
+      </div>
+      <input id="line" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Command line" />
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
