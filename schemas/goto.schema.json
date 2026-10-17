@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["room", "spawn"],
+  "properties": {
+    "room": { "type": "string", "minLength": 1 },
+    "spawn": { "type": "string", "minLength": 1 }
+  }
+}

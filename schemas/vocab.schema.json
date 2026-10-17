@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lastcall.engine/schemas/vocab.schema.json",
+  "title": "Vocabulary",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "ignore": { "type": "array", "items": { "type": "string" } },
+    "prepositions": { "type": "array", "items": { "type": "string" } },
+    "phrases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["from", "to"],
+        "properties": {
+          "from": { "type": "string" },
+          "to": { "type": "string" }
+        }
+      }
+    },
+    "rewrites": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["pattern", "replace"],
+        "properties": {
+          "pattern": { "type": "string" },
+          "replace": { "type": "string" }
+        }
+      }
+    },
+    "verbs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "words"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "words": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+          "ranged": { "type": "boolean" },
+          "meta": { "type": "boolean" },
+          "default": { "type": "string" }
+        }
+      }
+    },
+    "nouns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "words"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "words": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+        }
+      }
+    },
+    "rooms": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": { "type": "string" }
+      }
+    },
+    "unknownWord": { "type": "string" },
+    "unknownCommand": { "type": "string" }
+  }
+}

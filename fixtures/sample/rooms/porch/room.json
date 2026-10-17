@@ -1,0 +1,105 @@
+{
+  "id": "porch",
+  "name": "Porch",
+  "look": "A covered porch of an old gatehouse. A stone well sits beside the bench, and a heavy door faces the yard.",
+  "spawns": {
+    "default": [40, 190],
+    "from_yard": [330, 170]
+  },
+  "exits": [
+    {
+      "id": "to_yard",
+      "trigger": [348, 150, 36, 61],
+      "to": "yard",
+      "spawn": "default",
+      "blockedIf": "!flag:door_open",
+      "blockedText": "The heavy door is locked.",
+      "approach": [330, 185]
+    }
+  ],
+  "hotspots": [
+    {
+      "id": "key",
+      "rect": [64, 166, 56, 24],
+      "nouns": ["key"],
+      "look": "A brass key glints on the bench.",
+      "stand": [90, 185],
+      "face": "n"
+    },
+    {
+      "id": "well",
+      "rect": [190, 160, 62, 50],
+      "nouns": ["well"],
+      "look": "The stone well drops into the dark.",
+      "stand": [168, 190],
+      "face": "e"
+    },
+    {
+      "id": "door",
+      "rect": [328, 96, 46, 110],
+      "nouns": ["door"],
+      "look": "A heavy wooden door, shut tight.",
+      "stand": [310, 190],
+      "face": "e"
+    }
+  ],
+  "props": [
+    {
+      "id": "key",
+      "pos": [78, 166],
+      "showIf": "!has:key",
+      "frame": { "x": 0, "y": 0, "w": 12, "h": 8, "ax": 0, "ay": 0 }
+    }
+  ],
+  "onEnter": [
+    {
+      "id": "porch_enter",
+      "req": ["!flag:seen_porch"],
+      "set": "seen_porch",
+      "texts": [
+        "Night settles on the old gatehouse porch.",
+        "A brass key glints on the bench beside a stone well."
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "id": "take_key",
+      "verb": "take",
+      "noun": "key",
+      "req": ["!has:key"],
+      "once": true,
+      "take": "key",
+      "score": { "id": "found_key", "points": 5 },
+      "text": "You pocket the brass key."
+    },
+    {
+      "id": "unlock_door",
+      "verb": "unlock",
+      "noun": "door",
+      "req": ["has:key", "!flag:door_open"],
+      "once": true,
+      "set": "door_open",
+      "score": { "id": "open_door", "points": 5 },
+      "text": "The key turns. The door swings open."
+    },
+    {
+      "id": "use_key_door",
+      "verb": "use",
+      "noun": "key",
+      "second": "door",
+      "req": ["has:key", "!flag:door_open"],
+      "once": true,
+      "set": "door_open",
+      "score": { "id": "open_door", "points": 5 },
+      "text": "The key turns. The door swings open."
+    },
+    {
+      "id": "climb_well",
+      "verb": "climb",
+      "noun": "well",
+      "text": "You slip on the wet stones and fall into the dark.",
+      "death": true
+    }
+  ]
+}

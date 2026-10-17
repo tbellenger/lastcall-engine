@@ -1,0 +1,51 @@
+{
+  "ignore": ["a", "an", "the", "to"],
+  "prepositions": ["at", "on", "with", "in", "into"],
+  "phrases": [{ "from": "pick up", "to": "take" }],
+  "rewrites": [],
+  "verbs": [
+    {
+      "id": "take",
+      "words": ["take", "get", "grab"],
+      "default": "You can't take that."
+    },
+    {
+      "id": "look",
+      "words": ["look", "examine", "x"],
+      "ranged": true,
+      "default": "You see nothing special."
+    },
+    {
+      "id": "use",
+      "words": ["use"],
+      "ranged": true,
+      "default": "You can't use that."
+    },
+    {
+      "id": "unlock",
+      "words": ["unlock", "open"],
+      "default": "The heavy door is locked."
+    },
+    {
+      "id": "climb",
+      "words": ["climb", "enter"],
+      "default": "There is nothing to climb here."
+    },
+    { "id": "inventory", "words": ["inventory", "i"], "meta": true },
+    { "id": "score", "words": ["score"], "meta": true },
+    { "id": "help", "words": ["help"], "meta": true },
+    { "id": "save", "words": ["save"], "meta": true },
+    { "id": "restore", "words": ["restore"], "meta": true }
+  ],
+  "nouns": [
+    { "id": "key", "words": ["key", "brass"] },
+    { "id": "door", "words": ["door"] },
+    { "id": "well", "words": ["well"] },
+    { "id": "fence", "words": ["fence"] }
+  ],
+  "rooms": {
+    "porch": { "rim": "well" }
+  },
+  "unknownWord": "I don't know the word '{word}'.",
+  "unknownCommand": "I don't understand that."
+}

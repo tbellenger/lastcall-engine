@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lastcall.engine/schemas/effect.schema.json",
+  "title": "Effect",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["do"],
+  "properties": {
+    "do": {
+      "enum": [
+        "say",
+        "take",
+        "give",
+        "set",
+        "clear",
+        "inc",
+        "setVar",
+        "score",
+        "goto",
+        "setDead",
+        "setEnding",
+        "checkpoint",
+        "walkTo",
+        "wait",
+        "sfx",
+        "face",
+        "markOnce"
+      ]
+    },
+    "text": { "type": "string" },
+    "id": { "type": "string" },
+    "flag": { "type": "string" },
+    "var": { "type": "string" },
+    "by": { "type": "integer" },
+    "value": { "type": "integer" },
+    "points": { "type": "integer" },
+    "room": { "type": "string" },
+    "spawn": { "type": "string" },
+    "name": { "type": "string" },
+    "x": { "type": "integer" },
+    "y": { "type": "integer" },
+    "ticks": { "type": "integer", "minimum": 0 },
+    "dir": { "type": "string" }
+  }
+}

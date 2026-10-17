@@ -1,0 +1,18 @@
+[package]
+name = "lastcall-core"
+description = "Deterministic Sierra-style adventure engine core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+authors.workspace = true
+
+[dependencies]
+flate2 = { version = "1", default-features = false, features = ["rust_backend"] }
+png = "0.17"
+regex = "1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"
+thiserror = "2"
+zip = { version = "2.2", default-features = false, features = ["deflate"] }

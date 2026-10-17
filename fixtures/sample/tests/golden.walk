@@ -1,0 +1,28 @@
+# The Gatehouse — pick up the key, open the door, reach the yard.
+@expect text Night settles on the old gatehouse porch.
+@dismiss
+@expect text A brass key glints on the bench beside a stone well.
+@dismiss
+look at the rim
+@expect text stone well
+@dismiss
+flurb
+@expect text don't know the word 'flurb'
+@dismiss
+@walkto 130,160
+@snapshot behind_pillar
+get key
+@expect text You pocket the brass key.
+@expect item key
+@expect score 5
+@expect flag seen_porch
+@dismiss
+unlock door
+@expect text The key turns. The door swings open.
+@expect score 10
+@expect flag door_open
+@dismiss
+@walk e 80
+@expect room yard
+@expect text The yard is quiet. The lane waits beyond an iron fence.
+@snapshot yard

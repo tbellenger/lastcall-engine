@@ -1,0 +1,22 @@
+[package]
+name = "advc"
+description = "Validate, pack, and test adventure games"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+authors.workspace = true
+
+[dependencies]
+jsonschema = "0.29"
+lastcall-core = { path = "../core" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[lib]
+name = "advc"
+path = "src/lib.rs"
+
+[[bin]]
+name = "advc"
+path = "src/main.rs"

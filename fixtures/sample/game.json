@@ -1,0 +1,16 @@
+{
+  "id": "gatehouse",
+  "title": "The Gatehouse",
+  "version": "1.0.0",
+  "formatVersion": "0.1.0",
+  "engineMin": "0.1.0",
+  "resolution": [384, 216],
+  "startRoom": "porch",
+  "startSpawn": "default",
+  "hero": "hero",
+  "scoreMax": 10,
+  "rngSeed": 1,
+  "reach": 42,
+  "intro": [],
+  "rules": []
+}

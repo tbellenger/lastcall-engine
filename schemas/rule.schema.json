@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lastcall.engine/schemas/rule.schema.json",
+  "title": "Rule",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string" },
+    "verb": { "type": "string" },
+    "noun": { "type": "string" },
+    "second": { "type": "string" },
+    "req": { "type": "array", "items": { "type": "string" } },
+    "once": { "type": "boolean" },
+    "effects": {
+      "type": "array",
+      "items": { "$ref": "effect.schema.json" }
+    },
+    "text": { "type": "string" },
+    "texts": { "type": "array", "items": { "type": "string" } },
+    "say": { "type": "string" },
+    "take": { "type": "string" },
+    "give": { "type": "string" },
+    "set": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ]
+    },
+    "clear": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ]
+    },
+    "inc": { "$ref": "inc.schema.json" },
+    "setVar": { "$ref": "set-var.schema.json" },
+    "score": { "$ref": "score.schema.json" },
+    "sfx": { "type": "string" },
+    "checkpoint": { "type": "string" },
+    "goto": { "$ref": "goto.schema.json" },
+    "death": { "type": "boolean" },
+    "ending": { "type": "string" },
+    "wait": { "type": "integer", "minimum": 0 },
+    "face": { "type": "string" },
+    "walkTo": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": { "type": "integer" }
+    }
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lastcall.engine/schemas/room.schema.json",
+  "title": "Room",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "name"],
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "name": { "type": "string" },
+    "look": { "type": "string" },
+    "spawns": {
+      "type": "object",
+      "additionalProperties": { "$ref": "point.schema.json" }
+    },
+    "exits": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "trigger", "to", "spawn"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "trigger": {
+            "type": "array",
+            "minItems": 4,
+            "maxItems": 4,
+            "items": { "type": "integer" }
+          },
+          "to": { "type": "string", "minLength": 1 },
+          "spawn": { "type": "string", "minLength": 1 },
+          "blockedIf": { "type": "string" },
+          "blockedText": { "type": "string" },
+          "approach": { "$ref": "point.schema.json" }
+        }
+      }
+    },
+    "hotspots": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "rect"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "rect": {
+            "type": "array",
+            "minItems": 4,
+            "maxItems": 4,
+            "items": { "type": "integer" }
+          },
+          "nouns": { "type": "array", "items": { "type": "string" } },
+          "look": { "type": "string" },
+          "stand": { "$ref": "point.schema.json" },
+          "face": { "type": "string" }
+        }
+      }
+    },
+    "actors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "actor", "pos"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "actor": { "type": "string", "minLength": 1 },
+          "pos": { "$ref": "point.schema.json" },
+          "facing": { "type": "string" },
+          "costume": { "type": "string" },
+          "anim": { "type": "string" },
+          "priorityOverride": { "type": "integer", "minimum": 0, "maximum": 255 },
+          "states": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["anim"],
+              "properties": {
+                "if": { "type": "array", "items": { "type": "string" } },
+                "anim": { "type": "string", "minLength": 1 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "props": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "pos", "frame"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "pos": { "$ref": "point.schema.json" },
+          "showIf": { "type": "string" },
+          "priority": { "type": "integer", "minimum": 0, "maximum": 255 },
+          "frame": { "$ref": "frame.schema.json" }
+        }
+      }
+    },
+    "onEnter": { "type": "array", "items": { "$ref": "rule.schema.json" } },
+    "rules": { "type": "array", "items": { "$ref": "rule.schema.json" } }
+  }
+}

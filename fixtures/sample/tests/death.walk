@@ -1,0 +1,13 @@
+# Falling in the well restores the checkpoint taken before the porch text.
+@dismiss
+@dismiss
+climb the well
+@expect text You slip on the wet stones and fall into the dark.
+@dismiss
+@expect death
+@restore
+@expect alive
+@expect room porch
+@expect score 0
+@expect !item key
+@expect text Night settles on the old gatehouse porch.

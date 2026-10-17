@@ -1,0 +1,33 @@
+# Rust
+/target
+**/*.rs.bk
+Cargo.lock.bak
+
+# wasm / pack
+*.wasm
+web/src/wasm/
+web/public/*.advpak
+*.advpak
+
+# Node / Vite / Playwright
+node_modules/
+web/node_modules/
+web/dist/
+web/.vite/
+playwright-report/
+test-results/
+blob-report/
+playwright/.cache/
+
+# Snapshot failures (golden hashes and PNGs are committed)
+fixtures/**/snapshots/_actual/
+fixtures/**/snapshots/_diff/
+
+# Secrets and local env
+.env
+.env.*
+!.env.example
+
+# OS / editor
+.DS_Store
+*.swp

@@ -1,0 +1,137 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+          targets: wasm32-unknown-unknown
+      - uses: Swatinem/rust-cache@v2
+      - name: System libraries for the desktop player
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pkg-config libgtk-3-dev libasound2-dev libxkbcommon-dev libwayland-dev libx11-dev libxcursor-dev libxrandr-dev libxi-dev
+      - name: Format
+        run: cargo fmt --all --check
+      - name: Clippy
+        run: cargo clippy --workspace --all-targets -- -D warnings
+      - name: Clippy wasm
+        run: cargo clippy -p lastcall-wasm --target wasm32-unknown-unknown -- -D warnings
+      - name: Test
+        run: cargo test --workspace
+      - name: Sample package
+        run: |
+          cargo run -p advc --release -- validate fixtures/sample
+          cargo run -p advc --release -- test fixtures/sample
+      - name: wasm-bindgen
+        run: cargo install wasm-bindgen-cli --version 0.2.100 --locked
+      - name: Build wasm
+        run: bash scripts/build-wasm.sh
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Pack sample into the web shell
+        run: cargo run -p advc --release -- pack fixtures/sample -o web/public/sample.advpak
+      - name: Web typecheck and build
+        working-directory: web
+        run: |
+          npm ci
+          npm run typecheck
+          npm run build
+      - name: Browser smoke
+        working-directory: web
+        run: |
+          npx playwright install --with-deps chromium
+          npm run test:e2e
+
+  linux-player:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: System libraries
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pkg-config libgtk-3-dev libasound2-dev libxkbcommon-dev libwayland-dev libx11-dev libxcursor-dev libxrandr-dev libxi-dev
+      - name: Build player and sample
+        run: |
+          cargo build -p advplay --release
+          cargo build -p advc --release
+          mkdir -p dist
+          cp target/release/advplay dist/advplay
+          ./target/release/advc pack fixtures/sample -o dist/sample.advpak
+          cp packaging/README-linux.txt dist/README.txt
+          ./dist/advplay --dump-frame dist/sample.advpak --expect fixtures/sample/tests/boot.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lastcall-advplay-linux-x86_64
+          path: |
+            dist/advplay
+            dist/sample.advpak
+            dist/README.txt
+
+  macos-player:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-apple-darwin,x86_64-apple-darwin
+      - uses: Swatinem/rust-cache@v2
+      - name: Universal player and sample
+        env:
+          MACOSX_DEPLOYMENT_TARGET: "11.0"
+        run: |
+          cargo build -p advc --release
+          cargo build -p advplay --release --target aarch64-apple-darwin
+          cargo build -p advplay --release --target x86_64-apple-darwin
+          mkdir -p dist
+          lipo -create \
+            target/aarch64-apple-darwin/release/advplay \
+            target/x86_64-apple-darwin/release/advplay \
+            -output dist/advplay
+          file dist/advplay
+          ./target/release/advc pack fixtures/sample -o dist/sample.advpak
+          bash scripts/bundle-macos-app.sh dist/advplay dist/sample.advpak dist
+          dist/LastCall.app/Contents/MacOS/advplay --dump-frame dist/sample.advpak --expect fixtures/sample/tests/boot.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lastcall-advplay-macos-universal
+          path: |
+            dist/LastCall.app
+            dist/README.txt
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [linux-player, macos-player]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - name: Pack release archives
+        run: |
+          tar -C artifacts/lastcall-advplay-linux-x86_64 -czf LastCall-linux-x86_64.tar.gz advplay sample.advpak README.txt
+          (cd artifacts/lastcall-advplay-macos-universal && zip -r "$GITHUB_WORKSPACE/LastCall-macos-universal.zip" LastCall.app README.txt)
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            LastCall-linux-x86_64.tar.gz
+            LastCall-macos-universal.zip

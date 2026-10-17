@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lastcall.engine/schemas/items.schema.json",
+  "title": "Items",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["id", "name"],
+    "properties": {
+      "id": { "type": "string", "minLength": 1 },
+      "name": { "type": "string" },
+      "plural": { "type": "string" },
+      "look": { "type": "string" }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "bands": [
+    { "y": 0, "priority": 2 },
+    { "y": 150, "priority": 5 },
+    { "y": 175, "priority": 9 },
+    { "y": 195, "priority": 13 }
+  ]
+}
