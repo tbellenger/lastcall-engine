@@ -35,7 +35,8 @@
     "command": "on_command",
     "enter": "on_enter",
     "cutsceneCommand": "on_cutscene_command",
-    "after": "on_after"
+    "after": "on_after",
+    "exit": "on_exit"
   },
   "timers": [
     {

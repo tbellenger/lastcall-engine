@@ -169,6 +169,10 @@ pub struct Hooks {
     /// Runs after the command's own effects, still before the player dismisses them.
     #[serde(default)]
     pub after: Option<String>,
+    /// Runs when the hero walks into an exit, before the engine changes rooms.
+    /// Handling it (a death, a custom leave) skips the default move.
+    #[serde(default)]
+    pub exit: Option<String>,
 }
 
 /// Counts non-skipped commands while `when` holds. The command that would pass
@@ -476,6 +480,12 @@ pub struct ExitDef {
     pub trigger: [i32; 4],
     pub to: String,
     pub spawn: String,
+    /// Door picture the player can click. Feet still have to reach `trigger`.
+    #[serde(default)]
+    pub rect: Option<[i32; 4]>,
+    /// Run this command instead of moving directly. The club leave is `go out`.
+    #[serde(default)]
+    pub command: Option<String>,
     #[serde(default)]
     pub blocked_if: Option<String>,
     #[serde(default)]

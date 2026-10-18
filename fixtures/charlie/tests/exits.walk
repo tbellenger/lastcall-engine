@@ -1,0 +1,198 @@
+# Walk into every exit. Typed travel in the golden transcript never stood in a trigger.
+@settle
+@tap 216,126
+@expect room bathroom
+@expect text step into the gents
+@settle
+@walk w 160
+@expect room bar
+@expect text Thunder rolls
+@settle
+@walkto exit:alley_door
+@expect room alley
+@expect text The storm has broken
+@settle
+@walkto exit:nail_door
+@expect room bar
+@expect text step back into the Rusty Nail
+@settle
+@walkto exit:front_exit
+@expect room bar
+@expect text even hotter out there
+@settle
+@walk n 80
+
+# The same doors, after the bar errands, then every later doorway.
+@settle
+order beer
+@settle
+drink beer
+@settle
+talk to earl
+@settle
+buy drink for earl
+@settle
+play b7
+@settle
+tip sal
+@settle
+@expect flag gotQuarters
+@walkto exit:gents_door
+@expect room bathroom
+@settle
+look mirror
+@settle
+get soap
+@settle
+put quarters in machine
+@settle
+wear cologne
+@settle
+@expect flag wearingCologne
+@walkto exit:doorway
+@expect room bar
+@settle
+@walkto exit:alley_door
+@expect room alley
+@settle
+get matchbook
+@settle
+search car
+@settle
+get umbrella
+@settle
+give five to professor
+@settle
+show matchbook to bouncer
+@settle
+talk to bouncer
+@settle
+@expect room club
+tip dancer
+@settle
+get pick
+@settle
+show matchbook to guard
+@settle
+drop soap
+@settle
+@walkto exit:alley_exit
+@settle
+@expect room alley
+@expect text bolts through the door
+climb dumpster
+@settle
+pull ladder with umbrella
+@settle
+climb ladder
+@settle
+@expect room rooftop
+pick lock
+@settle
+@expect room street
+talk doorman
+@settle
+@expect room billiard
+look
+@settle
+wait
+@settle
+wait
+@settle
+use matchbook
+@settle
+wait
+@settle
+wait
+@settle
+get ball
+@settle
+throw ball
+@settle
+get knife
+@settle
+get chips
+@settle
+get handkerchief
+@settle
+@save before-hall
+@walkto exit:to_hall
+@settle
+@expect death
+@expect text guard is posted
+@restore before-hall
+@settle
+@expect room billiard
+@walkto exit:to_deck
+@expect room deck
+@settle
+dive
+@settle
+hold breath
+@settle
+get chlorine
+@settle
+@walkto exit:to_billiard
+@expect room billiard
+@settle
+take clothes
+@settle
+@walkto exit:to_hall
+@expect room hall
+@settle
+@walkto exit:to_kitchen
+@expect room kitchen
+@settle
+open pantry
+@settle
+make bomb
+@settle
+@walkto exit:to_hall
+@expect room hall
+@settle
+@walkto exit:to_billiard
+@expect room billiard
+@settle
+@walkto exit:to_hall
+@expect room hall
+@settle
+@walkto exit:to_hallway
+@expect room hallway
+@settle
+@walkto exit:to_hall
+@expect room hall
+@settle
+@walkto exit:to_hallway
+@expect room hallway
+@settle
+@save before-office
+@walkto exit:to_office
+@settle
+@expect death
+@expect text nap ends
+@restore before-office
+@settle
+@expect room hallway
+throw bomb
+@settle
+@walkto exit:to_office
+@expect room office
+@settle
+@walkto exit:to_hallway
+@expect room hallway
+@settle
+@walkto exit:to_office
+@expect room office
+@settle
+untie dana
+@settle
+call police
+@settle
+search desk
+@settle
+read books
+@settle
+give books to police
+@settle
+give note to police
+@expect room office

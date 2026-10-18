@@ -63,6 +63,24 @@ fn on_cutscene_command() {
     handled();
 }
 
+fn on_exit() {
+    let dest = noun();
+    if dest == "hall" && room() != "hall" {
+        if !flag("poolDone") {
+            die_auto(hall_death());
+            return;
+        }
+        if flag("wet") {
+            die_auto(wet_death());
+            return;
+        }
+    }
+    if dest == "office" && !flag("hallClear") {
+        die_auto(nap_death());
+        return;
+    }
+}
+
 fn on_enter() {
     if !flag("live") {
         set_flag("live");

@@ -1,4 +1,3 @@
-use crate::cond::is_ident;
 use crate::error::{Error, Result};
 use crate::model::{Dir, SCREEN_H, SCREEN_W};
 use crate::pak::Package;
@@ -262,7 +261,7 @@ pub fn decode_save(package: &Package, bytes: &[u8]) -> Result<DecodedSave> {
     let world = world_from_state(package, &file.state, file.tick)?;
     let mut checkpoints = BTreeMap::new();
     for (name, cp) in &file.state.checkpoints {
-        if !is_ident(name) {
+        if !is_checkpoint_name(name) {
             return Err(Error::msg(format!("bad checkpoint name '{name}'")));
         }
         let mut cp_world = world_from_inner(package, &cp.state, cp.tick)?;
@@ -423,8 +422,19 @@ fn world_from_inner(package: &Package, state: &InnerState, tick: u64) -> Result<
     })
 }
 
+/// Checkpoint names come from the game. Charlie uses `alley-chase` and `club-chase`.
+fn is_checkpoint_name(text: &str) -> bool {
+    let mut chars = text.chars();
+    match chars.next() {
+        Some(c) if c.is_ascii_alphabetic() || c == '_' => {}
+        _ => return false,
+    }
+    chars.all(|c| c.is_ascii_alphanumeric() || c == '_' || c == '-') && text.len() <= 64
+}
+
 fn known_places(package: &Package) -> BTreeSet<String> {
     let mut ids = BTreeSet::new();
+    ids.insert(package.game.hero.clone());
     for room in package.rooms.values() {
         for actor in &room.def.actors {
             ids.insert(actor.id.clone());
