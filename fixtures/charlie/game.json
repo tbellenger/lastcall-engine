@@ -1,0 +1,625 @@
+{
+  "id": "charlie",
+  "title": "Charlie: Last Call",
+  "version": "1.0.0",
+  "formatVersion": "0.2.0",
+  "engineMin": "0.2.0",
+  "resolution": [
+    384,
+    216
+  ],
+  "startRoom": "bar",
+  "startSpawn": "default",
+  "hero": "charlie",
+  "scoreMax": 168,
+  "rngSeed": 1,
+  "reach": 42,
+  "intro": [],
+  "carrying": [
+    "twenty",
+    "dollar",
+    "dollar",
+    "dollar"
+  ],
+  "deathPrompt": "Restore, restart, or quit?",
+  "hooks": {
+    "early": "on_early",
+    "command": "on_command",
+    "enter": "on_enter",
+    "cutsceneCommand": "on_cutscene_command",
+    "after": "on_after"
+  },
+  "timers": [
+    {
+      "id": "clubChase",
+      "when": [
+        "room:club",
+        "flag:clubChase"
+      ],
+      "limit": 4,
+      "var": "clockClub",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Footsteps become a hand on Charlie's collar. The soap stays in his pocket, which is a poor place for a rescue. The polished floor never gets its chance."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "club-chase"
+        }
+      ]
+    },
+    {
+      "id": "alleyChase",
+      "when": [
+        "room:alley",
+        "flag:alleyChase"
+      ],
+      "limit": 4,
+      "var": "clockAlley",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The thug gets his wind back. Charlie is still down in the rain, which is not the roof. The ladder stays up, like a lesson with rust on it."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "alley-chase"
+        }
+      ]
+    }
+  ],
+  "declarations": {
+    "flags": [
+      "alleyChase",
+      "badEnd",
+      "clubChase",
+      "danaFree",
+      "drankBeer",
+      "dry",
+      "earlClue",
+      "earlDrink",
+      "earlTalked",
+      "ended",
+      "floorBook",
+      "goodEnd",
+      "gotNote",
+      "gotQuarters",
+      "hallClear",
+      "handsFree",
+      "heardThunder",
+      "inPool",
+      "ladderDown",
+      "ladderHooked",
+      "leftClub",
+      "live",
+      "matchbookHere",
+      "onDumpster",
+      "orderedBeer",
+      "paidProfessor",
+      "policeCalled",
+      "policeHere",
+      "poolDone",
+      "professorTalk",
+      "quietEnter",
+      "salMood",
+      "seenCutscene",
+      "shownGuard",
+      "shownMatchbook",
+      "soap",
+      "soapSlipped",
+      "tankStop",
+      "thugDown",
+      "tied",
+      "tipped",
+      "tippedDancer",
+      "umbrella",
+      "vicEntered",
+      "vicFled",
+      "vicLeft",
+      "wearingCologne",
+      "wet"
+    ],
+    "vars": [
+      "thug",
+      "police",
+      "billiardMoves",
+      "clockClub",
+      "clockAlley"
+    ],
+    "scores": [
+      {
+        "id": "bean-thug",
+        "points": 4
+      },
+      {
+        "id": "burn-rope",
+        "points": 5
+      },
+      {
+        "id": "buy-cologne",
+        "points": 8
+      },
+      {
+        "id": "buy-earl",
+        "points": 6
+      },
+      {
+        "id": "call-police",
+        "points": 3
+      },
+      {
+        "id": "climb-dumpster",
+        "points": 3
+      },
+      {
+        "id": "drink-beer",
+        "points": 2
+      },
+      {
+        "id": "enter-club",
+        "points": 5
+      },
+      {
+        "id": "get-ball",
+        "points": 3
+      },
+      {
+        "id": "get-books",
+        "points": 4
+      },
+      {
+        "id": "get-chlorine",
+        "points": 3
+      },
+      {
+        "id": "get-iron",
+        "points": 4
+      },
+      {
+        "id": "get-matchbook",
+        "points": 4
+      },
+      {
+        "id": "get-note",
+        "points": 4
+      },
+      {
+        "id": "get-pick",
+        "points": 3
+      },
+      {
+        "id": "get-quarters",
+        "points": 4
+      },
+      {
+        "id": "get-soap",
+        "points": 3
+      },
+      {
+        "id": "get-umbrella",
+        "points": 4
+      },
+      {
+        "id": "give-books",
+        "points": 3
+      },
+      {
+        "id": "give-plate",
+        "points": 5
+      },
+      {
+        "id": "give-professor",
+        "points": 3
+      },
+      {
+        "id": "glimpse-dana",
+        "points": 4
+      },
+      {
+        "id": "look-mirror",
+        "points": 1
+      },
+      {
+        "id": "make-bomb",
+        "points": 4
+      },
+      {
+        "id": "order-beer",
+        "points": 2
+      },
+      {
+        "id": "pick-lock",
+        "points": 4
+      },
+      {
+        "id": "play-b7",
+        "points": 8
+      },
+      {
+        "id": "pool-breath",
+        "points": 5
+      },
+      {
+        "id": "pull-ladder",
+        "points": 3
+      },
+      {
+        "id": "reach-roof",
+        "points": 4
+      },
+      {
+        "id": "read-books",
+        "points": 2
+      },
+      {
+        "id": "show-guard",
+        "points": 4
+      },
+      {
+        "id": "show-matchbook",
+        "points": 3
+      },
+      {
+        "id": "slip-soap",
+        "points": 5
+      },
+      {
+        "id": "smoke-guard",
+        "points": 5
+      },
+      {
+        "id": "talk-earl",
+        "points": 2
+      },
+      {
+        "id": "thug-chips",
+        "points": 2
+      },
+      {
+        "id": "thug-clothes",
+        "points": 3
+      },
+      {
+        "id": "thug-hanky",
+        "points": 2
+      },
+      {
+        "id": "thug-knife",
+        "points": 2
+      },
+      {
+        "id": "tip-dancer",
+        "points": 2
+      },
+      {
+        "id": "tip-sal",
+        "points": 6
+      },
+      {
+        "id": "untie-dana",
+        "points": 4
+      },
+      {
+        "id": "wear-cologne",
+        "points": 4
+      },
+      {
+        "id": "witness-cutscene",
+        "points": 4
+      }
+    ],
+    "endings": [
+      "good",
+      "bad"
+    ]
+  },
+  "rules": [
+    {
+      "verb": "wear",
+      "effects": [
+        {
+          "do": "give",
+          "id": "cologne"
+        },
+        {
+          "do": "set",
+          "flag": "wearingCologne"
+        },
+        {
+          "do": "score",
+          "id": "wear-cologne",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "spray"
+        },
+        {
+          "do": "say",
+          "text": "You smell like a Midnight Stallion. The suit is still a lost cause, but the air around it has hope."
+        }
+      ],
+      "req": [
+        "has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "cologne",
+      "anySecond": true,
+      "id": "global:wear-cologne"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "cologne"
+        },
+        {
+          "do": "set",
+          "flag": "wearingCologne"
+        },
+        {
+          "do": "score",
+          "id": "wear-cologne",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "spray"
+        },
+        {
+          "do": "say",
+          "text": "You smell like a Midnight Stallion. The suit is still a lost cause, but the air around it has hope."
+        }
+      ],
+      "req": [
+        "has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "cologne",
+      "anySecond": true,
+      "id": "global:wear-cologne:1"
+    },
+    {
+      "verb": "wear",
+      "effects": [
+        {
+          "do": "say",
+          "text": "You already smell like a winner. The suit has not been informed."
+        }
+      ],
+      "req": [
+        "flag:wearingCologne"
+      ],
+      "noun": "cologne",
+      "anySecond": true,
+      "id": "global:wear-cologne-again"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "You already smell like a winner. The suit has not been informed."
+        }
+      ],
+      "req": [
+        "flag:wearingCologne"
+      ],
+      "noun": "cologne",
+      "anySecond": true,
+      "id": "global:wear-cologne-again:1"
+    },
+    {
+      "verb": "drink",
+      "effects": [
+        {
+          "do": "give",
+          "id": "beer"
+        },
+        {
+          "do": "set",
+          "flag": "drankBeer"
+        },
+        {
+          "do": "score",
+          "id": "drink-beer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "drink"
+        },
+        {
+          "do": "say",
+          "text": "Heaven, with a head on it."
+        }
+      ],
+      "req": [
+        "has:beer"
+      ],
+      "noun": "beer",
+      "anySecond": true,
+      "id": "global:drink-beer"
+    },
+    {
+      "verb": "drink",
+      "effects": [
+        {
+          "do": "give",
+          "id": "beer"
+        },
+        {
+          "do": "set",
+          "flag": "drankBeer"
+        },
+        {
+          "do": "score",
+          "id": "drink-beer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "drink"
+        },
+        {
+          "do": "say",
+          "text": "Heaven, with a head on it."
+        }
+      ],
+      "req": [
+        "has:beer"
+      ],
+      "noun": "drink",
+      "anySecond": true,
+      "id": "global:drink-beer:1"
+    },
+    {
+      "verb": "drink",
+      "effects": [
+        {
+          "do": "give",
+          "id": "beer"
+        },
+        {
+          "do": "set",
+          "flag": "drankBeer"
+        },
+        {
+          "do": "score",
+          "id": "drink-beer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "drink"
+        },
+        {
+          "do": "say",
+          "text": "Heaven, with a head on it."
+        }
+      ],
+      "req": [
+        "has:beer"
+      ],
+      "anySecond": true,
+      "id": "global:drink-beer:2"
+    },
+    {
+      "verb": "drop",
+      "effects": [
+        {
+          "do": "say",
+          "text": "You mime dropping the soap. The floor is not the chase, and the thugs are not behind you. You keep the slimy thing. For later."
+        }
+      ],
+      "req": [
+        "has:soap",
+        "!flag:clubChase"
+      ],
+      "noun": "soap",
+      "anySecond": true,
+      "id": "global:drop-soap"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "You squeeze the soap. Still slick. Floors and this soap do not get along, but nobody is chasing you yet."
+        }
+      ],
+      "req": [
+        "has:soap",
+        "!flag:clubChase"
+      ],
+      "noun": "soap",
+      "anySecond": true,
+      "id": "global:use-soap-early"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Still slick. Floors and this soap do not get along."
+        }
+      ],
+      "req": [
+        "has:soap"
+      ],
+      "noun": "soap",
+      "anySecond": true,
+      "id": "global:look-soap"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Scrawled in pencil on a bar napkin: NY plate KTL-4471. Black sedan."
+        }
+      ],
+      "req": [
+        "has:note"
+      ],
+      "noun": "note",
+      "anySecond": true,
+      "id": "global:read-note"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "You don't have anything to read."
+        }
+      ],
+      "req": [
+        "!has:note"
+      ],
+      "noun": "note",
+      "anySecond": true,
+      "id": "global:read-note-none"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "THE PURPLE RHINO — ASK FOR VIC. The cover is damp. The name is not."
+        }
+      ],
+      "req": [
+        "has:matchbook"
+      ],
+      "noun": "matchbook",
+      "anySecond": true,
+      "id": "global:read-matchbook"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "You don't have anything to read."
+        }
+      ],
+      "req": [
+        "!has:matchbook"
+      ],
+      "noun": "matchbook",
+      "anySecond": true,
+      "id": "global:read-matchbook-none"
+    }
+  ]
+}

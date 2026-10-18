@@ -1,0 +1,56 @@
+{
+  "id": "hall",
+  "name": "Entrance Hall",
+  "look": "The entrance hall of Vic's lakehouse. Dark wood, a coat rack, and no guard. He went to check the pool. The kitchen door is open on the right.",
+  "spawns": {
+    "default": [
+      180,
+      184
+    ],
+    "fromBilliard": [
+      180,
+      184
+    ],
+    "fromKitchen": [
+      300,
+      188
+    ],
+    "fromHallway": [
+      70,
+      188
+    ]
+  },
+  "exits": [],
+  "hotspots": [
+    {
+      "id": "rack",
+      "rect": [
+        200,
+        70,
+        40,
+        60
+      ],
+      "nouns": [
+        "rack",
+        "coat"
+      ],
+      "look": "A coat rack with nothing Charlie wants to wear."
+    },
+    {
+      "id": "kitchen_door",
+      "rect": [
+        316,
+        56,
+        34,
+        134
+      ],
+      "nouns": [
+        "kitchen"
+      ],
+      "look": "A wooden door, standing open. Warm light from the kitchen spills onto the floor."
+    }
+  ],
+  "actors": [],
+  "props": [],
+  "rules": []
+}

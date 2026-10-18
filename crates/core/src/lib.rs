@@ -18,6 +18,7 @@ pub mod parser;
 pub mod render;
 pub mod rng;
 pub mod save;
+pub mod script;
 pub mod walk;
 
 pub use engine::{Engine, HostEvent, Input};

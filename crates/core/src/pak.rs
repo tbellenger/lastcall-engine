@@ -2,7 +2,7 @@ use crate::cond::{self, Cond};
 use crate::error::{Error, Result};
 use crate::imageutil::{self, crop, Decoded, GrayImage, RgbaImage, SpriteFrame};
 use crate::model::Vocab;
-use crate::model::{ActorDef, Effect, GameDef, ItemDef, RoomDef, SCREEN_H, SCREEN_W};
+use crate::model::{ActorDef, CutsceneDef, Effect, GameDef, ItemDef, RoomDef, SCREEN_H, SCREEN_W};
 use crate::parser::VocabIndex;
 use sha2::{Digest, Sha256};
 use std::collections::{BTreeMap, BTreeSet};
@@ -34,6 +34,12 @@ pub struct RoomPart {
     pub walk: GrayImage,
     pub priority: GrayImage,
     pub props: Option<RgbaImage>,
+    pub pictures: BTreeMap<String, RgbaImage>,
+}
+
+pub struct CutscenePart {
+    pub def: CutsceneDef,
+    pub frames: Vec<RgbaImage>,
 }
 
 pub struct ActorPart {
@@ -47,15 +53,24 @@ pub struct PackageParts {
     pub items: Vec<ItemDef>,
     pub rooms: Vec<RoomPart>,
     pub actors: Vec<ActorPart>,
+    pub script: String,
+    pub cutscenes: Vec<CutscenePart>,
 }
 
 #[derive(Debug)]
 pub struct LoadedRoom {
     pub def: RoomDef,
     pub picture: RgbaImage,
+    pub pictures: BTreeMap<String, RgbaImage>,
     pub walk: Vec<u8>,
     pub priority: Vec<u8>,
     pub prop_frames: Vec<SpriteFrame>,
+}
+
+#[derive(Debug)]
+pub struct LoadedCutscene {
+    pub def: CutsceneDef,
+    pub frames: Vec<RgbaImage>,
 }
 
 #[derive(Debug)]
@@ -80,6 +95,8 @@ pub struct Package {
     pub known_vars: BTreeSet<String>,
     pub known_rules: BTreeSet<String>,
     pub endings: BTreeSet<String>,
+    pub script: Option<crate::script::Script>,
+    pub cutscenes: BTreeMap<String, LoadedCutscene>,
 }
 
 pub fn build_pak(parts: &PackageParts) -> Result<Vec<u8>> {
@@ -118,6 +135,33 @@ pub fn build_pak(parts: &PackageParts) -> Result<Vec<u8>> {
             files.insert(
                 format!("rooms/{id}/props.png"),
                 (imageutil::encode_rgba(props)?, true),
+            );
+        }
+        for (name, image) in &room.pictures {
+            files.insert(
+                format!("rooms/{id}/variant-{name}.png"),
+                (imageutil::encode_rgba(image)?, true),
+            );
+        }
+    }
+    if !parts.script.is_empty() {
+        files.insert(
+            "scripts/game.rhai".into(),
+            (parts.script.as_bytes().to_vec(), false),
+        );
+    }
+    for cut in &parts.cutscenes {
+        let mut def = cut.def.clone();
+        def.frame_count = cut.frames.len() as u32;
+        let id = def.id.clone();
+        files.insert(
+            format!("cutscenes/{id}.json"),
+            (serde_json::to_vec(&def)?, false),
+        );
+        for (index, frame) in cut.frames.iter().enumerate() {
+            files.insert(
+                format!("cutscenes/{id}/f{index:03}.png"),
+                (imageutil::encode_rgba(frame)?, true),
             );
         }
     }
@@ -324,11 +368,28 @@ pub fn load_pak(bytes: &[u8]) -> Result<Package> {
                 prop.frame.ay,
             )?);
         }
+        let mut pictures = BTreeMap::new();
+        for name in &def.pictures {
+            let key = format!("rooms/{id}/variant-{name}.png");
+            let image = decode_rgba(
+                files
+                    .get(&key)
+                    .ok_or_else(|| Error::msg(format!("room {id} is missing variant {name}")))?,
+                "variant",
+            )?;
+            if image.w != SCREEN_W || image.h != SCREEN_H {
+                return Err(Error::msg(format!(
+                    "room {id} variant {name} is not {SCREEN_W}x{SCREEN_H}"
+                )));
+            }
+            pictures.insert(name.clone(), image);
+        }
         rooms.insert(
             id,
             LoadedRoom {
                 def,
                 picture,
+                pictures,
                 walk: walk.pixels,
                 priority: priority.pixels,
                 prop_frames,
@@ -402,7 +463,52 @@ pub fn load_pak(bytes: &[u8]) -> Result<Package> {
         known_vars: BTreeSet::new(),
         known_rules: BTreeSet::new(),
         endings: BTreeSet::new(),
+        script: None,
+        cutscenes: BTreeMap::new(),
     };
+    if let Some(source) = files.get("scripts/game.rhai") {
+        let text = String::from_utf8(source.clone())
+            .map_err(|_| Error::msg("scripts/game.rhai is not utf-8"))?;
+        package.script = Some(crate::script::Script::compile(&text).map_err(Error::msg)?);
+    }
+    let cut_ids: Vec<String> = files
+        .keys()
+        .filter_map(|path| {
+            let rest = path.strip_prefix("cutscenes/")?;
+            let name = rest.strip_suffix(".json")?;
+            if !name.contains('/') {
+                Some(name.to_string())
+            } else {
+                None
+            }
+        })
+        .collect();
+    for id in cut_ids {
+        let def: CutsceneDef = serde_json::from_slice(&files[&format!("cutscenes/{id}.json")])?;
+        if def.id != id {
+            return Err(Error::msg(format!(
+                "cutscene file {id} does not match id {}",
+                def.id
+            )));
+        }
+        let mut frames = Vec::new();
+        for index in 0..def.frame_count {
+            let key = format!("cutscenes/{id}/f{index:03}.png");
+            let image = decode_rgba(
+                files
+                    .get(&key)
+                    .ok_or_else(|| Error::msg(format!("cutscene {id} is missing frame {index}")))?,
+                "cutscene",
+            )?;
+            if image.w != SCREEN_W || image.h != SCREEN_H {
+                return Err(Error::msg(format!(
+                    "cutscene {id} frame {index} is not {SCREEN_W}x{SCREEN_H}"
+                )));
+            }
+            frames.push(image);
+        }
+        package.cutscenes.insert(id, LoadedCutscene { def, frames });
+    }
     index_package(&mut package)?;
     if !package.rooms.contains_key(&package.game.start_room) {
         return Err(Error::msg(format!(
@@ -420,8 +526,53 @@ pub fn load_pak(bytes: &[u8]) -> Result<Package> {
 }
 
 fn index_package(package: &mut Package) -> Result<()> {
+    for flag in &package.game.declarations.flags {
+        package.known_flags.insert(flag.clone());
+    }
+    for var in &package.game.declarations.vars {
+        package.known_vars.insert(var.clone());
+    }
+    for ending in &package.game.declarations.endings {
+        package.endings.insert(ending.clone());
+    }
+    for score in &package.game.declarations.scores {
+        note_score(&mut package.score_table, &score.id, score.points)?;
+    }
+    for timer in &package.game.timers {
+        package.known_vars.insert(timer.var.clone());
+        for cond in &timer.when {
+            note_cond(&mut package.known_flags, &mut package.known_vars, cond)?;
+        }
+        note_effect_list(
+            &timer.effects,
+            &mut package.known_flags,
+            &mut package.known_vars,
+            &mut package.score_table,
+            &mut package.endings,
+        )?;
+    }
+
     let mut rules = Vec::new();
     rules.extend(package.game.rules.clone());
+    for cut in package.cutscenes.values() {
+        rules.extend(cut.def.on_command.clone());
+        note_effect_list(
+            &cut.def.on_end,
+            &mut package.known_flags,
+            &mut package.known_vars,
+            &mut package.score_table,
+            &mut package.endings,
+        )?;
+        for beat in &cut.def.beats {
+            note_effect_list(
+                &beat.effects,
+                &mut package.known_flags,
+                &mut package.known_vars,
+                &mut package.score_table,
+                &mut package.endings,
+            )?;
+        }
+    }
     for room in package.rooms.values() {
         rules.extend(room.def.rules.clone());
         rules.extend(room.def.on_enter.clone());
@@ -450,28 +601,48 @@ fn index_package(package: &mut Package) -> Result<()> {
         for cond in &rule.req {
             note_cond(&mut package.known_flags, &mut package.known_vars, cond)?;
         }
-        for effect in &rule.effects {
-            match effect {
-                Effect::Set { flag } | Effect::Clear { flag } => {
-                    package.known_flags.insert(flag.clone());
-                }
-                Effect::Inc { var, .. } | Effect::SetVar { var, .. } => {
-                    package.known_vars.insert(var.clone());
-                }
-                Effect::Score { id, points } => {
-                    if let Some(prev) = package.score_table.insert(id.clone(), *points) {
-                        if prev != *points {
-                            return Err(Error::msg(format!(
-                                "score id {id} is awarded as both {prev} and {points}"
-                            )));
-                        }
-                    }
-                }
-                Effect::SetEnding { id } => {
-                    package.endings.insert(id.clone());
-                }
-                _ => {}
+        note_effect_list(
+            &rule.effects,
+            &mut package.known_flags,
+            &mut package.known_vars,
+            &mut package.score_table,
+            &mut package.endings,
+        )?;
+    }
+    Ok(())
+}
+
+fn note_score(table: &mut BTreeMap<String, i32>, id: &str, points: i32) -> Result<()> {
+    if let Some(prev) = table.insert(id.to_string(), points) {
+        if prev != points {
+            return Err(Error::msg(format!(
+                "score id {id} is awarded as both {prev} and {points}"
+            )));
+        }
+    }
+    Ok(())
+}
+
+fn note_effect_list(
+    effects: &[Effect],
+    flags: &mut BTreeSet<String>,
+    vars: &mut BTreeSet<String>,
+    scores: &mut BTreeMap<String, i32>,
+    endings: &mut BTreeSet<String>,
+) -> Result<()> {
+    for effect in effects {
+        match effect {
+            Effect::Set { flag } | Effect::Clear { flag } => {
+                flags.insert(flag.clone());
             }
+            Effect::Inc { var, .. } | Effect::SetVar { var, .. } => {
+                vars.insert(var.clone());
+            }
+            Effect::Score { id, points } => note_score(scores, id, *points)?,
+            Effect::SetEnding { id } => {
+                endings.insert(id.clone());
+            }
+            _ => {}
         }
     }
     Ok(())

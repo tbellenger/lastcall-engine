@@ -1,0 +1,127 @@
+{
+  "id": "charlie",
+  "costumes": {
+    "default": {
+      "sheet": "sheet.png",
+      "frameW": 16,
+      "frameH": 24,
+      "ax": 8,
+      "ay": 23,
+      "animations": {
+        "stand_s": {
+          "fps": 1,
+          "frames": [
+            0
+          ]
+        },
+        "walk_s": {
+          "fps": 8,
+          "frames": [
+            1,
+            2
+          ]
+        },
+        "stand_n": {
+          "fps": 1,
+          "frames": [
+            3
+          ]
+        },
+        "walk_n": {
+          "fps": 8,
+          "frames": [
+            4,
+            5
+          ]
+        },
+        "stand_e": {
+          "fps": 1,
+          "frames": [
+            6
+          ]
+        },
+        "walk_e": {
+          "fps": 8,
+          "frames": [
+            7,
+            8
+          ]
+        },
+        "stand_w": {
+          "fps": 1,
+          "frames": [
+            9
+          ]
+        },
+        "walk_w": {
+          "fps": 8,
+          "frames": [
+            10,
+            11
+          ]
+        }
+      }
+    },
+    "dry": {
+      "sheet": "sheet-dry.png",
+      "frameW": 16,
+      "frameH": 24,
+      "ax": 8,
+      "ay": 23,
+      "animations": {
+        "stand_s": {
+          "fps": 1,
+          "frames": [
+            0
+          ]
+        },
+        "walk_s": {
+          "fps": 8,
+          "frames": [
+            1,
+            2
+          ]
+        },
+        "stand_n": {
+          "fps": 1,
+          "frames": [
+            3
+          ]
+        },
+        "walk_n": {
+          "fps": 8,
+          "frames": [
+            4,
+            5
+          ]
+        },
+        "stand_e": {
+          "fps": 1,
+          "frames": [
+            6
+          ]
+        },
+        "walk_e": {
+          "fps": 8,
+          "frames": [
+            7,
+            8
+          ]
+        },
+        "stand_w": {
+          "fps": 1,
+          "frames": [
+            9
+          ]
+        },
+        "walk_w": {
+          "fps": 8,
+          "frames": [
+            10,
+            11
+          ]
+        }
+      }
+    }
+  }
+}

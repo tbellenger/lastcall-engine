@@ -1,0 +1,6663 @@
+{
+  "id": "alley",
+  "name": "Alley",
+  "look": "A narrow alley in the rain. The storm has broken, and it smells of garbage learning to swim. Fire escapes zig-zag up the brick. The ladder is pulled up, out of reach. A rusted car sits on its rims. Across the way a black door waits under a purple neon PURPLE RHINO sign, guarded by a bouncer the size of a vending machine. A hooked umbrella leans by the trash. A man sits on a flattened box.",
+  "spawns": {
+    "default": [
+      240,
+      200
+    ],
+    "fromBar": [
+      320,
+      200
+    ],
+    "fromClub": [
+      150,
+      200
+    ]
+  },
+  "exits": [],
+  "hotspots": [
+    {
+      "id": "nail_door",
+      "rect": [
+        250,
+        48,
+        48,
+        138
+      ],
+      "nouns": [
+        "door",
+        "bar",
+        "rusty nail"
+      ],
+      "look": "The back door of the Rusty Nail. It still smells like beer, which is an improvement."
+    },
+    {
+      "id": "trash",
+      "rect": [
+        16,
+        150,
+        20,
+        20
+      ],
+      "nouns": [
+        "trash",
+        "trash can"
+      ],
+      "look": "Garbage. Just garbage. The umbrella leaning on it is the only thing with ambition."
+    },
+    {
+      "id": "umbrella",
+      "rect": [
+        200,
+        144,
+        28,
+        44
+      ],
+      "nouns": [
+        "umbrella"
+      ],
+      "look": "An old black umbrella with a hooked handle. Somebody left in a hurry. The rain stayed.",
+      "stand": [
+        214,
+        190
+      ]
+    },
+    {
+      "id": "matchbook",
+      "rect": [
+        130,
+        190,
+        24,
+        14
+      ],
+      "nouns": [
+        "matchbook",
+        "puddle"
+      ],
+      "look": "A soggy matchbook sits in a puddle by the Purple Rhino door.",
+      "stand": [
+        140,
+        204
+      ]
+    },
+    {
+      "id": "dumpster",
+      "rect": [
+        170,
+        140,
+        60,
+        50
+      ],
+      "nouns": [
+        "trash"
+      ],
+      "look": "It has a lid and a point of view. You leave both alone.",
+      "stand": [
+        200,
+        198
+      ]
+    },
+    {
+      "id": "velvet_door",
+      "rect": [
+        90,
+        50,
+        46,
+        130
+      ],
+      "nouns": [
+        "door",
+        "club"
+      ],
+      "look": "The Purple Rhino. Members, and guests who smell better than a subway platform."
+    },
+    {
+      "id": "velvet_sign",
+      "rect": [
+        80,
+        16,
+        70,
+        36
+      ],
+      "nouns": [
+        "sign",
+        "velvet sign",
+        "rhino sign"
+      ],
+      "look": "Purple neon. PURPLE RHINO. It hisses in the rain."
+    },
+    {
+      "id": "fire_escape",
+      "rect": [
+        168,
+        8,
+        56,
+        90
+      ],
+      "nouns": [
+        "fire escape",
+        "ladder"
+      ],
+      "look": "The ladder's pulled up, a good two feet out of reach, even from the dumpster.",
+      "stand": [
+        200,
+        198
+      ]
+    },
+    {
+      "id": "car",
+      "rect": [
+        300,
+        120,
+        70,
+        70
+      ],
+      "nouns": [
+        "car"
+      ],
+      "look": "A '78 Buick that has been here since '78. The rain is not improving it.",
+      "stand": [
+        330,
+        200
+      ]
+    },
+    {
+      "id": "box",
+      "rect": [
+        8,
+        150,
+        40,
+        40
+      ],
+      "nouns": [
+        "box",
+        "cardboard"
+      ],
+      "look": "Flattened cardboard, recently occupied by a man who notices things."
+    },
+    {
+      "id": "streetlight",
+      "rect": [
+        40,
+        20,
+        16,
+        40
+      ],
+      "nouns": [
+        "streetlight",
+        "light",
+        "lamp",
+        "street light"
+      ]
+    },
+    {
+      "id": "alley_mouth",
+      "rect": [
+        16,
+        36,
+        36,
+        16
+      ],
+      "nouns": [
+        "out",
+        "alley mouth",
+        "road"
+      ]
+    },
+    {
+      "id": "professor",
+      "rect": [
+        8,
+        106,
+        100,
+        98
+      ],
+      "nouns": [
+        "professor"
+      ],
+      "look": "A man on a flattened box, watching the rain like it owes him an explanation.",
+      "stand": [
+        52,
+        202
+      ]
+    },
+    {
+      "id": "bouncer",
+      "rect": [
+        96,
+        80,
+        40,
+        100
+      ],
+      "nouns": [
+        "bouncer"
+      ],
+      "look": "A bouncer the size of a vending machine. The purple door does not open itself.",
+      "stand": [
+        120,
+        198
+      ]
+    }
+  ],
+  "actors": [],
+  "props": [],
+  "rules": [
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The thug is getting his breath back. The dumpster, then the ladder. Something with a hook."
+        }
+      ],
+      "req": [
+        "flag:alleyChase"
+      ],
+      "anySecond": true,
+      "id": "alley:look-alley-chase"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The thug is getting his breath back. The dumpster, then the ladder. Something with a hook."
+        }
+      ],
+      "req": [
+        "flag:alleyChase"
+      ],
+      "noun": "around",
+      "anySecond": true,
+      "id": "alley:look-alley-chase:1"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The thug is getting his breath back. The dumpster, then the ladder. Something with a hook."
+        }
+      ],
+      "req": [
+        "flag:alleyChase"
+      ],
+      "noun": "room",
+      "anySecond": true,
+      "id": "alley:look-alley-chase:2"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Up on the lid, the ladder's hook dangles just out of reach. Something with a hook would do it."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster"
+      ],
+      "noun": "trash",
+      "anySecond": true,
+      "id": "alley:look-dumpster-up"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The lid is a step. From up there the ladder's hook is almost in reach."
+        }
+      ],
+      "req": [
+        "flag:alleyChase"
+      ],
+      "noun": "trash",
+      "anySecond": true,
+      "id": "alley:look-dumpster-chase"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Up on the lid, the ladder's hook dangles just out of reach. Something with a hook would do it."
+        }
+      ],
+      "req": [
+        "flag:alleyChase"
+      ],
+      "noun": "ladder",
+      "anySecond": true,
+      "id": "alley:look-ladder-chase"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The ladder's pulled up, a good two feet out of reach, even from the dumpster. The umbrella's hook could catch a rung. Later, when someone is chasing you."
+        }
+      ],
+      "req": [
+        "has:umbrella",
+        "!flag:alleyChase"
+      ],
+      "noun": "ladder",
+      "anySecond": true,
+      "id": "alley:look-ladder-hook"
+    },
+    {
+      "verb": "jump",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "onDumpster"
+        },
+        {
+          "do": "score",
+          "id": "climb-dumpster",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "You scramble onto the dumpster. Up on the lid, the ladder's hook dangles just out of reach. Something with a hook would do it."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "!flag:onDumpster"
+      ],
+      "noun": "trash",
+      "anySecond": true,
+      "id": "alley:climb-dumpster-chase"
+    },
+    {
+      "verb": "jump",
+      "effects": [
+        {
+          "do": "say",
+          "text": "You're already up here. The hook is the problem, not the lid."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster"
+      ],
+      "noun": "trash",
+      "anySecond": true,
+      "id": "alley:climb-dumpster-again"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderDown"
+        },
+        {
+          "do": "score",
+          "id": "pull-ladder",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches the bottom rung. The ladder rattles down in a shower of rust and rain. It is, briefly, a way up."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "id": "alley:pull-ladder-chase"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderDown"
+        },
+        {
+          "do": "score",
+          "id": "pull-ladder",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches the bottom rung. The ladder rattles down in a shower of rust and rain. It is, briefly, a way up."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "second": "ladder",
+      "id": "alley:pull-ladder-chase:1"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderDown"
+        },
+        {
+          "do": "score",
+          "id": "pull-ladder",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches the bottom rung. The ladder rattles down in a shower of rust and rain. It is, briefly, a way up."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "second": "umbrella",
+      "id": "alley:pull-ladder-chase:2"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderDown"
+        },
+        {
+          "do": "score",
+          "id": "pull-ladder",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches the bottom rung. The ladder rattles down in a shower of rust and rain. It is, briefly, a way up."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "id": "alley:pull-ladder-chase:3"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderDown"
+        },
+        {
+          "do": "score",
+          "id": "pull-ladder",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches the bottom rung. The ladder rattles down in a shower of rust and rain. It is, briefly, a way up."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "second": "ladder",
+      "id": "alley:pull-ladder-chase:4"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderDown"
+        },
+        {
+          "do": "score",
+          "id": "pull-ladder",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches the bottom rung. The ladder rattles down in a shower of rust and rain. It is, briefly, a way up."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "second": "umbrella",
+      "id": "alley:pull-ladder-chase:5"
+    },
+    {
+      "verb": "pull",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderDown"
+        },
+        {
+          "do": "score",
+          "id": "pull-ladder",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches the bottom rung. The ladder rattles down in a shower of rust and rain. It is, briefly, a way up."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "id": "alley:pull-ladder-chase:6"
+    },
+    {
+      "verb": "pull",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderDown"
+        },
+        {
+          "do": "score",
+          "id": "pull-ladder",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches the bottom rung. The ladder rattles down in a shower of rust and rain. It is, briefly, a way up."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "second": "ladder",
+      "id": "alley:pull-ladder-chase:7"
+    },
+    {
+      "verb": "pull",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderDown"
+        },
+        {
+          "do": "score",
+          "id": "pull-ladder",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches the bottom rung. The ladder rattles down in a shower of rust and rain. It is, briefly, a way up."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "second": "umbrella",
+      "id": "alley:pull-ladder-chase:8"
+    },
+    {
+      "verb": "pull",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderDown"
+        },
+        {
+          "do": "score",
+          "id": "pull-ladder",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches the bottom rung. The ladder rattles down in a shower of rust and rain. It is, briefly, a way up."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "id": "alley:pull-ladder-chase:9"
+    },
+    {
+      "verb": "pull",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderDown"
+        },
+        {
+          "do": "score",
+          "id": "pull-ladder",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches the bottom rung. The ladder rattles down in a shower of rust and rain. It is, briefly, a way up."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "second": "ladder",
+      "id": "alley:pull-ladder-chase:10"
+    },
+    {
+      "verb": "pull",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderDown"
+        },
+        {
+          "do": "score",
+          "id": "pull-ladder",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches the bottom rung. The ladder rattles down in a shower of rust and rain. It is, briefly, a way up."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "second": "umbrella",
+      "id": "alley:pull-ladder-chase:11"
+    },
+    {
+      "verb": "hook",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderDown"
+        },
+        {
+          "do": "score",
+          "id": "pull-ladder",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches the bottom rung. The ladder rattles down in a shower of rust and rain. It is, briefly, a way up."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "id": "alley:pull-ladder-chase:12"
+    },
+    {
+      "verb": "hook",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderDown"
+        },
+        {
+          "do": "score",
+          "id": "pull-ladder",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches the bottom rung. The ladder rattles down in a shower of rust and rain. It is, briefly, a way up."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "second": "ladder",
+      "id": "alley:pull-ladder-chase:13"
+    },
+    {
+      "verb": "hook",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderDown"
+        },
+        {
+          "do": "score",
+          "id": "pull-ladder",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches the bottom rung. The ladder rattles down in a shower of rust and rain. It is, briefly, a way up."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "second": "umbrella",
+      "id": "alley:pull-ladder-chase:14"
+    },
+    {
+      "verb": "hook",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderDown"
+        },
+        {
+          "do": "score",
+          "id": "pull-ladder",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches the bottom rung. The ladder rattles down in a shower of rust and rain. It is, briefly, a way up."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "id": "alley:pull-ladder-chase:15"
+    },
+    {
+      "verb": "hook",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderDown"
+        },
+        {
+          "do": "score",
+          "id": "pull-ladder",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches the bottom rung. The ladder rattles down in a shower of rust and rain. It is, briefly, a way up."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "second": "ladder",
+      "id": "alley:pull-ladder-chase:16"
+    },
+    {
+      "verb": "hook",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderDown"
+        },
+        {
+          "do": "score",
+          "id": "pull-ladder",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches the bottom rung. The ladder rattles down in a shower of rust and rain. It is, briefly, a way up."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "second": "umbrella",
+      "id": "alley:pull-ladder-chase:17"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Charlie reaches for the ladder with his bare hands and the dignity of a man who left his umbrella somewhere sensible. The thug appreciates the effort by ending it."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "!has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "id": "alley:pull-ladder-no-umbrella"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Charlie reaches for the ladder with his bare hands and the dignity of a man who left his umbrella somewhere sensible. The thug appreciates the effort by ending it."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "!has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "second": "ladder",
+      "id": "alley:pull-ladder-no-umbrella:1"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Charlie reaches for the ladder with his bare hands and the dignity of a man who left his umbrella somewhere sensible. The thug appreciates the effort by ending it."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "!has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "second": "umbrella",
+      "id": "alley:pull-ladder-no-umbrella:2"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Charlie reaches for the ladder with his bare hands and the dignity of a man who left his umbrella somewhere sensible. The thug appreciates the effort by ending it."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "!has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "id": "alley:pull-ladder-no-umbrella:3"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Charlie reaches for the ladder with his bare hands and the dignity of a man who left his umbrella somewhere sensible. The thug appreciates the effort by ending it."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "!has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "second": "ladder",
+      "id": "alley:pull-ladder-no-umbrella:4"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Charlie reaches for the ladder with his bare hands and the dignity of a man who left his umbrella somewhere sensible. The thug appreciates the effort by ending it."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "!has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "second": "umbrella",
+      "id": "alley:pull-ladder-no-umbrella:5"
+    },
+    {
+      "verb": "pull",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Charlie reaches for the ladder with his bare hands and the dignity of a man who left his umbrella somewhere sensible. The thug appreciates the effort by ending it."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "!has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "id": "alley:pull-ladder-no-umbrella:6"
+    },
+    {
+      "verb": "pull",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Charlie reaches for the ladder with his bare hands and the dignity of a man who left his umbrella somewhere sensible. The thug appreciates the effort by ending it."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "!has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "second": "ladder",
+      "id": "alley:pull-ladder-no-umbrella:7"
+    },
+    {
+      "verb": "pull",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Charlie reaches for the ladder with his bare hands and the dignity of a man who left his umbrella somewhere sensible. The thug appreciates the effort by ending it."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "!has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "second": "umbrella",
+      "id": "alley:pull-ladder-no-umbrella:8"
+    },
+    {
+      "verb": "pull",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Charlie reaches for the ladder with his bare hands and the dignity of a man who left his umbrella somewhere sensible. The thug appreciates the effort by ending it."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "!has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "id": "alley:pull-ladder-no-umbrella:9"
+    },
+    {
+      "verb": "pull",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Charlie reaches for the ladder with his bare hands and the dignity of a man who left his umbrella somewhere sensible. The thug appreciates the effort by ending it."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "!has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "second": "ladder",
+      "id": "alley:pull-ladder-no-umbrella:10"
+    },
+    {
+      "verb": "pull",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Charlie reaches for the ladder with his bare hands and the dignity of a man who left his umbrella somewhere sensible. The thug appreciates the effort by ending it."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "!has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "second": "umbrella",
+      "id": "alley:pull-ladder-no-umbrella:11"
+    },
+    {
+      "verb": "hook",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Charlie reaches for the ladder with his bare hands and the dignity of a man who left his umbrella somewhere sensible. The thug appreciates the effort by ending it."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "!has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "id": "alley:pull-ladder-no-umbrella:12"
+    },
+    {
+      "verb": "hook",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Charlie reaches for the ladder with his bare hands and the dignity of a man who left his umbrella somewhere sensible. The thug appreciates the effort by ending it."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "!has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "second": "ladder",
+      "id": "alley:pull-ladder-no-umbrella:13"
+    },
+    {
+      "verb": "hook",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Charlie reaches for the ladder with his bare hands and the dignity of a man who left his umbrella somewhere sensible. The thug appreciates the effort by ending it."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "!has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "second": "umbrella",
+      "id": "alley:pull-ladder-no-umbrella:14"
+    },
+    {
+      "verb": "hook",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Charlie reaches for the ladder with his bare hands and the dignity of a man who left his umbrella somewhere sensible. The thug appreciates the effort by ending it."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "!has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "id": "alley:pull-ladder-no-umbrella:15"
+    },
+    {
+      "verb": "hook",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Charlie reaches for the ladder with his bare hands and the dignity of a man who left his umbrella somewhere sensible. The thug appreciates the effort by ending it."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "!has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "second": "ladder",
+      "id": "alley:pull-ladder-no-umbrella:16"
+    },
+    {
+      "verb": "hook",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Charlie reaches for the ladder with his bare hands and the dignity of a man who left his umbrella somewhere sensible. The thug appreciates the effort by ending it."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "!has:umbrella",
+        "!flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "second": "umbrella",
+      "id": "alley:pull-ladder-no-umbrella:17"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "From down here the hook is a rumor. The dumpster would put you closer."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "!flag:onDumpster",
+        "!flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "id": "alley:pull-ladder-low"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "From down here the hook is a rumor. The dumpster would put you closer."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "!flag:onDumpster",
+        "!flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "second": "ladder",
+      "id": "alley:pull-ladder-low:1"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "From down here the hook is a rumor. The dumpster would put you closer."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "!flag:onDumpster",
+        "!flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "second": "umbrella",
+      "id": "alley:pull-ladder-low:2"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "From down here the hook is a rumor. The dumpster would put you closer."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "!flag:onDumpster",
+        "!flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "id": "alley:pull-ladder-low:3"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "From down here the hook is a rumor. The dumpster would put you closer."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "!flag:onDumpster",
+        "!flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "second": "ladder",
+      "id": "alley:pull-ladder-low:4"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "From down here the hook is a rumor. The dumpster would put you closer."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "!flag:onDumpster",
+        "!flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "second": "umbrella",
+      "id": "alley:pull-ladder-low:5"
+    },
+    {
+      "verb": "pull",
+      "effects": [
+        {
+          "do": "say",
+          "text": "From down here the hook is a rumor. The dumpster would put you closer."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "!flag:onDumpster",
+        "!flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "id": "alley:pull-ladder-low:6"
+    },
+    {
+      "verb": "pull",
+      "effects": [
+        {
+          "do": "say",
+          "text": "From down here the hook is a rumor. The dumpster would put you closer."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "!flag:onDumpster",
+        "!flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "second": "ladder",
+      "id": "alley:pull-ladder-low:7"
+    },
+    {
+      "verb": "pull",
+      "effects": [
+        {
+          "do": "say",
+          "text": "From down here the hook is a rumor. The dumpster would put you closer."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "!flag:onDumpster",
+        "!flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "second": "umbrella",
+      "id": "alley:pull-ladder-low:8"
+    },
+    {
+      "verb": "pull",
+      "effects": [
+        {
+          "do": "say",
+          "text": "From down here the hook is a rumor. The dumpster would put you closer."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "!flag:onDumpster",
+        "!flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "id": "alley:pull-ladder-low:9"
+    },
+    {
+      "verb": "pull",
+      "effects": [
+        {
+          "do": "say",
+          "text": "From down here the hook is a rumor. The dumpster would put you closer."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "!flag:onDumpster",
+        "!flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "second": "ladder",
+      "id": "alley:pull-ladder-low:10"
+    },
+    {
+      "verb": "pull",
+      "effects": [
+        {
+          "do": "say",
+          "text": "From down here the hook is a rumor. The dumpster would put you closer."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "!flag:onDumpster",
+        "!flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "second": "umbrella",
+      "id": "alley:pull-ladder-low:11"
+    },
+    {
+      "verb": "hook",
+      "effects": [
+        {
+          "do": "say",
+          "text": "From down here the hook is a rumor. The dumpster would put you closer."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "!flag:onDumpster",
+        "!flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "id": "alley:pull-ladder-low:12"
+    },
+    {
+      "verb": "hook",
+      "effects": [
+        {
+          "do": "say",
+          "text": "From down here the hook is a rumor. The dumpster would put you closer."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "!flag:onDumpster",
+        "!flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "second": "ladder",
+      "id": "alley:pull-ladder-low:13"
+    },
+    {
+      "verb": "hook",
+      "effects": [
+        {
+          "do": "say",
+          "text": "From down here the hook is a rumor. The dumpster would put you closer."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "!flag:onDumpster",
+        "!flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "second": "umbrella",
+      "id": "alley:pull-ladder-low:14"
+    },
+    {
+      "verb": "hook",
+      "effects": [
+        {
+          "do": "say",
+          "text": "From down here the hook is a rumor. The dumpster would put you closer."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "!flag:onDumpster",
+        "!flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "id": "alley:pull-ladder-low:15"
+    },
+    {
+      "verb": "hook",
+      "effects": [
+        {
+          "do": "say",
+          "text": "From down here the hook is a rumor. The dumpster would put you closer."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "!flag:onDumpster",
+        "!flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "second": "ladder",
+      "id": "alley:pull-ladder-low:16"
+    },
+    {
+      "verb": "hook",
+      "effects": [
+        {
+          "do": "say",
+          "text": "From down here the hook is a rumor. The dumpster would put you closer."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "!flag:onDumpster",
+        "!flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "second": "umbrella",
+      "id": "alley:pull-ladder-low:17"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "It's down. Climb, before the thug remembers how legs work."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "id": "alley:ladder-already"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "It's down. Climb, before the thug remembers how legs work."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "second": "ladder",
+      "id": "alley:ladder-already:1"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "It's down. Climb, before the thug remembers how legs work."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "second": "umbrella",
+      "id": "alley:ladder-already:2"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "It's down. Climb, before the thug remembers how legs work."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "id": "alley:ladder-already:3"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "It's down. Climb, before the thug remembers how legs work."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "second": "ladder",
+      "id": "alley:ladder-already:4"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "It's down. Climb, before the thug remembers how legs work."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "second": "umbrella",
+      "id": "alley:ladder-already:5"
+    },
+    {
+      "verb": "pull",
+      "effects": [
+        {
+          "do": "say",
+          "text": "It's down. Climb, before the thug remembers how legs work."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "id": "alley:ladder-already:6"
+    },
+    {
+      "verb": "pull",
+      "effects": [
+        {
+          "do": "say",
+          "text": "It's down. Climb, before the thug remembers how legs work."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "second": "ladder",
+      "id": "alley:ladder-already:7"
+    },
+    {
+      "verb": "pull",
+      "effects": [
+        {
+          "do": "say",
+          "text": "It's down. Climb, before the thug remembers how legs work."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "second": "umbrella",
+      "id": "alley:ladder-already:8"
+    },
+    {
+      "verb": "pull",
+      "effects": [
+        {
+          "do": "say",
+          "text": "It's down. Climb, before the thug remembers how legs work."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "id": "alley:ladder-already:9"
+    },
+    {
+      "verb": "pull",
+      "effects": [
+        {
+          "do": "say",
+          "text": "It's down. Climb, before the thug remembers how legs work."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "second": "ladder",
+      "id": "alley:ladder-already:10"
+    },
+    {
+      "verb": "pull",
+      "effects": [
+        {
+          "do": "say",
+          "text": "It's down. Climb, before the thug remembers how legs work."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "second": "umbrella",
+      "id": "alley:ladder-already:11"
+    },
+    {
+      "verb": "hook",
+      "effects": [
+        {
+          "do": "say",
+          "text": "It's down. Climb, before the thug remembers how legs work."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "id": "alley:ladder-already:12"
+    },
+    {
+      "verb": "hook",
+      "effects": [
+        {
+          "do": "say",
+          "text": "It's down. Climb, before the thug remembers how legs work."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "second": "ladder",
+      "id": "alley:ladder-already:13"
+    },
+    {
+      "verb": "hook",
+      "effects": [
+        {
+          "do": "say",
+          "text": "It's down. Climb, before the thug remembers how legs work."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "second": "umbrella",
+      "id": "alley:ladder-already:14"
+    },
+    {
+      "verb": "hook",
+      "effects": [
+        {
+          "do": "say",
+          "text": "It's down. Climb, before the thug remembers how legs work."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "id": "alley:ladder-already:15"
+    },
+    {
+      "verb": "hook",
+      "effects": [
+        {
+          "do": "say",
+          "text": "It's down. Climb, before the thug remembers how legs work."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "second": "ladder",
+      "id": "alley:ladder-already:16"
+    },
+    {
+      "verb": "hook",
+      "effects": [
+        {
+          "do": "say",
+          "text": "It's down. Climb, before the thug remembers how legs work."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:ladderDown"
+      ],
+      "noun": "umbrella",
+      "second": "umbrella",
+      "id": "alley:ladder-already:17"
+    },
+    {
+      "verb": "jump",
+      "effects": [
+        {
+          "do": "score",
+          "id": "reach-roof",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "Charlie grabs the wet rung and climbs like the rent is due."
+        },
+        {
+          "do": "goto",
+          "room": "rooftop",
+          "spawn": "fromLadder"
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "anySecond": true,
+      "id": "alley:climb-roof"
+    },
+    {
+      "verb": "jump",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The ladder's still pulled up. Something with a hook, from the dumpster."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "flag:onDumpster",
+        "!flag:ladderDown"
+      ],
+      "noun": "ladder",
+      "anySecond": true,
+      "id": "alley:climb-ladder-early"
+    },
+    {
+      "verb": "jump",
+      "effects": [
+        {
+          "do": "say",
+          "text": "You can't reach the rungs from the ground. The dumpster is the step."
+        }
+      ],
+      "req": [
+        "flag:alleyChase",
+        "!flag:onDumpster"
+      ],
+      "noun": "ladder",
+      "anySecond": true,
+      "id": "alley:climb-ladder-ground"
+    },
+    {
+      "verb": "jump",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Be specific. The dumpster, then the ladder."
+        }
+      ],
+      "req": [
+        "flag:alleyChase"
+      ],
+      "anySecond": true,
+      "id": "alley:jump-chase"
+    },
+    {
+      "verb": "jump",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Be specific. The dumpster, then the ladder."
+        }
+      ],
+      "req": [
+        "flag:alleyChase"
+      ],
+      "noun": "ladder",
+      "anySecond": true,
+      "id": "alley:jump-chase:1"
+    },
+    {
+      "verb": "attack",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Tank's fist and Charlie's face hold a brief conference. The face loses. Your last clear thought is that cologne would have been a better opening line."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [],
+      "noun": "bouncer",
+      "anySecond": true,
+      "id": "alley:fight-tank"
+    },
+    {
+      "verb": "attack",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Tank's fist and Charlie's face hold a brief conference. The face loses. Your last clear thought is that cologne would have been a better opening line."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [],
+      "noun": "tank",
+      "anySecond": true,
+      "id": "alley:fight-tank:1"
+    },
+    {
+      "verb": "attack",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Tank's fist and Charlie's face hold a brief conference. The face loses. Your last clear thought is that cologne would have been a better opening line."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [],
+      "anySecond": true,
+      "id": "alley:fight-tank:2"
+    },
+    {
+      "verb": "insult",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Tank's fist and Charlie's face hold a brief conference. The face loses. Your last clear thought is that cologne would have been a better opening line."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [],
+      "noun": "bouncer",
+      "anySecond": true,
+      "id": "alley:fight-tank:3"
+    },
+    {
+      "verb": "insult",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Tank's fist and Charlie's face hold a brief conference. The face loses. Your last clear thought is that cologne would have been a better opening line."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [],
+      "noun": "tank",
+      "anySecond": true,
+      "id": "alley:fight-tank:4"
+    },
+    {
+      "verb": "insult",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Tank's fist and Charlie's face hold a brief conference. The face loses. Your last clear thought is that cologne would have been a better opening line."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [],
+      "anySecond": true,
+      "id": "alley:fight-tank:5"
+    },
+    {
+      "verb": "jump",
+      "effects": [
+        {
+          "do": "clear",
+          "flag": "onDumpster"
+        },
+        {
+          "do": "say",
+          "text": "You climb down. The lid booms one more time, out of spite."
+        }
+      ],
+      "req": [
+        "flag:onDumpster"
+      ],
+      "noun": "down",
+      "anySecond": true,
+      "id": "alley:climb-down"
+    },
+    {
+      "verb": "jump",
+      "effects": [
+        {
+          "do": "clear",
+          "flag": "onDumpster"
+        },
+        {
+          "do": "say",
+          "text": "You climb down. The lid booms one more time, out of spite."
+        }
+      ],
+      "req": [
+        "flag:onDumpster"
+      ],
+      "noun": "off",
+      "anySecond": true,
+      "id": "alley:climb-down:1"
+    },
+    {
+      "verb": "jump",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "onDumpster"
+        },
+        {
+          "do": "say",
+          "text": "You climb onto the dumpster. The lid booms. The fire escape is right there, and still no use. You can't go further yet. The umbrella's hook might catch that rung, later, when it counts."
+        }
+      ],
+      "req": [
+        "has:umbrella",
+        "!flag:alleyChase"
+      ],
+      "noun": "trash",
+      "anySecond": true,
+      "id": "alley:climb-dumpster-umbrella"
+    },
+    {
+      "verb": "jump",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "onDumpster"
+        },
+        {
+          "do": "say",
+          "text": "You climb onto the dumpster. The lid booms. The fire escape is right there, and still no use. You can't go further yet."
+        }
+      ],
+      "req": [],
+      "noun": "trash",
+      "anySecond": true,
+      "id": "alley:climb-dumpster"
+    },
+    {
+      "verb": "jump",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The ladder is pulled up for a reason. Charlie jumps anyway. Gravity, an old New York regular, catches the tab."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [],
+      "noun": "ladder",
+      "anySecond": true,
+      "id": "alley:jump-ladder"
+    },
+    {
+      "verb": "jump",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The ladder is pulled up for a reason. Charlie jumps anyway. Gravity, an old New York regular, catches the tab."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [],
+      "anySecond": true,
+      "id": "alley:jump-ladder:1"
+    },
+    {
+      "verb": "shout",
+      "effects": [
+        {
+          "do": "say",
+          "text": "You shout Dana's name into the purple neon. The door opens on a pair of shoulders that do not belong to a friend. Charlie's curiosity is survived by his suit."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [
+        "flag:seenCutscene"
+      ],
+      "anySecond": true,
+      "id": "alley:shout-after"
+    },
+    {
+      "verb": "shout",
+      "effects": [
+        {
+          "do": "say",
+          "text": "You shout Dana's name into the purple neon. The door opens on a pair of shoulders that do not belong to a friend. Charlie's curiosity is survived by his suit."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [
+        "flag:seenCutscene"
+      ],
+      "noun": "woman",
+      "anySecond": true,
+      "id": "alley:shout-after:1"
+    },
+    {
+      "verb": "shout",
+      "effects": [
+        {
+          "do": "say",
+          "text": "You shout Dana's name into the purple neon. The door opens on a pair of shoulders that do not belong to a friend. Charlie's curiosity is survived by his suit."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [
+        "flag:seenCutscene"
+      ],
+      "noun": "bouncer",
+      "anySecond": true,
+      "id": "alley:shout-after:2"
+    },
+    {
+      "verb": "shout",
+      "effects": [
+        {
+          "do": "say",
+          "text": "You shout Dana's name into the purple neon. The door opens on a pair of shoulders that do not belong to a friend. Charlie's curiosity is survived by his suit."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [
+        "flag:seenCutscene"
+      ],
+      "noun": "door",
+      "anySecond": true,
+      "id": "alley:shout-after:3"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderHooked"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches a rung. The ladder rattles down an inch. You shove it back up before anyone looks. Later. When people are chasing you."
+        }
+      ],
+      "req": [
+        "has:umbrella",
+        "!flag:alleyChase"
+      ],
+      "noun": "umbrella",
+      "id": "alley:hook-ladder"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderHooked"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches a rung. The ladder rattles down an inch. You shove it back up before anyone looks. Later. When people are chasing you."
+        }
+      ],
+      "req": [
+        "has:umbrella",
+        "!flag:alleyChase"
+      ],
+      "noun": "umbrella",
+      "second": "ladder",
+      "id": "alley:hook-ladder:1"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderHooked"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches a rung. The ladder rattles down an inch. You shove it back up before anyone looks. Later. When people are chasing you."
+        }
+      ],
+      "req": [
+        "has:umbrella",
+        "!flag:alleyChase"
+      ],
+      "noun": "umbrella",
+      "second": "umbrella",
+      "id": "alley:hook-ladder:2"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderHooked"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches a rung. The ladder rattles down an inch. You shove it back up before anyone looks. Later. When people are chasing you."
+        }
+      ],
+      "req": [
+        "has:umbrella",
+        "!flag:alleyChase"
+      ],
+      "noun": "ladder",
+      "id": "alley:hook-ladder:3"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderHooked"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches a rung. The ladder rattles down an inch. You shove it back up before anyone looks. Later. When people are chasing you."
+        }
+      ],
+      "req": [
+        "has:umbrella",
+        "!flag:alleyChase"
+      ],
+      "noun": "ladder",
+      "second": "ladder",
+      "id": "alley:hook-ladder:4"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderHooked"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches a rung. The ladder rattles down an inch. You shove it back up before anyone looks. Later. When people are chasing you."
+        }
+      ],
+      "req": [
+        "has:umbrella",
+        "!flag:alleyChase"
+      ],
+      "noun": "ladder",
+      "second": "umbrella",
+      "id": "alley:hook-ladder:5"
+    },
+    {
+      "verb": "pull",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderHooked"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches a rung. The ladder rattles down an inch. You shove it back up before anyone looks. Later. When people are chasing you."
+        }
+      ],
+      "req": [
+        "has:umbrella",
+        "!flag:alleyChase"
+      ],
+      "noun": "umbrella",
+      "id": "alley:hook-ladder:6"
+    },
+    {
+      "verb": "pull",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderHooked"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches a rung. The ladder rattles down an inch. You shove it back up before anyone looks. Later. When people are chasing you."
+        }
+      ],
+      "req": [
+        "has:umbrella",
+        "!flag:alleyChase"
+      ],
+      "noun": "umbrella",
+      "second": "ladder",
+      "id": "alley:hook-ladder:7"
+    },
+    {
+      "verb": "pull",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderHooked"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches a rung. The ladder rattles down an inch. You shove it back up before anyone looks. Later. When people are chasing you."
+        }
+      ],
+      "req": [
+        "has:umbrella",
+        "!flag:alleyChase"
+      ],
+      "noun": "umbrella",
+      "second": "umbrella",
+      "id": "alley:hook-ladder:8"
+    },
+    {
+      "verb": "pull",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderHooked"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches a rung. The ladder rattles down an inch. You shove it back up before anyone looks. Later. When people are chasing you."
+        }
+      ],
+      "req": [
+        "has:umbrella",
+        "!flag:alleyChase"
+      ],
+      "noun": "ladder",
+      "id": "alley:hook-ladder:9"
+    },
+    {
+      "verb": "pull",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderHooked"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches a rung. The ladder rattles down an inch. You shove it back up before anyone looks. Later. When people are chasing you."
+        }
+      ],
+      "req": [
+        "has:umbrella",
+        "!flag:alleyChase"
+      ],
+      "noun": "ladder",
+      "second": "ladder",
+      "id": "alley:hook-ladder:10"
+    },
+    {
+      "verb": "pull",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderHooked"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches a rung. The ladder rattles down an inch. You shove it back up before anyone looks. Later. When people are chasing you."
+        }
+      ],
+      "req": [
+        "has:umbrella",
+        "!flag:alleyChase"
+      ],
+      "noun": "ladder",
+      "second": "umbrella",
+      "id": "alley:hook-ladder:11"
+    },
+    {
+      "verb": "hook",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderHooked"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches a rung. The ladder rattles down an inch. You shove it back up before anyone looks. Later. When people are chasing you."
+        }
+      ],
+      "req": [
+        "has:umbrella",
+        "!flag:alleyChase"
+      ],
+      "noun": "umbrella",
+      "id": "alley:hook-ladder:12"
+    },
+    {
+      "verb": "hook",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderHooked"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches a rung. The ladder rattles down an inch. You shove it back up before anyone looks. Later. When people are chasing you."
+        }
+      ],
+      "req": [
+        "has:umbrella",
+        "!flag:alleyChase"
+      ],
+      "noun": "umbrella",
+      "second": "ladder",
+      "id": "alley:hook-ladder:13"
+    },
+    {
+      "verb": "hook",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderHooked"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches a rung. The ladder rattles down an inch. You shove it back up before anyone looks. Later. When people are chasing you."
+        }
+      ],
+      "req": [
+        "has:umbrella",
+        "!flag:alleyChase"
+      ],
+      "noun": "umbrella",
+      "second": "umbrella",
+      "id": "alley:hook-ladder:14"
+    },
+    {
+      "verb": "hook",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderHooked"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches a rung. The ladder rattles down an inch. You shove it back up before anyone looks. Later. When people are chasing you."
+        }
+      ],
+      "req": [
+        "has:umbrella",
+        "!flag:alleyChase"
+      ],
+      "noun": "ladder",
+      "id": "alley:hook-ladder:15"
+    },
+    {
+      "verb": "hook",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderHooked"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches a rung. The ladder rattles down an inch. You shove it back up before anyone looks. Later. When people are chasing you."
+        }
+      ],
+      "req": [
+        "has:umbrella",
+        "!flag:alleyChase"
+      ],
+      "noun": "ladder",
+      "second": "ladder",
+      "id": "alley:hook-ladder:16"
+    },
+    {
+      "verb": "hook",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "ladderHooked"
+        },
+        {
+          "do": "say",
+          "text": "The hooked handle catches a rung. The ladder rattles down an inch. You shove it back up before anyone looks. Later. When people are chasing you."
+        }
+      ],
+      "req": [
+        "has:umbrella",
+        "!flag:alleyChase"
+      ],
+      "noun": "ladder",
+      "second": "umbrella",
+      "id": "alley:hook-ladder:17"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "score",
+          "id": "enter-club",
+          "points": 5
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Tank snorts, almost politely. \"Midnight Stallion. And Vic's matchbook. Don't make me regret the door.\""
+        },
+        {
+          "do": "goto",
+          "room": "club",
+          "spawn": "fromAlley"
+        }
+      ],
+      "req": [
+        "flag:seenCutscene",
+        "flag:wearingCologne",
+        "flag:shownMatchbook"
+      ],
+      "noun": "bouncer",
+      "anySecond": true,
+      "id": "alley:enter-matchbook"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "score",
+          "id": "enter-club",
+          "points": 5
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Tank snorts, almost politely. \"Midnight Stallion. And Vic's matchbook. Don't make me regret the door.\""
+        },
+        {
+          "do": "goto",
+          "room": "club",
+          "spawn": "fromAlley"
+        }
+      ],
+      "req": [
+        "flag:seenCutscene",
+        "flag:wearingCologne",
+        "flag:shownMatchbook"
+      ],
+      "noun": "club",
+      "anySecond": true,
+      "id": "alley:enter-matchbook:1"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "score",
+          "id": "enter-club",
+          "points": 5
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Tank snorts, almost politely. \"Midnight Stallion. And Vic's matchbook. Don't make me regret the door.\""
+        },
+        {
+          "do": "goto",
+          "room": "club",
+          "spawn": "fromAlley"
+        }
+      ],
+      "req": [
+        "flag:seenCutscene",
+        "flag:wearingCologne",
+        "flag:shownMatchbook"
+      ],
+      "noun": "door",
+      "anySecond": true,
+      "id": "alley:enter-matchbook:2"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "score",
+          "id": "enter-club",
+          "points": 5
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Tank snorts, almost politely. \"Midnight Stallion. And Vic's matchbook. Don't make me regret the door.\""
+        },
+        {
+          "do": "goto",
+          "room": "club",
+          "spawn": "fromAlley"
+        }
+      ],
+      "req": [
+        "flag:seenCutscene",
+        "flag:wearingCologne",
+        "flag:shownMatchbook"
+      ],
+      "noun": "bouncer",
+      "anySecond": true,
+      "id": "alley:enter-matchbook:3"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "score",
+          "id": "enter-club",
+          "points": 5
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Tank snorts, almost politely. \"Midnight Stallion. And Vic's matchbook. Don't make me regret the door.\""
+        },
+        {
+          "do": "goto",
+          "room": "club",
+          "spawn": "fromAlley"
+        }
+      ],
+      "req": [
+        "flag:seenCutscene",
+        "flag:wearingCologne",
+        "flag:shownMatchbook"
+      ],
+      "noun": "club",
+      "anySecond": true,
+      "id": "alley:enter-matchbook:4"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "score",
+          "id": "enter-club",
+          "points": 5
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Tank snorts, almost politely. \"Midnight Stallion. And Vic's matchbook. Don't make me regret the door.\""
+        },
+        {
+          "do": "goto",
+          "room": "club",
+          "spawn": "fromAlley"
+        }
+      ],
+      "req": [
+        "flag:seenCutscene",
+        "flag:wearingCologne",
+        "flag:shownMatchbook"
+      ],
+      "noun": "door",
+      "anySecond": true,
+      "id": "alley:enter-matchbook:5"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "score",
+          "id": "enter-club",
+          "points": 5
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Tank's nose does the math. \"...Midnight Stallion? Respect. Go on in.\""
+        },
+        {
+          "do": "goto",
+          "room": "club",
+          "spawn": "fromAlley"
+        }
+      ],
+      "req": [
+        "flag:seenCutscene",
+        "flag:wearingCologne"
+      ],
+      "noun": "bouncer",
+      "anySecond": true,
+      "id": "alley:enter-plain"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "score",
+          "id": "enter-club",
+          "points": 5
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Tank's nose does the math. \"...Midnight Stallion? Respect. Go on in.\""
+        },
+        {
+          "do": "goto",
+          "room": "club",
+          "spawn": "fromAlley"
+        }
+      ],
+      "req": [
+        "flag:seenCutscene",
+        "flag:wearingCologne"
+      ],
+      "noun": "club",
+      "anySecond": true,
+      "id": "alley:enter-plain:1"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "score",
+          "id": "enter-club",
+          "points": 5
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Tank's nose does the math. \"...Midnight Stallion? Respect. Go on in.\""
+        },
+        {
+          "do": "goto",
+          "room": "club",
+          "spawn": "fromAlley"
+        }
+      ],
+      "req": [
+        "flag:seenCutscene",
+        "flag:wearingCologne"
+      ],
+      "noun": "door",
+      "anySecond": true,
+      "id": "alley:enter-plain:2"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "score",
+          "id": "enter-club",
+          "points": 5
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Tank's nose does the math. \"...Midnight Stallion? Respect. Go on in.\""
+        },
+        {
+          "do": "goto",
+          "room": "club",
+          "spawn": "fromAlley"
+        }
+      ],
+      "req": [
+        "flag:seenCutscene",
+        "flag:wearingCologne"
+      ],
+      "noun": "bouncer",
+      "anySecond": true,
+      "id": "alley:enter-plain:3"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "score",
+          "id": "enter-club",
+          "points": 5
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Tank's nose does the math. \"...Midnight Stallion? Respect. Go on in.\""
+        },
+        {
+          "do": "goto",
+          "room": "club",
+          "spawn": "fromAlley"
+        }
+      ],
+      "req": [
+        "flag:seenCutscene",
+        "flag:wearingCologne"
+      ],
+      "noun": "club",
+      "anySecond": true,
+      "id": "alley:enter-plain:4"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "score",
+          "id": "enter-club",
+          "points": 5
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Tank's nose does the math. \"...Midnight Stallion? Respect. Go on in.\""
+        },
+        {
+          "do": "goto",
+          "room": "club",
+          "spawn": "fromAlley"
+        }
+      ],
+      "req": [
+        "flag:seenCutscene",
+        "flag:wearingCologne"
+      ],
+      "noun": "door",
+      "anySecond": true,
+      "id": "alley:enter-plain:5"
+    },
+    {
+      "verb": "show",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownMatchbook"
+        },
+        {
+          "do": "score",
+          "id": "show-matchbook",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "Tank glances at the matchbook. The frown loosens by a millimetre. \"Vic, huh.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:seenCutscene",
+        "!flag:shownMatchbook"
+      ],
+      "noun": "matchbook",
+      "id": "alley:show-matchbook"
+    },
+    {
+      "verb": "show",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownMatchbook"
+        },
+        {
+          "do": "score",
+          "id": "show-matchbook",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "Tank glances at the matchbook. The frown loosens by a millimetre. \"Vic, huh.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:seenCutscene",
+        "!flag:shownMatchbook"
+      ],
+      "noun": "matchbook",
+      "second": "bouncer",
+      "id": "alley:show-matchbook:1"
+    },
+    {
+      "verb": "show",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownMatchbook"
+        },
+        {
+          "do": "score",
+          "id": "show-matchbook",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "Tank glances at the matchbook. The frown loosens by a millimetre. \"Vic, huh.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:seenCutscene",
+        "!flag:shownMatchbook"
+      ],
+      "noun": "matchbook",
+      "second": "guard",
+      "id": "alley:show-matchbook:2"
+    },
+    {
+      "verb": "show",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownMatchbook"
+        },
+        {
+          "do": "score",
+          "id": "show-matchbook",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "Tank glances at the matchbook. The frown loosens by a millimetre. \"Vic, huh.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:seenCutscene",
+        "!flag:shownMatchbook"
+      ],
+      "noun": "matchbook",
+      "second": "matchbook",
+      "id": "alley:show-matchbook:3"
+    },
+    {
+      "verb": "show",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownMatchbook"
+        },
+        {
+          "do": "score",
+          "id": "show-matchbook",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "Tank glances at the matchbook. The frown loosens by a millimetre. \"Vic, huh.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:seenCutscene",
+        "!flag:shownMatchbook"
+      ],
+      "noun": "bouncer",
+      "id": "alley:show-matchbook:4"
+    },
+    {
+      "verb": "show",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownMatchbook"
+        },
+        {
+          "do": "score",
+          "id": "show-matchbook",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "Tank glances at the matchbook. The frown loosens by a millimetre. \"Vic, huh.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:seenCutscene",
+        "!flag:shownMatchbook"
+      ],
+      "noun": "bouncer",
+      "second": "bouncer",
+      "id": "alley:show-matchbook:5"
+    },
+    {
+      "verb": "show",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownMatchbook"
+        },
+        {
+          "do": "score",
+          "id": "show-matchbook",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "Tank glances at the matchbook. The frown loosens by a millimetre. \"Vic, huh.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:seenCutscene",
+        "!flag:shownMatchbook"
+      ],
+      "noun": "bouncer",
+      "second": "guard",
+      "id": "alley:show-matchbook:6"
+    },
+    {
+      "verb": "show",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownMatchbook"
+        },
+        {
+          "do": "score",
+          "id": "show-matchbook",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "Tank glances at the matchbook. The frown loosens by a millimetre. \"Vic, huh.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:seenCutscene",
+        "!flag:shownMatchbook"
+      ],
+      "noun": "bouncer",
+      "second": "matchbook",
+      "id": "alley:show-matchbook:7"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownMatchbook"
+        },
+        {
+          "do": "score",
+          "id": "show-matchbook",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "Tank glances at the matchbook. The frown loosens by a millimetre. \"Vic, huh.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:seenCutscene",
+        "!flag:shownMatchbook"
+      ],
+      "noun": "matchbook",
+      "id": "alley:show-matchbook:8"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownMatchbook"
+        },
+        {
+          "do": "score",
+          "id": "show-matchbook",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "Tank glances at the matchbook. The frown loosens by a millimetre. \"Vic, huh.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:seenCutscene",
+        "!flag:shownMatchbook"
+      ],
+      "noun": "matchbook",
+      "second": "bouncer",
+      "id": "alley:show-matchbook:9"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownMatchbook"
+        },
+        {
+          "do": "score",
+          "id": "show-matchbook",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "Tank glances at the matchbook. The frown loosens by a millimetre. \"Vic, huh.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:seenCutscene",
+        "!flag:shownMatchbook"
+      ],
+      "noun": "matchbook",
+      "second": "guard",
+      "id": "alley:show-matchbook:10"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownMatchbook"
+        },
+        {
+          "do": "score",
+          "id": "show-matchbook",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "Tank glances at the matchbook. The frown loosens by a millimetre. \"Vic, huh.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:seenCutscene",
+        "!flag:shownMatchbook"
+      ],
+      "noun": "matchbook",
+      "second": "matchbook",
+      "id": "alley:show-matchbook:11"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownMatchbook"
+        },
+        {
+          "do": "score",
+          "id": "show-matchbook",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "Tank glances at the matchbook. The frown loosens by a millimetre. \"Vic, huh.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:seenCutscene",
+        "!flag:shownMatchbook"
+      ],
+      "noun": "bouncer",
+      "id": "alley:show-matchbook:12"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownMatchbook"
+        },
+        {
+          "do": "score",
+          "id": "show-matchbook",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "Tank glances at the matchbook. The frown loosens by a millimetre. \"Vic, huh.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:seenCutscene",
+        "!flag:shownMatchbook"
+      ],
+      "noun": "bouncer",
+      "second": "bouncer",
+      "id": "alley:show-matchbook:13"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownMatchbook"
+        },
+        {
+          "do": "score",
+          "id": "show-matchbook",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "Tank glances at the matchbook. The frown loosens by a millimetre. \"Vic, huh.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:seenCutscene",
+        "!flag:shownMatchbook"
+      ],
+      "noun": "bouncer",
+      "second": "guard",
+      "id": "alley:show-matchbook:14"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownMatchbook"
+        },
+        {
+          "do": "score",
+          "id": "show-matchbook",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "Tank glances at the matchbook. The frown loosens by a millimetre. \"Vic, huh.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:seenCutscene",
+        "!flag:shownMatchbook"
+      ],
+      "noun": "bouncer",
+      "second": "matchbook",
+      "id": "alley:show-matchbook:15"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownMatchbook"
+        },
+        {
+          "do": "score",
+          "id": "show-matchbook",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "Tank glances at the matchbook. The frown loosens by a millimetre. \"Vic, huh.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:seenCutscene",
+        "!flag:shownMatchbook"
+      ],
+      "noun": "matchbook",
+      "id": "alley:show-matchbook:16"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownMatchbook"
+        },
+        {
+          "do": "score",
+          "id": "show-matchbook",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "Tank glances at the matchbook. The frown loosens by a millimetre. \"Vic, huh.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:seenCutscene",
+        "!flag:shownMatchbook"
+      ],
+      "noun": "matchbook",
+      "second": "bouncer",
+      "id": "alley:show-matchbook:17"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownMatchbook"
+        },
+        {
+          "do": "score",
+          "id": "show-matchbook",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "Tank glances at the matchbook. The frown loosens by a millimetre. \"Vic, huh.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:seenCutscene",
+        "!flag:shownMatchbook"
+      ],
+      "noun": "matchbook",
+      "second": "guard",
+      "id": "alley:show-matchbook:18"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownMatchbook"
+        },
+        {
+          "do": "score",
+          "id": "show-matchbook",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "Tank glances at the matchbook. The frown loosens by a millimetre. \"Vic, huh.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:seenCutscene",
+        "!flag:shownMatchbook"
+      ],
+      "noun": "matchbook",
+      "second": "matchbook",
+      "id": "alley:show-matchbook:19"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownMatchbook"
+        },
+        {
+          "do": "score",
+          "id": "show-matchbook",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "Tank glances at the matchbook. The frown loosens by a millimetre. \"Vic, huh.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:seenCutscene",
+        "!flag:shownMatchbook"
+      ],
+      "noun": "bouncer",
+      "id": "alley:show-matchbook:20"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownMatchbook"
+        },
+        {
+          "do": "score",
+          "id": "show-matchbook",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "Tank glances at the matchbook. The frown loosens by a millimetre. \"Vic, huh.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:seenCutscene",
+        "!flag:shownMatchbook"
+      ],
+      "noun": "bouncer",
+      "second": "bouncer",
+      "id": "alley:show-matchbook:21"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownMatchbook"
+        },
+        {
+          "do": "score",
+          "id": "show-matchbook",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "Tank glances at the matchbook. The frown loosens by a millimetre. \"Vic, huh.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:seenCutscene",
+        "!flag:shownMatchbook"
+      ],
+      "noun": "bouncer",
+      "second": "guard",
+      "id": "alley:show-matchbook:22"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownMatchbook"
+        },
+        {
+          "do": "score",
+          "id": "show-matchbook",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "Tank glances at the matchbook. The frown loosens by a millimetre. \"Vic, huh.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:seenCutscene",
+        "!flag:shownMatchbook"
+      ],
+      "noun": "bouncer",
+      "second": "matchbook",
+      "id": "alley:show-matchbook:23"
+    },
+    {
+      "verb": "show",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Tank has already read the cover. \"Vic. I remember. Don't wave it like a flag.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:shownMatchbook"
+      ],
+      "noun": "matchbook",
+      "id": "alley:show-matchbook-again"
+    },
+    {
+      "verb": "show",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Tank has already read the cover. \"Vic. I remember. Don't wave it like a flag.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:shownMatchbook"
+      ],
+      "noun": "matchbook",
+      "second": "bouncer",
+      "id": "alley:show-matchbook-again:1"
+    },
+    {
+      "verb": "show",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Tank has already read the cover. \"Vic. I remember. Don't wave it like a flag.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:shownMatchbook"
+      ],
+      "noun": "matchbook",
+      "second": "guard",
+      "id": "alley:show-matchbook-again:2"
+    },
+    {
+      "verb": "show",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Tank has already read the cover. \"Vic. I remember. Don't wave it like a flag.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:shownMatchbook"
+      ],
+      "noun": "matchbook",
+      "second": "matchbook",
+      "id": "alley:show-matchbook-again:3"
+    },
+    {
+      "verb": "show",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Tank has already read the cover. \"Vic. I remember. Don't wave it like a flag.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:shownMatchbook"
+      ],
+      "noun": "bouncer",
+      "id": "alley:show-matchbook-again:4"
+    },
+    {
+      "verb": "show",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Tank has already read the cover. \"Vic. I remember. Don't wave it like a flag.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:shownMatchbook"
+      ],
+      "noun": "bouncer",
+      "second": "bouncer",
+      "id": "alley:show-matchbook-again:5"
+    },
+    {
+      "verb": "show",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Tank has already read the cover. \"Vic. I remember. Don't wave it like a flag.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:shownMatchbook"
+      ],
+      "noun": "bouncer",
+      "second": "guard",
+      "id": "alley:show-matchbook-again:6"
+    },
+    {
+      "verb": "show",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Tank has already read the cover. \"Vic. I remember. Don't wave it like a flag.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:shownMatchbook"
+      ],
+      "noun": "bouncer",
+      "second": "matchbook",
+      "id": "alley:show-matchbook-again:7"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Tank has already read the cover. \"Vic. I remember. Don't wave it like a flag.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:shownMatchbook"
+      ],
+      "noun": "matchbook",
+      "id": "alley:show-matchbook-again:8"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Tank has already read the cover. \"Vic. I remember. Don't wave it like a flag.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:shownMatchbook"
+      ],
+      "noun": "matchbook",
+      "second": "bouncer",
+      "id": "alley:show-matchbook-again:9"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Tank has already read the cover. \"Vic. I remember. Don't wave it like a flag.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:shownMatchbook"
+      ],
+      "noun": "matchbook",
+      "second": "guard",
+      "id": "alley:show-matchbook-again:10"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Tank has already read the cover. \"Vic. I remember. Don't wave it like a flag.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:shownMatchbook"
+      ],
+      "noun": "matchbook",
+      "second": "matchbook",
+      "id": "alley:show-matchbook-again:11"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Tank has already read the cover. \"Vic. I remember. Don't wave it like a flag.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:shownMatchbook"
+      ],
+      "noun": "bouncer",
+      "id": "alley:show-matchbook-again:12"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Tank has already read the cover. \"Vic. I remember. Don't wave it like a flag.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:shownMatchbook"
+      ],
+      "noun": "bouncer",
+      "second": "bouncer",
+      "id": "alley:show-matchbook-again:13"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Tank has already read the cover. \"Vic. I remember. Don't wave it like a flag.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:shownMatchbook"
+      ],
+      "noun": "bouncer",
+      "second": "guard",
+      "id": "alley:show-matchbook-again:14"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Tank has already read the cover. \"Vic. I remember. Don't wave it like a flag.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:shownMatchbook"
+      ],
+      "noun": "bouncer",
+      "second": "matchbook",
+      "id": "alley:show-matchbook-again:15"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Tank has already read the cover. \"Vic. I remember. Don't wave it like a flag.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:shownMatchbook"
+      ],
+      "noun": "matchbook",
+      "id": "alley:show-matchbook-again:16"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Tank has already read the cover. \"Vic. I remember. Don't wave it like a flag.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:shownMatchbook"
+      ],
+      "noun": "matchbook",
+      "second": "bouncer",
+      "id": "alley:show-matchbook-again:17"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Tank has already read the cover. \"Vic. I remember. Don't wave it like a flag.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:shownMatchbook"
+      ],
+      "noun": "matchbook",
+      "second": "guard",
+      "id": "alley:show-matchbook-again:18"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Tank has already read the cover. \"Vic. I remember. Don't wave it like a flag.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:shownMatchbook"
+      ],
+      "noun": "matchbook",
+      "second": "matchbook",
+      "id": "alley:show-matchbook-again:19"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Tank has already read the cover. \"Vic. I remember. Don't wave it like a flag.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:shownMatchbook"
+      ],
+      "noun": "bouncer",
+      "id": "alley:show-matchbook-again:20"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Tank has already read the cover. \"Vic. I remember. Don't wave it like a flag.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:shownMatchbook"
+      ],
+      "noun": "bouncer",
+      "second": "bouncer",
+      "id": "alley:show-matchbook-again:21"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Tank has already read the cover. \"Vic. I remember. Don't wave it like a flag.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:shownMatchbook"
+      ],
+      "noun": "bouncer",
+      "second": "guard",
+      "id": "alley:show-matchbook-again:22"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Tank has already read the cover. \"Vic. I remember. Don't wave it like a flag.\""
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "flag:shownMatchbook"
+      ],
+      "noun": "bouncer",
+      "second": "matchbook",
+      "id": "alley:show-matchbook-again:23"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "tankStop"
+        },
+        {
+          "do": "say",
+          "text": "Whoa. Whoa. You smell like a subway platform in July. Walk away."
+        }
+      ],
+      "req": [
+        "flag:seenCutscene",
+        "!flag:wearingCologne"
+      ],
+      "noun": "bouncer",
+      "anySecond": true,
+      "id": "alley:bouncer-sweaty"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "tankStop"
+        },
+        {
+          "do": "say",
+          "text": "Whoa. Whoa. You smell like a subway platform in July. Walk away."
+        }
+      ],
+      "req": [
+        "flag:seenCutscene",
+        "!flag:wearingCologne"
+      ],
+      "noun": "club",
+      "anySecond": true,
+      "id": "alley:bouncer-sweaty:1"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "tankStop"
+        },
+        {
+          "do": "say",
+          "text": "Whoa. Whoa. You smell like a subway platform in July. Walk away."
+        }
+      ],
+      "req": [
+        "flag:seenCutscene",
+        "!flag:wearingCologne"
+      ],
+      "noun": "door",
+      "anySecond": true,
+      "id": "alley:bouncer-sweaty:2"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "tankStop"
+        },
+        {
+          "do": "say",
+          "text": "Whoa. Whoa. You smell like a subway platform in July. Walk away."
+        }
+      ],
+      "req": [
+        "flag:seenCutscene",
+        "!flag:wearingCologne"
+      ],
+      "noun": "bouncer",
+      "anySecond": true,
+      "id": "alley:bouncer-sweaty:3"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "tankStop"
+        },
+        {
+          "do": "say",
+          "text": "Whoa. Whoa. You smell like a subway platform in July. Walk away."
+        }
+      ],
+      "req": [
+        "flag:seenCutscene",
+        "!flag:wearingCologne"
+      ],
+      "noun": "club",
+      "anySecond": true,
+      "id": "alley:bouncer-sweaty:4"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "tankStop"
+        },
+        {
+          "do": "say",
+          "text": "Whoa. Whoa. You smell like a subway platform in July. Walk away."
+        }
+      ],
+      "req": [
+        "flag:seenCutscene",
+        "!flag:wearingCologne"
+      ],
+      "noun": "door",
+      "anySecond": true,
+      "id": "alley:bouncer-sweaty:5"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "tankStop"
+        },
+        {
+          "do": "say",
+          "text": "Tank folds his arms across a chest that has its own weather. \"Not yet. And not you.\""
+        }
+      ],
+      "req": [
+        "!flag:seenCutscene"
+      ],
+      "noun": "bouncer",
+      "anySecond": true,
+      "id": "alley:bouncer-early"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "tankStop"
+        },
+        {
+          "do": "say",
+          "text": "Tank folds his arms across a chest that has its own weather. \"Not yet. And not you.\""
+        }
+      ],
+      "req": [
+        "!flag:seenCutscene"
+      ],
+      "noun": "club",
+      "anySecond": true,
+      "id": "alley:bouncer-early:1"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "tankStop"
+        },
+        {
+          "do": "say",
+          "text": "Tank folds his arms across a chest that has its own weather. \"Not yet. And not you.\""
+        }
+      ],
+      "req": [
+        "!flag:seenCutscene"
+      ],
+      "noun": "door",
+      "anySecond": true,
+      "id": "alley:bouncer-early:2"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "tankStop"
+        },
+        {
+          "do": "say",
+          "text": "Tank folds his arms across a chest that has its own weather. \"Not yet. And not you.\""
+        }
+      ],
+      "req": [
+        "!flag:seenCutscene"
+      ],
+      "noun": "bouncer",
+      "anySecond": true,
+      "id": "alley:bouncer-early:3"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "tankStop"
+        },
+        {
+          "do": "say",
+          "text": "Tank folds his arms across a chest that has its own weather. \"Not yet. And not you.\""
+        }
+      ],
+      "req": [
+        "!flag:seenCutscene"
+      ],
+      "noun": "club",
+      "anySecond": true,
+      "id": "alley:bouncer-early:4"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "tankStop"
+        },
+        {
+          "do": "say",
+          "text": "Tank folds his arms across a chest that has its own weather. \"Not yet. And not you.\""
+        }
+      ],
+      "req": [
+        "!flag:seenCutscene"
+      ],
+      "noun": "door",
+      "anySecond": true,
+      "id": "alley:bouncer-early:5"
+    },
+    {
+      "verb": "show",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "tankStop"
+        },
+        {
+          "do": "say",
+          "text": "Tank folds his arms across a chest that has its own weather. \"Not yet. And not you.\""
+        }
+      ],
+      "req": [
+        "!flag:seenCutscene"
+      ],
+      "noun": "bouncer",
+      "anySecond": true,
+      "id": "alley:bouncer-early:6"
+    },
+    {
+      "verb": "show",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "tankStop"
+        },
+        {
+          "do": "say",
+          "text": "Tank folds his arms across a chest that has its own weather. \"Not yet. And not you.\""
+        }
+      ],
+      "req": [
+        "!flag:seenCutscene"
+      ],
+      "noun": "club",
+      "anySecond": true,
+      "id": "alley:bouncer-early:7"
+    },
+    {
+      "verb": "show",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "tankStop"
+        },
+        {
+          "do": "say",
+          "text": "Tank folds his arms across a chest that has its own weather. \"Not yet. And not you.\""
+        }
+      ],
+      "req": [
+        "!flag:seenCutscene"
+      ],
+      "noun": "door",
+      "anySecond": true,
+      "id": "alley:bouncer-early:8"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "say",
+          "text": "\"What woman? I don't see no woman. Do you see a woman?\""
+        }
+      ],
+      "req": [],
+      "noun": "woman",
+      "anySecond": true,
+      "id": "alley:ask-woman"
+    },
+    {
+      "verb": "get",
+      "effects": [
+        {
+          "do": "take",
+          "id": "umbrella"
+        },
+        {
+          "do": "set",
+          "flag": "umbrella"
+        },
+        {
+          "do": "score",
+          "id": "get-umbrella",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "A black umbrella with a big hooked handle. Perfect for rain, or for hooking things that are out of reach."
+        }
+      ],
+      "req": [
+        "!has:umbrella"
+      ],
+      "noun": "umbrella",
+      "anySecond": true,
+      "id": "alley:get-umbrella"
+    },
+    {
+      "verb": "get",
+      "effects": [
+        {
+          "do": "say",
+          "text": "You already have the umbrella. The rain is not impressed, but you are drier in spirit."
+        }
+      ],
+      "req": [
+        "has:umbrella"
+      ],
+      "noun": "umbrella",
+      "anySecond": true,
+      "id": "alley:get-umbrella-again"
+    },
+    {
+      "verb": "search",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Garbage. Just garbage."
+        }
+      ],
+      "req": [],
+      "noun": "trash",
+      "anySecond": true,
+      "id": "alley:search-trash"
+    },
+    {
+      "verb": "get",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Garbage. Just garbage."
+        }
+      ],
+      "req": [],
+      "noun": "trash",
+      "anySecond": true,
+      "id": "alley:search-trash:1"
+    },
+    {
+      "verb": "search",
+      "effects": [
+        {
+          "do": "take",
+          "id": "iron"
+        },
+        {
+          "do": "score",
+          "id": "get-iron",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "A '78 Buick that has been here since '78. Under the seat, a tyre iron. You take it. Doors later. The ladder is an umbrella problem."
+        }
+      ],
+      "req": [
+        "!has:iron"
+      ],
+      "noun": "car",
+      "anySecond": true,
+      "id": "alley:get-iron"
+    },
+    {
+      "verb": "search",
+      "effects": [
+        {
+          "do": "take",
+          "id": "iron"
+        },
+        {
+          "do": "score",
+          "id": "get-iron",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "A '78 Buick that has been here since '78. Under the seat, a tyre iron. You take it. Doors later. The ladder is an umbrella problem."
+        }
+      ],
+      "req": [
+        "!has:iron"
+      ],
+      "noun": "iron",
+      "anySecond": true,
+      "id": "alley:get-iron:1"
+    },
+    {
+      "verb": "get",
+      "effects": [
+        {
+          "do": "take",
+          "id": "iron"
+        },
+        {
+          "do": "score",
+          "id": "get-iron",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "A '78 Buick that has been here since '78. Under the seat, a tyre iron. You take it. Doors later. The ladder is an umbrella problem."
+        }
+      ],
+      "req": [
+        "!has:iron"
+      ],
+      "noun": "car",
+      "anySecond": true,
+      "id": "alley:get-iron:2"
+    },
+    {
+      "verb": "get",
+      "effects": [
+        {
+          "do": "take",
+          "id": "iron"
+        },
+        {
+          "do": "score",
+          "id": "get-iron",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "A '78 Buick that has been here since '78. Under the seat, a tyre iron. You take it. Doors later. The ladder is an umbrella problem."
+        }
+      ],
+      "req": [
+        "!has:iron"
+      ],
+      "noun": "iron",
+      "anySecond": true,
+      "id": "alley:get-iron:3"
+    },
+    {
+      "verb": "search",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The Buick has donated all it plans to. One tyre iron is a whole personality."
+        }
+      ],
+      "req": [
+        "has:iron"
+      ],
+      "noun": "car",
+      "anySecond": true,
+      "id": "alley:get-iron-again"
+    },
+    {
+      "verb": "search",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The Buick has donated all it plans to. One tyre iron is a whole personality."
+        }
+      ],
+      "req": [
+        "has:iron"
+      ],
+      "noun": "iron",
+      "anySecond": true,
+      "id": "alley:get-iron-again:1"
+    },
+    {
+      "verb": "get",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The Buick has donated all it plans to. One tyre iron is a whole personality."
+        }
+      ],
+      "req": [
+        "has:iron"
+      ],
+      "noun": "car",
+      "anySecond": true,
+      "id": "alley:get-iron-again:2"
+    },
+    {
+      "verb": "get",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The Buick has donated all it plans to. One tyre iron is a whole personality."
+        }
+      ],
+      "req": [
+        "has:iron"
+      ],
+      "noun": "iron",
+      "anySecond": true,
+      "id": "alley:get-iron-again:3"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The matchbook is in your pocket, damp and useful. THE PURPLE RHINO — ASK FOR VIC. The puddle kept the ink mostly honest."
+        }
+      ],
+      "req": [
+        "has:matchbook"
+      ],
+      "noun": "matchbook",
+      "anySecond": true,
+      "id": "alley:look-matchbook-have"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The puddle is just rain now. The matchbook is in your pocket."
+        }
+      ],
+      "req": [
+        "has:matchbook"
+      ],
+      "noun": "puddle",
+      "anySecond": true,
+      "id": "alley:look-puddle-have"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "A soggy matchbook sits in a puddle by the Purple Rhino door. THE PURPLE RHINO — ASK FOR VIC. The rain is winning, but the name is still there."
+        }
+      ],
+      "req": [
+        "flag:matchbookHere",
+        "!has:matchbook"
+      ],
+      "noun": "matchbook",
+      "anySecond": true,
+      "id": "alley:look-matchbook"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Rain in a dent by the Purple Rhino door. A soggy matchbook sits in it. THE PURPLE RHINO — ASK FOR VIC."
+        }
+      ],
+      "req": [
+        "flag:matchbookHere",
+        "!has:matchbook"
+      ],
+      "noun": "puddle",
+      "anySecond": true,
+      "id": "alley:look-puddle"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "You don't see a matchbook. Not yet."
+        }
+      ],
+      "req": [
+        "!flag:matchbookHere"
+      ],
+      "noun": "matchbook",
+      "anySecond": true,
+      "id": "alley:look-matchbook-early"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "A puddle by the Purple Rhino door. Nothing in it worth pocketing. Not yet."
+        }
+      ],
+      "req": [
+        "!flag:matchbookHere"
+      ],
+      "noun": "puddle",
+      "anySecond": true,
+      "id": "alley:look-puddle-early"
+    },
+    {
+      "verb": "get",
+      "effects": [
+        {
+          "do": "take",
+          "id": "matchbook"
+        },
+        {
+          "do": "score",
+          "id": "get-matchbook",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "A matchbook lies where a goon dropped it. THE PURPLE RHINO — ASK FOR VIC. You pocket it."
+        }
+      ],
+      "req": [
+        "flag:matchbookHere",
+        "!has:matchbook"
+      ],
+      "noun": "matchbook",
+      "anySecond": true,
+      "id": "alley:get-matchbook"
+    },
+    {
+      "verb": "get",
+      "effects": [
+        {
+          "do": "say",
+          "text": "You don't see a matchbook. Not yet."
+        }
+      ],
+      "req": [
+        "!flag:matchbookHere"
+      ],
+      "noun": "matchbook",
+      "anySecond": true,
+      "id": "alley:get-matchbook-early"
+    },
+    {
+      "verb": "get",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The matchbook is already in your pocket, next to the feeling that Vic is bad news."
+        }
+      ],
+      "req": [
+        "has:matchbook"
+      ],
+      "noun": "matchbook",
+      "anySecond": true,
+      "id": "alley:get-matchbook-have"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "say",
+          "text": "The man on the box watches the club door. \"Those boys come every Thursday. Never good.\""
+        }
+      ],
+      "req": [
+        "!flag:gotNote"
+      ],
+      "noun": "professor",
+      "anySecond": true,
+      "id": "alley:talk-professor"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "say",
+          "text": "\"KTL-4471,\" he says, like a man who does not repeat himself and just did. \"Don't lose that.\""
+        }
+      ],
+      "req": [
+        "flag:gotNote"
+      ],
+      "noun": "professor",
+      "anySecond": true,
+      "id": "alley:talk-professor-after"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "note"
+        },
+        {
+          "do": "set",
+          "flag": "paidProfessor"
+        },
+        {
+          "do": "set",
+          "flag": "gotNote"
+        },
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "score",
+          "id": "give-professor",
+          "points": 3
+        },
+        {
+          "do": "score",
+          "id": "get-note",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "He palms the five like a magician. \"NY plate — KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
+        }
+      ],
+      "req": [
+        "has:five",
+        "flag:seenCutscene",
+        "!flag:gotNote"
+      ],
+      "noun": "five",
+      "id": "alley:give-professor-five"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "note"
+        },
+        {
+          "do": "set",
+          "flag": "paidProfessor"
+        },
+        {
+          "do": "set",
+          "flag": "gotNote"
+        },
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "score",
+          "id": "give-professor",
+          "points": 3
+        },
+        {
+          "do": "score",
+          "id": "get-note",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "He palms the five like a magician. \"NY plate — KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
+        }
+      ],
+      "req": [
+        "has:five",
+        "flag:seenCutscene",
+        "!flag:gotNote"
+      ],
+      "noun": "five",
+      "second": "professor",
+      "id": "alley:give-professor-five:1"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "note"
+        },
+        {
+          "do": "set",
+          "flag": "paidProfessor"
+        },
+        {
+          "do": "set",
+          "flag": "gotNote"
+        },
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "score",
+          "id": "give-professor",
+          "points": 3
+        },
+        {
+          "do": "score",
+          "id": "get-note",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "He palms the five like a magician. \"NY plate — KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
+        }
+      ],
+      "req": [
+        "has:five",
+        "flag:seenCutscene",
+        "!flag:gotNote"
+      ],
+      "noun": "money",
+      "id": "alley:give-professor-five:2"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "note"
+        },
+        {
+          "do": "set",
+          "flag": "paidProfessor"
+        },
+        {
+          "do": "set",
+          "flag": "gotNote"
+        },
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "score",
+          "id": "give-professor",
+          "points": 3
+        },
+        {
+          "do": "score",
+          "id": "get-note",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "He palms the five like a magician. \"NY plate — KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
+        }
+      ],
+      "req": [
+        "has:five",
+        "flag:seenCutscene",
+        "!flag:gotNote"
+      ],
+      "noun": "money",
+      "second": "professor",
+      "id": "alley:give-professor-five:3"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "note"
+        },
+        {
+          "do": "set",
+          "flag": "paidProfessor"
+        },
+        {
+          "do": "set",
+          "flag": "gotNote"
+        },
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "score",
+          "id": "give-professor",
+          "points": 3
+        },
+        {
+          "do": "score",
+          "id": "get-note",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "He palms the five like a magician. \"NY plate — KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
+        }
+      ],
+      "req": [
+        "has:five",
+        "flag:seenCutscene",
+        "!flag:gotNote"
+      ],
+      "noun": "professor",
+      "id": "alley:give-professor-five:4"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "note"
+        },
+        {
+          "do": "set",
+          "flag": "paidProfessor"
+        },
+        {
+          "do": "set",
+          "flag": "gotNote"
+        },
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "score",
+          "id": "give-professor",
+          "points": 3
+        },
+        {
+          "do": "score",
+          "id": "get-note",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "He palms the five like a magician. \"NY plate — KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
+        }
+      ],
+      "req": [
+        "has:five",
+        "flag:seenCutscene",
+        "!flag:gotNote"
+      ],
+      "noun": "professor",
+      "second": "professor",
+      "id": "alley:give-professor-five:5"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "note"
+        },
+        {
+          "do": "set",
+          "flag": "paidProfessor"
+        },
+        {
+          "do": "set",
+          "flag": "gotNote"
+        },
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "score",
+          "id": "give-professor",
+          "points": 3
+        },
+        {
+          "do": "score",
+          "id": "get-note",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "He palms the five like a magician. \"NY plate — KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
+        }
+      ],
+      "req": [
+        "has:five",
+        "flag:seenCutscene",
+        "!flag:gotNote"
+      ],
+      "noun": "five",
+      "id": "alley:give-professor-five:6"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "note"
+        },
+        {
+          "do": "set",
+          "flag": "paidProfessor"
+        },
+        {
+          "do": "set",
+          "flag": "gotNote"
+        },
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "score",
+          "id": "give-professor",
+          "points": 3
+        },
+        {
+          "do": "score",
+          "id": "get-note",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "He palms the five like a magician. \"NY plate — KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
+        }
+      ],
+      "req": [
+        "has:five",
+        "flag:seenCutscene",
+        "!flag:gotNote"
+      ],
+      "noun": "five",
+      "second": "professor",
+      "id": "alley:give-professor-five:7"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "note"
+        },
+        {
+          "do": "set",
+          "flag": "paidProfessor"
+        },
+        {
+          "do": "set",
+          "flag": "gotNote"
+        },
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "score",
+          "id": "give-professor",
+          "points": 3
+        },
+        {
+          "do": "score",
+          "id": "get-note",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "He palms the five like a magician. \"NY plate — KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
+        }
+      ],
+      "req": [
+        "has:five",
+        "flag:seenCutscene",
+        "!flag:gotNote"
+      ],
+      "noun": "money",
+      "id": "alley:give-professor-five:8"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "note"
+        },
+        {
+          "do": "set",
+          "flag": "paidProfessor"
+        },
+        {
+          "do": "set",
+          "flag": "gotNote"
+        },
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "score",
+          "id": "give-professor",
+          "points": 3
+        },
+        {
+          "do": "score",
+          "id": "get-note",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "He palms the five like a magician. \"NY plate — KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
+        }
+      ],
+      "req": [
+        "has:five",
+        "flag:seenCutscene",
+        "!flag:gotNote"
+      ],
+      "noun": "money",
+      "second": "professor",
+      "id": "alley:give-professor-five:9"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "note"
+        },
+        {
+          "do": "set",
+          "flag": "paidProfessor"
+        },
+        {
+          "do": "set",
+          "flag": "gotNote"
+        },
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "score",
+          "id": "give-professor",
+          "points": 3
+        },
+        {
+          "do": "score",
+          "id": "get-note",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "He palms the five like a magician. \"NY plate — KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
+        }
+      ],
+      "req": [
+        "has:five",
+        "flag:seenCutscene",
+        "!flag:gotNote"
+      ],
+      "noun": "professor",
+      "id": "alley:give-professor-five:10"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "note"
+        },
+        {
+          "do": "set",
+          "flag": "paidProfessor"
+        },
+        {
+          "do": "set",
+          "flag": "gotNote"
+        },
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "score",
+          "id": "give-professor",
+          "points": 3
+        },
+        {
+          "do": "score",
+          "id": "get-note",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "He palms the five like a magician. \"NY plate — KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
+        }
+      ],
+      "req": [
+        "has:five",
+        "flag:seenCutscene",
+        "!flag:gotNote"
+      ],
+      "noun": "professor",
+      "second": "professor",
+      "id": "alley:give-professor-five:11"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "note"
+        },
+        {
+          "do": "set",
+          "flag": "paidProfessor"
+        },
+        {
+          "do": "set",
+          "flag": "gotNote"
+        },
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "score",
+          "id": "give-professor",
+          "points": 3
+        },
+        {
+          "do": "score",
+          "id": "get-note",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate — KTL-4471. Thought somebody'd want it.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "flag:seenCutscene",
+        "!flag:gotNote"
+      ],
+      "noun": "ten",
+      "id": "alley:give-professor-ten"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "note"
+        },
+        {
+          "do": "set",
+          "flag": "paidProfessor"
+        },
+        {
+          "do": "set",
+          "flag": "gotNote"
+        },
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "score",
+          "id": "give-professor",
+          "points": 3
+        },
+        {
+          "do": "score",
+          "id": "get-note",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate — KTL-4471. Thought somebody'd want it.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "flag:seenCutscene",
+        "!flag:gotNote"
+      ],
+      "noun": "ten",
+      "second": "professor",
+      "id": "alley:give-professor-ten:1"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "note"
+        },
+        {
+          "do": "set",
+          "flag": "paidProfessor"
+        },
+        {
+          "do": "set",
+          "flag": "gotNote"
+        },
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "score",
+          "id": "give-professor",
+          "points": 3
+        },
+        {
+          "do": "score",
+          "id": "get-note",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate — KTL-4471. Thought somebody'd want it.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "flag:seenCutscene",
+        "!flag:gotNote"
+      ],
+      "noun": "money",
+      "id": "alley:give-professor-ten:2"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "note"
+        },
+        {
+          "do": "set",
+          "flag": "paidProfessor"
+        },
+        {
+          "do": "set",
+          "flag": "gotNote"
+        },
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "score",
+          "id": "give-professor",
+          "points": 3
+        },
+        {
+          "do": "score",
+          "id": "get-note",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate — KTL-4471. Thought somebody'd want it.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "flag:seenCutscene",
+        "!flag:gotNote"
+      ],
+      "noun": "money",
+      "second": "professor",
+      "id": "alley:give-professor-ten:3"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "note"
+        },
+        {
+          "do": "set",
+          "flag": "paidProfessor"
+        },
+        {
+          "do": "set",
+          "flag": "gotNote"
+        },
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "score",
+          "id": "give-professor",
+          "points": 3
+        },
+        {
+          "do": "score",
+          "id": "get-note",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate — KTL-4471. Thought somebody'd want it.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "flag:seenCutscene",
+        "!flag:gotNote"
+      ],
+      "noun": "professor",
+      "id": "alley:give-professor-ten:4"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "note"
+        },
+        {
+          "do": "set",
+          "flag": "paidProfessor"
+        },
+        {
+          "do": "set",
+          "flag": "gotNote"
+        },
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "score",
+          "id": "give-professor",
+          "points": 3
+        },
+        {
+          "do": "score",
+          "id": "get-note",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate — KTL-4471. Thought somebody'd want it.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "flag:seenCutscene",
+        "!flag:gotNote"
+      ],
+      "noun": "professor",
+      "second": "professor",
+      "id": "alley:give-professor-ten:5"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "note"
+        },
+        {
+          "do": "set",
+          "flag": "paidProfessor"
+        },
+        {
+          "do": "set",
+          "flag": "gotNote"
+        },
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "score",
+          "id": "give-professor",
+          "points": 3
+        },
+        {
+          "do": "score",
+          "id": "get-note",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate — KTL-4471. Thought somebody'd want it.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "flag:seenCutscene",
+        "!flag:gotNote"
+      ],
+      "noun": "ten",
+      "id": "alley:give-professor-ten:6"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "note"
+        },
+        {
+          "do": "set",
+          "flag": "paidProfessor"
+        },
+        {
+          "do": "set",
+          "flag": "gotNote"
+        },
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "score",
+          "id": "give-professor",
+          "points": 3
+        },
+        {
+          "do": "score",
+          "id": "get-note",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate — KTL-4471. Thought somebody'd want it.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "flag:seenCutscene",
+        "!flag:gotNote"
+      ],
+      "noun": "ten",
+      "second": "professor",
+      "id": "alley:give-professor-ten:7"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "note"
+        },
+        {
+          "do": "set",
+          "flag": "paidProfessor"
+        },
+        {
+          "do": "set",
+          "flag": "gotNote"
+        },
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "score",
+          "id": "give-professor",
+          "points": 3
+        },
+        {
+          "do": "score",
+          "id": "get-note",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate — KTL-4471. Thought somebody'd want it.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "flag:seenCutscene",
+        "!flag:gotNote"
+      ],
+      "noun": "money",
+      "id": "alley:give-professor-ten:8"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "note"
+        },
+        {
+          "do": "set",
+          "flag": "paidProfessor"
+        },
+        {
+          "do": "set",
+          "flag": "gotNote"
+        },
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "score",
+          "id": "give-professor",
+          "points": 3
+        },
+        {
+          "do": "score",
+          "id": "get-note",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate — KTL-4471. Thought somebody'd want it.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "flag:seenCutscene",
+        "!flag:gotNote"
+      ],
+      "noun": "money",
+      "second": "professor",
+      "id": "alley:give-professor-ten:9"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "note"
+        },
+        {
+          "do": "set",
+          "flag": "paidProfessor"
+        },
+        {
+          "do": "set",
+          "flag": "gotNote"
+        },
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "score",
+          "id": "give-professor",
+          "points": 3
+        },
+        {
+          "do": "score",
+          "id": "get-note",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate — KTL-4471. Thought somebody'd want it.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "flag:seenCutscene",
+        "!flag:gotNote"
+      ],
+      "noun": "professor",
+      "id": "alley:give-professor-ten:10"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "note"
+        },
+        {
+          "do": "set",
+          "flag": "paidProfessor"
+        },
+        {
+          "do": "set",
+          "flag": "gotNote"
+        },
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "score",
+          "id": "give-professor",
+          "points": 3
+        },
+        {
+          "do": "score",
+          "id": "get-note",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate — KTL-4471. Thought somebody'd want it.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "flag:seenCutscene",
+        "!flag:gotNote"
+      ],
+      "noun": "professor",
+      "second": "professor",
+      "id": "alley:give-professor-ten:11"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "say",
+          "text": "He waves you off. \"Pay me when you've seen what I keep seeing.\""
+        }
+      ],
+      "req": [
+        "!flag:seenCutscene"
+      ],
+      "noun": "five",
+      "anySecond": true,
+      "id": "alley:give-professor-early"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "say",
+          "text": "He waves you off. \"Pay me when you've seen what I keep seeing.\""
+        }
+      ],
+      "req": [
+        "!flag:seenCutscene"
+      ],
+      "noun": "money",
+      "anySecond": true,
+      "id": "alley:give-professor-early:1"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "say",
+          "text": "He waves you off. \"Pay me when you've seen what I keep seeing.\""
+        }
+      ],
+      "req": [
+        "!flag:seenCutscene"
+      ],
+      "noun": "ten",
+      "anySecond": true,
+      "id": "alley:give-professor-early:2"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "say",
+          "text": "He waves you off. \"Pay me when you've seen what I keep seeing.\""
+        }
+      ],
+      "req": [
+        "!flag:seenCutscene"
+      ],
+      "noun": "professor",
+      "anySecond": true,
+      "id": "alley:give-professor-early:3"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "say",
+          "text": "He waves you off. \"Pay me when you've seen what I keep seeing.\""
+        }
+      ],
+      "req": [
+        "!flag:seenCutscene"
+      ],
+      "noun": "five",
+      "anySecond": true,
+      "id": "alley:give-professor-early:4"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "say",
+          "text": "He waves you off. \"Pay me when you've seen what I keep seeing.\""
+        }
+      ],
+      "req": [
+        "!flag:seenCutscene"
+      ],
+      "noun": "money",
+      "anySecond": true,
+      "id": "alley:give-professor-early:5"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "say",
+          "text": "He waves you off. \"Pay me when you've seen what I keep seeing.\""
+        }
+      ],
+      "req": [
+        "!flag:seenCutscene"
+      ],
+      "noun": "ten",
+      "anySecond": true,
+      "id": "alley:give-professor-early:6"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "say",
+          "text": "He waves you off. \"Pay me when you've seen what I keep seeing.\""
+        }
+      ],
+      "req": [
+        "!flag:seenCutscene"
+      ],
+      "noun": "professor",
+      "anySecond": true,
+      "id": "alley:give-professor-early:7"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Your wallet has opinions, and none of them are a five."
+        }
+      ],
+      "req": [
+        "!has:five",
+        "!has:ten"
+      ],
+      "noun": "professor",
+      "anySecond": true,
+      "id": "alley:give-professor-broke"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Your wallet has opinions, and none of them are a five."
+        }
+      ],
+      "req": [
+        "!has:five",
+        "!has:ten"
+      ],
+      "noun": "money",
+      "anySecond": true,
+      "id": "alley:give-professor-broke:1"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Your wallet has opinions, and none of them are a five."
+        }
+      ],
+      "req": [
+        "!has:five",
+        "!has:ten"
+      ],
+      "noun": "professor",
+      "anySecond": true,
+      "id": "alley:give-professor-broke:2"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Your wallet has opinions, and none of them are a five."
+        }
+      ],
+      "req": [
+        "!has:five",
+        "!has:ten"
+      ],
+      "noun": "money",
+      "anySecond": true,
+      "id": "alley:give-professor-broke:3"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "say",
+          "text": "He already sold you the only fact he had. The note says KTL-4471."
+        }
+      ],
+      "req": [
+        "flag:gotNote"
+      ],
+      "noun": "professor",
+      "anySecond": true,
+      "id": "alley:give-professor-done"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "say",
+          "text": "He already sold you the only fact he had. The note says KTL-4471."
+        }
+      ],
+      "req": [
+        "flag:gotNote"
+      ],
+      "noun": "five",
+      "anySecond": true,
+      "id": "alley:give-professor-done:1"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "say",
+          "text": "He already sold you the only fact he had. The note says KTL-4471."
+        }
+      ],
+      "req": [
+        "flag:gotNote"
+      ],
+      "noun": "money",
+      "anySecond": true,
+      "id": "alley:give-professor-done:2"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "say",
+          "text": "He already sold you the only fact he had. The note says KTL-4471."
+        }
+      ],
+      "req": [
+        "flag:gotNote"
+      ],
+      "noun": "professor",
+      "anySecond": true,
+      "id": "alley:give-professor-done:3"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "say",
+          "text": "He already sold you the only fact he had. The note says KTL-4471."
+        }
+      ],
+      "req": [
+        "flag:gotNote"
+      ],
+      "noun": "five",
+      "anySecond": true,
+      "id": "alley:give-professor-done:4"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "professorTalk"
+        },
+        {
+          "do": "say",
+          "text": "He already sold you the only fact he had. The note says KTL-4471."
+        }
+      ],
+      "req": [
+        "flag:gotNote"
+      ],
+      "noun": "money",
+      "anySecond": true,
+      "id": "alley:give-professor-done:5"
+    },
+    {
+      "verb": "pet",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The cat hisses like you personally invented the rain."
+        }
+      ],
+      "req": [],
+      "noun": "cat",
+      "anySecond": true,
+      "id": "alley:pet-cat"
+    },
+    {
+      "verb": "pet",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The cat hisses like you personally invented the rain."
+        }
+      ],
+      "req": [],
+      "anySecond": true,
+      "id": "alley:pet-cat:1"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "goto",
+          "room": "bar",
+          "spawn": "fromAlley"
+        }
+      ],
+      "req": [],
+      "noun": "bar",
+      "id": "alley:go-bar"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "goto",
+          "room": "bar",
+          "spawn": "fromAlley"
+        }
+      ],
+      "req": [],
+      "noun": "bar",
+      "second": "bar",
+      "id": "alley:go-bar:1"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "goto",
+          "room": "bar",
+          "spawn": "fromAlley"
+        }
+      ],
+      "req": [],
+      "noun": "door",
+      "id": "alley:go-bar:2"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "goto",
+          "room": "bar",
+          "spawn": "fromAlley"
+        }
+      ],
+      "req": [],
+      "noun": "door",
+      "second": "bar",
+      "id": "alley:go-bar:3"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The cops? And say what? You smell, and saw a car?"
+        }
+      ],
+      "req": [],
+      "noun": "out",
+      "anySecond": true,
+      "id": "alley:go-street"
+    }
+  ]
+}

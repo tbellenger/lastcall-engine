@@ -26,6 +26,14 @@ pub struct World {
     pub dead: bool,
     pub ending: Option<String>,
     pub tick: u64,
+    /// Named checkpoint a death should restore, or none for the autosave.
+    pub death_restore: Option<String>,
+    pub held: bool,
+    pub picture: String,
+    pub cutscene: Option<String>,
+    pub cut_beat: u32,
+    pub cut_frame: u32,
+    pub cut_flip: u32,
 }
 
 impl World {
@@ -46,6 +54,13 @@ impl World {
             dead: false,
             ending: None,
             tick: seed_tick,
+            death_restore: None,
+            held: false,
+            picture: String::new(),
+            cutscene: None,
+            cut_beat: 0,
+            cut_frame: 0,
+            cut_flip: 0,
         }
     }
 }
@@ -64,6 +79,7 @@ pub struct DecodedSave {
     pub checkpoints: BTreeMap<String, Checkpoint>,
     pub stack: Vec<String>,
     pub pack_mismatch: bool,
+    pub autosave_locked: bool,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -95,6 +111,23 @@ struct SaveState {
     checkpoint_stack: Vec<String>,
     dead: bool,
     ending: Option<String>,
+    /// When set, room changes no longer replace the autosave checkpoint.
+    #[serde(default)]
+    autosave_locked: bool,
+    #[serde(default)]
+    death_restore: Option<String>,
+    #[serde(default)]
+    held: bool,
+    #[serde(default)]
+    picture: String,
+    #[serde(default)]
+    cutscene: Option<String>,
+    #[serde(default)]
+    cut_beat: u32,
+    #[serde(default)]
+    cut_frame: u32,
+    #[serde(default)]
+    cut_flip: u32,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -127,6 +160,20 @@ struct InnerState {
     actors: BTreeMap<String, String>,
     dead: bool,
     ending: Option<String>,
+    #[serde(default)]
+    death_restore: Option<String>,
+    #[serde(default)]
+    held: bool,
+    #[serde(default)]
+    picture: String,
+    #[serde(default)]
+    cutscene: Option<String>,
+    #[serde(default)]
+    cut_beat: u32,
+    #[serde(default)]
+    cut_frame: u32,
+    #[serde(default)]
+    cut_flip: u32,
 }
 
 pub fn encode_save(
@@ -135,6 +182,7 @@ pub fn encode_save(
     rng: Pcg32,
     checkpoints: &BTreeMap<String, Checkpoint>,
     stack: &[String],
+    autosave_locked: bool,
 ) -> Result<Vec<u8>> {
     let file = SaveFile {
         format: SAVE_FORMAT,
@@ -171,6 +219,14 @@ pub fn encode_save(
             checkpoint_stack: stack.to_vec(),
             dead: world.dead,
             ending: world.ending.clone(),
+            death_restore: world.death_restore.clone(),
+            held: world.held,
+            picture: world.picture.clone(),
+            cutscene: world.cutscene.clone(),
+            cut_beat: world.cut_beat,
+            cut_frame: world.cut_frame,
+            cut_flip: world.cut_flip,
+            autosave_locked,
         },
     };
     let bytes = serde_json::to_vec(&file)?;
@@ -233,6 +289,7 @@ pub fn decode_save(package: &Package, bytes: &[u8]) -> Result<DecodedSave> {
         checkpoints,
         stack: file.state.checkpoint_stack,
         pack_mismatch: file.pack_hash != package.content_hash,
+        autosave_locked: file.state.autosave_locked,
     })
 }
 
@@ -253,6 +310,13 @@ fn world_from_state(package: &Package, state: &SaveState, tick: u64) -> Result<W
         actors: state.actors.clone(),
         dead: state.dead,
         ending: state.ending.clone(),
+        death_restore: state.death_restore.clone(),
+        held: state.held,
+        picture: state.picture.clone(),
+        cutscene: state.cutscene.clone(),
+        cut_beat: state.cut_beat,
+        cut_frame: state.cut_frame,
+        cut_flip: state.cut_flip,
     };
     world_from_inner(package, &inner, tick)
 }
@@ -349,6 +413,13 @@ fn world_from_inner(package: &Package, state: &InnerState, tick: u64) -> Result<
         dead: state.dead,
         ending: state.ending.clone(),
         tick,
+        death_restore: state.death_restore.clone(),
+        held: state.held,
+        picture: state.picture.clone(),
+        cutscene: state.cutscene.clone(),
+        cut_beat: state.cut_beat,
+        cut_frame: state.cut_frame,
+        cut_flip: state.cut_flip,
     })
 }
 
@@ -383,5 +454,12 @@ fn inner_from(world: &World) -> InnerState {
         actors: world.actors.clone(),
         dead: world.dead,
         ending: world.ending.clone(),
+        death_restore: world.death_restore.clone(),
+        held: world.held,
+        picture: world.picture.clone(),
+        cutscene: world.cutscene.clone(),
+        cut_beat: world.cut_beat,
+        cut_frame: world.cut_frame,
+        cut_flip: world.cut_flip,
     }
 }

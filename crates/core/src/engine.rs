@@ -83,6 +83,14 @@ pub struct Engine {
     route_is_effect: bool,
     overlap: Option<String>,
     moved: bool,
+    pending: Option<Parsed>,
+    hook_verb: String,
+    hook_noun: String,
+    hook_second: String,
+    /// Set by `keepAutosave` so later room changes leave the arrival snapshot alone.
+    autosave_locked: bool,
+    /// A room change wants a snapshot after the entry effects that run before the first line.
+    autosave_pending: bool,
     events: Vec<HostEvent>,
     fb: Vec<u8>,
 }
@@ -118,6 +126,12 @@ impl Engine {
             route_is_effect: false,
             overlap: None,
             moved: false,
+            pending: None,
+            hook_verb: String::new(),
+            hook_noun: String::new(),
+            hook_second: String::new(),
+            autosave_locked: false,
+            autosave_pending: false,
             events: Vec::new(),
             fb: vec![0; (SCREEN_W * SCREEN_H * 4) as usize],
         })
@@ -132,6 +146,9 @@ impl Engine {
                 ),
             });
         }
+        for id in self.pkg.game.carrying.clone() {
+            *self.world.inventory.entry(id).or_insert(0) += 1;
+        }
         let room = self.pkg.game.start_room.clone();
         let spawn = self.pkg.game.start_spawn.clone();
         self.place(&room, &spawn)?;
@@ -141,6 +158,8 @@ impl Engine {
         }
         self.queue_on_enter();
         self.pump();
+        // The boot snapshot includes entry flags. Later rooms replace it on arrival.
+        self.remember_autosave();
         self.render();
         Ok(())
     }
@@ -181,6 +200,14 @@ impl Engine {
         self.render();
     }
 
+    /// Run a command while a cutscene line is up, without advancing the cutscene.
+    pub fn interrupt_line(&mut self, line: &str) {
+        self.queue.clear();
+        self.current_text = None;
+        self.active = Active::Idle;
+        self.run_command(line);
+    }
+
     pub fn submit_line(&mut self, line: &str) {
         self.input_line = line.to_string();
         self.submit();
@@ -194,6 +221,7 @@ impl Engine {
         self.current_text = None;
         self.active = Active::Idle;
         self.pump();
+        self.advance_cutscene_if_idle();
         self.render();
         Ok(())
     }
@@ -208,6 +236,9 @@ impl Engine {
                 Active::Waiting { left } => {
                     if left <= 1 {
                         self.active = Active::Idle;
+                        if self.autoplay_cutscene() {
+                            self.advance_autoplay();
+                        }
                         self.pump();
                     } else {
                         self.active = Active::Waiting { left: left - 1 };
@@ -219,6 +250,7 @@ impl Engine {
             if self.moved && !self.route_is_effect {
                 self.check_exits();
             }
+            self.tick_flipbook();
         }
         self.render();
     }
@@ -250,6 +282,7 @@ impl Engine {
             self.rng,
             &self.checkpoints,
             &self.checkpoint_stack,
+            self.autosave_locked,
         )
     }
 
@@ -264,6 +297,8 @@ impl Engine {
         self.rng = decoded.rng;
         self.checkpoints = decoded.checkpoints;
         self.checkpoint_stack = decoded.stack;
+        self.autosave_locked = decoded.autosave_locked;
+        self.autosave_pending = false;
         self.reset_transient();
         self.events.push(HostEvent::RoomChanged {
             room: self.world.room.clone(),
@@ -319,6 +354,36 @@ impl Engine {
 
     pub fn said(&self) -> &[String] {
         &self.said
+    }
+
+    pub fn flags(&self) -> Vec<String> {
+        self.world.flags.iter().cloned().collect()
+    }
+
+    pub fn vars(&self) -> Vec<(String, i32)> {
+        self.world
+            .vars
+            .iter()
+            .map(|(k, v)| (k.clone(), *v))
+            .collect()
+    }
+
+    pub fn inventory(&self) -> Vec<(String, i32)> {
+        self.world
+            .inventory
+            .iter()
+            .map(|(k, v)| (k.clone(), *v))
+            .collect()
+    }
+
+    /// True while a line, a walk, or a wait still has to finish.
+    pub fn presenting(&self) -> bool {
+        self.route.is_some()
+            || !self.queue.is_empty()
+            || matches!(
+                self.active,
+                Active::Saying | Active::Walking | Active::Waiting { .. }
+            )
     }
 
     pub fn hero_px(&self) -> (i32, i32) {
@@ -412,6 +477,16 @@ impl Engine {
             self.pump();
             return;
         }
+        if matches!(self.active, Active::Ended) {
+            let line = self.input_line.trim().to_string();
+            self.input_line.clear();
+            if line.is_empty() {
+                return;
+            }
+            self.active = Active::Idle;
+            self.run_command(&line);
+            return;
+        }
         if matches!(self.active, Active::Dead) {
             let line = self.input_line.trim().to_string();
             self.input_line.clear();
@@ -421,10 +496,18 @@ impl Engine {
             self.last_command = line.clone();
             let parsed = self.pkg.vocab.parse(&self.world.room, &line);
             if parsed.verb.as_deref() == Some("restore") {
+                if let Err(err) = self.restore_after_death() {
+                    self.force_say(err.to_string());
+                }
+            } else if self.pkg.game.death_prompt.is_some()
+                && matches!(parsed.verb.as_deref(), Some("restart" | "quit"))
+            {
                 self.events.push(HostEvent::Ui {
-                    action: "restore".into(),
-                    slot: "1".into(),
+                    action: parsed.verb.unwrap_or_default(),
+                    slot: String::new(),
                 });
+            } else if let Some(prompt) = self.pkg.game.death_prompt.clone() {
+                self.force_say(prompt);
             } else {
                 self.force_say("Only restore will help now.".into());
             }
@@ -454,20 +537,55 @@ impl Engine {
             self.force_say(message);
             return;
         };
-        if let Some(rule) = self.match_rule(&parsed) {
-            self.enqueue_rule(&rule, &parsed);
+        self.hook_verb = verb.clone();
+        self.hook_noun = parsed.noun.clone().unwrap_or_default();
+        self.hook_second = parsed.second.clone().unwrap_or_default();
+        if self.world.cutscene.is_some() {
+            self.cutscene_command(&parsed);
+            return;
+        }
+        if self.hook_handles("early") {
             self.pump();
             return;
         }
-        if self.builtin(&verb, &parsed) {
+        if self.arm_timers(&verb) {
             return;
         }
-        if let Some(reply) = self.pkg.vocab.verb_default.get(&verb).cloned() {
-            self.force_say(reply);
+        let prefix = self.reach_prefix(&parsed);
+        if !prefix.is_empty() {
+            self.pending = Some(parsed);
+            self.queue.extend(prefix);
+            self.pump();
             return;
         }
-        let message = self.pkg.vocab.unknown_command.clone();
-        self.force_say(message);
+        self.finish_command(&parsed);
+    }
+
+    fn finish_command(&mut self, parsed: &Parsed) {
+        let Some(verb) = parsed.verb.clone() else {
+            return;
+        };
+        let scripted = self.hook_handles("command");
+        if !scripted {
+            if let Some(rule) = self.match_rule(parsed) {
+                self.enqueue_rule(&rule, parsed);
+            } else if !self.builtin(&verb, parsed) {
+                if let Some(reply) = self.pkg.vocab.verb_default.get(&verb).cloned() {
+                    self.queue.push_back(Effect::Say { text: reply });
+                } else {
+                    let message = self.pkg.vocab.unknown_command.clone();
+                    self.queue.push_back(Effect::Say { text: message });
+                }
+            }
+        }
+        if !self
+            .queue
+            .iter()
+            .any(|effect| matches!(effect, Effect::SetDead { .. }))
+        {
+            let _ = self.hook_handles("after");
+        }
+        self.pump();
     }
 
     fn builtin(&mut self, verb: &str, parsed: &Parsed) -> bool {
@@ -593,7 +711,10 @@ impl Engine {
         if rule.verb.is_none() || rule.verb != parsed.verb {
             return false;
         }
-        if !opt_eq(&rule.noun, &parsed.noun) || !opt_eq(&rule.second, &parsed.second) {
+        if !rule.any_noun && !opt_eq(&rule.noun, &parsed.noun) {
+            return false;
+        }
+        if !rule.any_second && !opt_eq(&rule.second, &parsed.second) {
             return false;
         }
         if rule.once && self.world.fired.contains(&rule.id) {
@@ -603,42 +724,78 @@ impl Engine {
     }
 
     fn enqueue_rule(&mut self, rule: &Rule, parsed: &Parsed) {
-        let meta = self
-            .pkg
-            .vocab
-            .verb_meta
-            .get(rule.verb.as_deref().unwrap_or(""))
-            .copied()
-            .unwrap_or(false);
-        let ranged = self
-            .pkg
-            .vocab
-            .verb_ranged
-            .get(rule.verb.as_deref().unwrap_or(""))
-            .copied()
-            .unwrap_or(false);
         let mut prefix = Vec::new();
-        if !meta && !ranged {
-            if let Some(noun) = &parsed.noun {
-                if let Some((stand, face)) = self.stand_for_noun(noun) {
-                    let (hx, hy) = self.hero_px();
-                    let dx = hx as i64 - stand.0 as i64;
-                    let dy = hy as i64 - stand.1 as i64;
-                    let reach = self.pkg.game.reach as i64;
-                    if dx * dx + dy * dy > reach * reach {
-                        prefix.push(Effect::WalkTo {
-                            x: stand.0,
-                            y: stand.1,
-                        });
-                    }
-                    if let Some(dir) = face {
-                        prefix.push(Effect::Face { dir });
-                    }
-                }
+        if let Some((stand, face)) = self.approach_stand(parsed) {
+            let (hx, hy) = self.hero_px();
+            let dx = hx as i64 - stand.0 as i64;
+            let dy = hy as i64 - stand.1 as i64;
+            let reach = self.pkg.game.reach as i64;
+            if dx * dx + dy * dy > reach * reach {
+                prefix.push(Effect::WalkTo {
+                    x: stand.0,
+                    y: stand.1,
+                });
+            }
+            if let Some(dir) = face {
+                prefix.push(Effect::Face { dir });
             }
         }
         prefix.extend(rule.effects.clone());
         self.queue.extend(prefix);
+    }
+
+    fn reach_prefix(&self, parsed: &Parsed) -> Vec<Effect> {
+        let Some((stand, _)) = self.approach_stand(parsed) else {
+            return Vec::new();
+        };
+        let (hx, hy) = self.hero_px();
+        let dx = hx as i64 - stand.0 as i64;
+        let dy = hy as i64 - stand.1 as i64;
+        let reach = self.pkg.game.reach as i64;
+        if dx * dx + dy * dy > reach * reach {
+            vec![Effect::WalkTo {
+                x: stand.0,
+                y: stand.1,
+            }]
+        } else {
+            Vec::new()
+        }
+    }
+
+    fn approach_stand(&self, parsed: &Parsed) -> Option<((i32, i32), Option<Dir>)> {
+        if self.world.held {
+            return None;
+        }
+        let verb = parsed.verb.as_deref().unwrap_or("");
+        if self.pkg.vocab.verb_meta.get(verb).copied().unwrap_or(false)
+            || self
+                .pkg
+                .vocab
+                .verb_ranged
+                .get(verb)
+                .copied()
+                .unwrap_or(false)
+        {
+            return None;
+        }
+        if let Some(second) = &parsed.second {
+            if let Some(stand) = self.stand_for_noun(second) {
+                return Some(stand);
+            }
+        }
+        if let Some(noun) = &parsed.noun {
+            if let Some(stand) = self.stand_for_noun(noun) {
+                return Some(stand);
+            }
+        }
+        let fallback = self
+            .pkg
+            .vocab
+            .verb_targets
+            .get(verb)
+            .and_then(|rooms| rooms.get(&self.world.room))
+            .cloned();
+        fallback.and_then(|noun| self.stand_for_noun(&noun))
     }
 
     fn stand_for_noun(&self, noun: &str) -> Option<((i32, i32), Option<Dir>)> {
@@ -674,6 +831,7 @@ impl Engine {
     fn pump(&mut self) {
         while matches!(self.active, Active::Idle) {
             let Some(effect) = self.queue.pop_front() else {
+                self.flush_autosave();
                 break;
             };
             if self.apply(effect) {
@@ -681,6 +839,15 @@ impl Engine {
             }
         }
         self.settle();
+    }
+
+    fn flush_autosave(&mut self) {
+        if !self.autosave_pending {
+            return;
+        }
+        self.autosave_pending = false;
+        self.remember_autosave();
+        self.events.push(HostEvent::Autosave);
     }
 
     fn settle(&mut self) {
@@ -697,6 +864,7 @@ impl Engine {
     fn apply(&mut self, effect: Effect) -> bool {
         match effect {
             Effect::Say { text } => {
+                self.flush_autosave();
                 self.said.push(text.clone());
                 self.current_text = Some(text.clone());
                 self.events.push(HostEvent::Say { text });
@@ -771,6 +939,13 @@ impl Engine {
             }
             Effect::Goto { room, spawn } => {
                 if self.place(&room, &spawn).is_ok() {
+                    // A checkpoint parked on the goto records the room Charlie
+                    // just entered, before the entry line is spoken.
+                    while matches!(self.queue.front(), Some(Effect::Checkpoint { .. })) {
+                        if let Some(Effect::Checkpoint { name }) = self.queue.pop_front() {
+                            self.take_checkpoint(&name);
+                        }
+                    }
                     self.queue_on_enter();
                 } else {
                     self.queue.push_front(Effect::Say {
@@ -779,8 +954,9 @@ impl Engine {
                 }
                 false
             }
-            Effect::SetDead => {
+            Effect::SetDead { restore_to } => {
                 self.world.dead = true;
+                self.world.death_restore = restore_to;
                 false
             }
             Effect::SetEnding { id } => {
@@ -789,6 +965,10 @@ impl Engine {
             }
             Effect::Checkpoint { name } => {
                 self.take_checkpoint(&name);
+                false
+            }
+            Effect::KeepAutosave => {
+                self.autosave_locked = true;
                 false
             }
             Effect::Sfx { id } => {
@@ -801,6 +981,59 @@ impl Engine {
             }
             Effect::MarkOnce { id } => {
                 self.world.fired.insert(id);
+                false
+            }
+            Effect::Call { name } => {
+                let _ = self.hook_handles_named(&name);
+                false
+            }
+            Effect::Cutscene { id } => {
+                if !self.pkg.cutscenes.contains_key(&id) {
+                    self.queue.push_front(Effect::Say {
+                        text: format!("The cutscene '{id}' is missing."),
+                    });
+                    return false;
+                }
+                self.world.cutscene = Some(id);
+                self.world.cut_beat = 0;
+                self.world.cut_frame = 0;
+                self.world.cut_flip = 0;
+                self.enter_cut_beat();
+                false
+            }
+            Effect::Costume { id } => {
+                self.world.costume = id;
+                false
+            }
+            Effect::Teleport { x, y } => {
+                self.world.hero_x = x * 256 + 128;
+                self.world.hero_y = y * 256 + 128;
+                false
+            }
+            Effect::Hold { locked } => {
+                self.world.held = locked;
+                if locked {
+                    self.walk_dir = None;
+                    if !self.route_is_effect {
+                        self.route = None;
+                    }
+                }
+                false
+            }
+            Effect::Picture { name } => {
+                self.world.picture = name;
+                false
+            }
+            Effect::Pose {
+                actor,
+                anim,
+                x,
+                y,
+                hidden,
+            } => {
+                self.world
+                    .actors
+                    .insert(actor, pose_token(hidden, anim, x, y));
                 false
             }
         }
@@ -825,13 +1058,17 @@ impl Engine {
         self.route_is_effect = false;
         self.overlap = None;
         self.walk_dir = None;
+        self.world.picture.clear();
         if matches!(self.active, Active::Walking) {
             self.active = Active::Idle;
+        }
+        if !self.autosave_locked {
+            // Snapshot after entry effects, so a cleared pose flag is not saved as still set.
+            self.autosave_pending = true;
         }
         self.events.push(HostEvent::RoomChanged {
             room: room.to_string(),
         });
-        self.events.push(HostEvent::Autosave);
         Ok(())
     }
 
@@ -845,6 +1082,9 @@ impl Engine {
         }
         for effect in effects.into_iter().rev() {
             self.queue.push_front(effect);
+        }
+        if let Some(name) = self.pkg.game.hooks.enter.clone() {
+            let _ = self.hook_handles_named(&name);
         }
     }
 
@@ -862,6 +1102,10 @@ impl Engine {
     }
 
     fn restore_checkpoint(&mut self, name: &str) -> Result<()> {
+        self.restore_named(name, true)
+    }
+
+    fn restore_named(&mut self, name: &str, replay_enter: bool) -> Result<()> {
         let snap = self
             .checkpoints
             .get(name)
@@ -874,13 +1118,24 @@ impl Engine {
         self.checkpoints = checkpoints;
         self.checkpoint_stack = stack;
         self.reset_transient();
-        self.queue_on_enter();
-        self.pump();
+        if replay_enter {
+            self.queue_on_enter();
+            self.pump();
+        }
         self.events.push(HostEvent::RoomChanged {
             room: self.world.room.clone(),
         });
         self.render();
         Ok(())
+    }
+
+    pub fn restore_after_death(&mut self) -> Result<()> {
+        if let Some(name) = self.world.death_restore.clone() {
+            // Charlie adopts the snapshot as it was saved. Entry lines do not replay.
+            self.restore_named(&name, false)
+        } else {
+            self.restore_last_checkpoint()
+        }
     }
 
     fn reset_transient(&mut self) {
@@ -894,6 +1149,7 @@ impl Engine {
         self.overlap = None;
         self.walk_dir = None;
         self.forced_ticks = 0;
+        self.pending = None;
         self.settle();
     }
 
@@ -905,7 +1161,7 @@ impl Engine {
         let Some(dir) = arrow_dir(key) else {
             return;
         };
-        if self.locked() {
+        if self.locked() || self.world.held {
             return;
         }
         self.forced_ticks = 0;
@@ -920,7 +1176,7 @@ impl Engine {
     }
 
     fn tap(&mut self, x: i32, y: i32) {
-        if self.locked() {
+        if self.locked() || self.world.held {
             return;
         }
         let w = SCREEN_W as i32;
@@ -1067,11 +1323,16 @@ impl Engine {
             self.active = Active::Idle;
             self.pump();
         }
+        if self.pending.is_some() && self.queue.is_empty() && matches!(self.active, Active::Idle) {
+            let parsed = self.pending.take().unwrap();
+            self.finish_command(&parsed);
+        }
     }
 
     fn fail_route(&mut self) {
         self.route = None;
         self.route_is_effect = false;
+        self.pending = None;
         self.queue.clear();
         self.active = Active::Idle;
         self.force_say("You can't get there from here.".into());
@@ -1149,8 +1410,12 @@ impl Engine {
         let right = format!("Score: {} of {}", self.score(), self.score_max());
         let narrator = self.current_text.clone();
         let input = self.input_line.clone();
-        let layers = self.collect_layers();
-        let picture = self.pkg.rooms[&self.world.room].picture.clone();
+        let layers = if self.cutscene_covers() {
+            Vec::new()
+        } else {
+            self.collect_layers()
+        };
+        let picture = self.backdrop();
         let priority = self.pkg.rooms[&self.world.room].priority.clone();
         render::composite(
             &mut self.fb,
@@ -1224,25 +1489,31 @@ impl Engine {
     }
 
     fn actor_layer(&self, place: &crate::model::ActorPlace) -> Option<Layer> {
+        let (hidden, anim_override, pos_override) = decode_pose(self.world.actors.get(&place.id));
+        if hidden {
+            return None;
+        }
         let facing = place.facing.unwrap_or(Dir::S);
         let costume = place.costume.clone().unwrap_or_else(|| "default".into());
-        let anim = place
+        let state_anim = place
             .states
             .iter()
             .find(|state| state.if_conds.is_empty() || self.reqs_ok(&state.if_conds))
             .map(|state| state.anim.clone())
             .or_else(|| place.anim.clone());
+        let anim = anim_override.or(state_anim);
         let (frame, _) =
             self.actor_frame(&place.actor, &costume, facing, false, anim.as_deref())?;
+        let pos = pos_override.unwrap_or(place.pos);
         let priority = place.priority_override.unwrap_or_else(|| {
-            render::band_for_y(&self.pkg.rooms[&self.world.room].def.bands, place.pos[1])
+            render::band_for_y(&self.pkg.rooms[&self.world.room].def.bands, pos[1])
         });
         Some(Layer {
             id: format!("actor:{}", place.id),
             priority,
-            sort_y: place.pos[1],
-            dest_x: place.pos[0] - frame.ax,
-            dest_y: place.pos[1] - frame.ay,
+            sort_y: pos[1],
+            dest_x: pos[0] - frame.ax,
+            dest_y: pos[1] - frame.ay,
             sprite: frame,
         })
     }
@@ -1295,14 +1566,303 @@ impl Engine {
         }
         None
     }
+
+    fn remember_autosave(&mut self) {
+        self.checkpoints.insert(
+            "autosave".into(),
+            Checkpoint {
+                world: self.world.clone(),
+                rng_state: self.rng.state(),
+                rng_inc: self.rng.inc(),
+            },
+        );
+    }
+
+    fn hook_handles(&mut self, which: &str) -> bool {
+        let name = match which {
+            "early" => self.pkg.game.hooks.early.clone(),
+            "command" => self.pkg.game.hooks.command.clone(),
+            "enter" => self.pkg.game.hooks.enter.clone(),
+            "cutscene_end" => self.pkg.game.hooks.cutscene_end.clone(),
+            "cutscene_command" => self.pkg.game.hooks.cutscene_command.clone(),
+            "after" => self.pkg.game.hooks.after.clone(),
+            _ => None,
+        };
+        match name {
+            Some(name) => self.hook_handles_named(&name),
+            None => false,
+        }
+    }
+
+    fn hook_handles_named(&mut self, name: &str) -> bool {
+        let Some(script) = self.pkg.script.as_ref() else {
+            return false;
+        };
+        if !script.has_fn(name) {
+            return false;
+        }
+        let world = self.world.clone();
+        let score = self.score();
+        let result = script.call(
+            &world,
+            score,
+            &self.hook_verb,
+            &self.hook_noun,
+            &self.hook_second,
+            name,
+        );
+        match result {
+            Ok(out) => {
+                if !out.effects.is_empty() {
+                    self.queue.extend(out.effects);
+                }
+                out.handled
+            }
+            Err(err) => {
+                self.events.push(HostEvent::Warning {
+                    message: err.clone(),
+                });
+                self.queue.push_back(Effect::Say { text: err });
+                true
+            }
+        }
+    }
+
+    fn arm_timers(&mut self, verb: &str) -> bool {
+        if self.pkg.vocab.verb_meta.get(verb).copied().unwrap_or(false) {
+            return false;
+        }
+        let timers = self.pkg.game.timers.clone();
+        for timer in timers {
+            if timer.skip_verbs.iter().any(|skip| skip == verb) {
+                continue;
+            }
+            if !self.reqs_ok(&timer.when) {
+                continue;
+            }
+            let current = self.world.vars.get(&timer.var).copied().unwrap_or(0);
+            if current + 1 > timer.limit {
+                self.queue.extend(timer.effects);
+                self.pump();
+                return true;
+            }
+            self.world.vars.insert(timer.var, current + 1);
+        }
+        false
+    }
+
+    fn cutscene_command(&mut self, parsed: &Parsed) {
+        let id = self.world.cutscene.clone().unwrap_or_default();
+        let rules = self
+            .pkg
+            .cutscenes
+            .get(&id)
+            .map(|cut| cut.def.on_command.clone())
+            .unwrap_or_default();
+        if let Some(rule) = rules.into_iter().find(|rule| self.rule_ok(rule, parsed)) {
+            self.queue.extend(rule.effects);
+            self.pump();
+            return;
+        }
+        if self.hook_handles("cutscene_command") {
+            self.pump();
+        }
+    }
+
+    fn enter_cut_beat(&mut self) {
+        let Some(id) = self.world.cutscene.clone() else {
+            return;
+        };
+        let Some(cut) = self.pkg.cutscenes.get(&id) else {
+            return;
+        };
+        if cut.def.beats.is_empty() {
+            if cut.frames.is_empty() {
+                self.end_cutscene();
+                return;
+            }
+            self.world.cut_frame = 0;
+            let ticks = cut.def.frame_ticks.first().copied().unwrap_or(8).max(1);
+            self.queue.push_front(Effect::Wait { ticks });
+            return;
+        }
+        let index = self.world.cut_beat as usize;
+        if index >= cut.def.beats.len() {
+            self.end_cutscene();
+            return;
+        }
+        let beat = cut.def.beats[index].clone();
+        self.world.cut_frame = beat.flip_from.unwrap_or(beat.frame);
+        self.world.cut_flip = 0;
+        let mut front = Vec::new();
+        front.extend(beat.effects);
+        for line in beat.say {
+            front.push(Effect::Say { text: line });
+        }
+        for effect in front.into_iter().rev() {
+            self.queue.push_front(effect);
+        }
+    }
+
+    fn advance_cutscene_if_idle(&mut self) {
+        if self.world.cutscene.is_none() {
+            return;
+        }
+        if !self.queue.is_empty() || !matches!(self.active, Active::Idle) {
+            return;
+        }
+        if self.autoplay_cutscene() {
+            return;
+        }
+        self.world.cut_beat = self.world.cut_beat.saturating_add(1);
+        self.enter_cut_beat();
+        self.pump();
+    }
+
+    fn autoplay_cutscene(&self) -> bool {
+        let Some(id) = &self.world.cutscene else {
+            return false;
+        };
+        self.pkg
+            .cutscenes
+            .get(id)
+            .is_some_and(|cut| cut.def.beats.is_empty() && !cut.frames.is_empty())
+    }
+
+    fn advance_autoplay(&mut self) {
+        let Some(id) = self.world.cutscene.clone() else {
+            return;
+        };
+        let Some(cut) = self.pkg.cutscenes.get(&id) else {
+            return;
+        };
+        let next = self.world.cut_frame.saturating_add(1);
+        if next >= cut.frames.len() as u32 {
+            self.end_cutscene();
+            return;
+        }
+        self.world.cut_frame = next;
+        let ticks = cut
+            .def
+            .frame_ticks
+            .get(next as usize)
+            .copied()
+            .unwrap_or(8)
+            .max(1);
+        self.queue.push_front(Effect::Wait { ticks });
+    }
+
+    fn end_cutscene(&mut self) {
+        let id = self.world.cutscene.take();
+        self.world.cut_beat = 0;
+        self.world.cut_frame = 0;
+        self.world.cut_flip = 0;
+        if let Some(id) = id {
+            if let Some(cut) = self.pkg.cutscenes.get(&id) {
+                let effects = cut.def.on_end.clone();
+                self.queue.extend(effects);
+            }
+        }
+        if let Some(name) = self.pkg.game.hooks.cutscene_end.clone() {
+            let _ = self.hook_handles_named(&name);
+        }
+    }
+
+    fn tick_flipbook(&mut self) {
+        let Some(id) = self.world.cutscene.clone() else {
+            return;
+        };
+        let Some(cut) = self.pkg.cutscenes.get(&id) else {
+            return;
+        };
+        let Some(beat) = cut.def.beats.get(self.world.cut_beat as usize) else {
+            return;
+        };
+        let (Some(from), Some(to)) = (beat.flip_from, beat.flip_to) else {
+            return;
+        };
+        let ticks = beat.flip_ticks.max(1);
+        self.world.cut_flip = self.world.cut_flip.saturating_add(1);
+        if self.world.cut_flip < ticks {
+            return;
+        }
+        self.world.cut_flip = 0;
+        let span = to.saturating_sub(from).saturating_add(1).max(1);
+        let step = self.world.cut_frame.saturating_sub(from).saturating_add(1) % span;
+        self.world.cut_frame = from + step;
+    }
+
+    fn cutscene_covers(&self) -> bool {
+        let Some(id) = &self.world.cutscene else {
+            return false;
+        };
+        self.pkg
+            .cutscenes
+            .get(id)
+            .is_some_and(|cut| !cut.frames.is_empty())
+    }
+
+    fn backdrop(&self) -> crate::imageutil::RgbaImage {
+        if let Some(id) = &self.world.cutscene {
+            if let Some(cut) = self.pkg.cutscenes.get(id) {
+                if !cut.frames.is_empty() {
+                    let index = (self.world.cut_frame as usize).min(cut.frames.len() - 1);
+                    return cut.frames[index].clone();
+                }
+            }
+        }
+        let room = &self.pkg.rooms[&self.world.room];
+        if !self.world.picture.is_empty() {
+            if let Some(image) = room.pictures.get(&self.world.picture) {
+                return image.clone();
+            }
+        }
+        room.picture.clone()
+    }
+}
+
+fn pose_token(hidden: bool, anim: Option<String>, x: Option<i32>, y: Option<i32>) -> String {
+    if hidden {
+        return "hidden".into();
+    }
+    match (anim, x, y) {
+        (Some(anim), Some(x), Some(y)) => format!("anim:{anim}@{x},{y}"),
+        (Some(anim), _, _) => format!("anim:{anim}"),
+        (None, Some(x), Some(y)) => format!("at:{x},{y}"),
+        _ => String::new(),
+    }
+}
+
+fn decode_pose(raw: Option<&String>) -> (bool, Option<String>, Option<[i32; 2]>) {
+    let Some(raw) = raw else {
+        return (false, None, None);
+    };
+    if raw == "hidden" {
+        return (true, None, None);
+    }
+    if let Some(rest) = raw.strip_prefix("at:") {
+        return (false, None, parse_pair(rest));
+    }
+    if let Some(rest) = raw.strip_prefix("anim:") {
+        if let Some((anim, at)) = rest.split_once('@') {
+            return (false, Some(anim.to_string()), parse_pair(at));
+        }
+        return (false, Some(rest.to_string()), None);
+    }
+    (false, None, None)
+}
+
+fn parse_pair(text: &str) -> Option<[i32; 2]> {
+    let (x, y) = text.split_once(',')?;
+    Some([x.parse().ok()?, y.parse().ok()?])
 }
 
 fn specificity(rule: &Rule) -> u8 {
     let mut score = 1u8;
-    if rule.noun.is_some() {
+    if rule.noun.is_some() && !rule.any_noun {
         score += 2;
     }
-    if rule.second.is_some() {
+    if rule.second.is_some() && !rule.any_second {
         score += 4;
     }
     score

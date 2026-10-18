@@ -58,6 +58,15 @@ jobs:
           npx playwright install --with-deps chromium
           npm run test:e2e
 
+  parity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Charlie transcripts
+        run: cargo run -p advc --release -- test fixtures/charlie
+
   linux-player:
     runs-on: ubuntu-latest
     steps:

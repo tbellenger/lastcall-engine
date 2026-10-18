@@ -1,0 +1,1368 @@
+{
+  "id": "street",
+  "name": "Street",
+  "look": "A fancy building at night, in the rain. An awning drips over brass doors. A uniformed doorman waits under the light. For the first time all night, the street looks like a way out.",
+  "spawns": {
+    "default": [
+      200,
+      202
+    ],
+    "fromLobby": [
+      200,
+      202
+    ]
+  },
+  "exits": [],
+  "hotspots": [
+    {
+      "id": "awning",
+      "rect": [
+        70,
+        24,
+        200,
+        36
+      ],
+      "nouns": [
+        "awning"
+      ],
+      "look": "Canvas, soaked through, doing its one job. Rain ticks off the edge in a steady line."
+    },
+    {
+      "id": "doors",
+      "rect": [
+        130,
+        60,
+        80,
+        120
+      ],
+      "nouns": [
+        "door"
+      ],
+      "look": "Brass doors, polished by people who do not use alleys. They lead back into the lobby Charlie just left.",
+      "stand": [
+        170,
+        198
+      ]
+    },
+    {
+      "id": "doorman",
+      "rect": [
+        220,
+        70,
+        46,
+        110
+      ],
+      "nouns": [
+        "doorman",
+        "man"
+      ],
+      "look": "Pressed uniform, white gloves, a smile that comes with the hat. His cufflinks are small and gold, and each one bears a V.",
+      "stand": [
+        232,
+        200
+      ]
+    }
+  ],
+  "actors": [],
+  "props": [],
+  "rules": [
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Pressed uniform, white gloves, a smile that comes with the hat. His cufflinks are small and gold, and each one bears a V."
+        }
+      ],
+      "req": [],
+      "noun": "doorman",
+      "anySecond": true,
+      "id": "street:look-doorman"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Pressed uniform, white gloves, a smile that comes with the hat. His cufflinks are small and gold, and each one bears a V."
+        }
+      ],
+      "req": [],
+      "noun": "man",
+      "anySecond": true,
+      "id": "street:look-doorman:1"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Brass doors, polished by people who do not use alleys. They lead back into the lobby Charlie just left."
+        }
+      ],
+      "req": [],
+      "noun": "door",
+      "anySecond": true,
+      "id": "street:look-doors"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Canvas, soaked through, doing its one job. Rain ticks off the edge in a steady line."
+        }
+      ],
+      "req": [],
+      "noun": "awning",
+      "anySecond": true,
+      "id": "street:look-awning"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Stone, brass, and a canopy that has never met a puddle it liked. The Purple Rhino's kind of money, one door further from the alley."
+        }
+      ],
+      "req": [],
+      "noun": "building",
+      "anySecond": true,
+      "id": "street:look-building"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "There isn't a cab. Not yet. The doorman looks like a man who could find one."
+        }
+      ],
+      "req": [],
+      "noun": "cab",
+      "anySecond": true,
+      "id": "street:look-cab"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The doorman looks him over. \"Rough night, sir? Let me get you a cab.\""
+        },
+        {
+          "do": "say",
+          "text": "He puts two fingers to his mouth and whistles. A black sedan noses in under the awning and stops."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the handle and opens the rear door himself."
+        },
+        {
+          "do": "say",
+          "text": "Dana Whitlock is tied in the back seat. The pencil is still in her bun. The red cardigan is crooked. She sees him. His mouth opens."
+        },
+        {
+          "do": "say",
+          "text": "The doorman's arm is already up behind him. A short leather club comes down on the back of Charlie's neck."
+        }
+      ],
+      "req": [],
+      "noun": "doorman",
+      "id": "street:hail-cab"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The doorman looks him over. \"Rough night, sir? Let me get you a cab.\""
+        },
+        {
+          "do": "say",
+          "text": "He puts two fingers to his mouth and whistles. A black sedan noses in under the awning and stops."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the handle and opens the rear door himself."
+        },
+        {
+          "do": "say",
+          "text": "Dana Whitlock is tied in the back seat. The pencil is still in her bun. The red cardigan is crooked. She sees him. His mouth opens."
+        },
+        {
+          "do": "say",
+          "text": "The doorman's arm is already up behind him. A short leather club comes down on the back of Charlie's neck."
+        }
+      ],
+      "req": [],
+      "noun": "doorman",
+      "second": "help",
+      "id": "street:hail-cab:1"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The doorman looks him over. \"Rough night, sir? Let me get you a cab.\""
+        },
+        {
+          "do": "say",
+          "text": "He puts two fingers to his mouth and whistles. A black sedan noses in under the awning and stops."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the handle and opens the rear door himself."
+        },
+        {
+          "do": "say",
+          "text": "Dana Whitlock is tied in the back seat. The pencil is still in her bun. The red cardigan is crooked. She sees him. His mouth opens."
+        },
+        {
+          "do": "say",
+          "text": "The doorman's arm is already up behind him. A short leather club comes down on the back of Charlie's neck."
+        }
+      ],
+      "req": [],
+      "noun": "doorman",
+      "second": "doorman",
+      "id": "street:hail-cab:2"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The doorman looks him over. \"Rough night, sir? Let me get you a cab.\""
+        },
+        {
+          "do": "say",
+          "text": "He puts two fingers to his mouth and whistles. A black sedan noses in under the awning and stops."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the handle and opens the rear door himself."
+        },
+        {
+          "do": "say",
+          "text": "Dana Whitlock is tied in the back seat. The pencil is still in her bun. The red cardigan is crooked. She sees him. His mouth opens."
+        },
+        {
+          "do": "say",
+          "text": "The doorman's arm is already up behind him. A short leather club comes down on the back of Charlie's neck."
+        }
+      ],
+      "req": [],
+      "noun": "doorman",
+      "second": "cab",
+      "id": "street:hail-cab:3"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The doorman looks him over. \"Rough night, sir? Let me get you a cab.\""
+        },
+        {
+          "do": "say",
+          "text": "He puts two fingers to his mouth and whistles. A black sedan noses in under the awning and stops."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the handle and opens the rear door himself."
+        },
+        {
+          "do": "say",
+          "text": "Dana Whitlock is tied in the back seat. The pencil is still in her bun. The red cardigan is crooked. She sees him. His mouth opens."
+        },
+        {
+          "do": "say",
+          "text": "The doorman's arm is already up behind him. A short leather club comes down on the back of Charlie's neck."
+        }
+      ],
+      "req": [],
+      "noun": "cab",
+      "id": "street:hail-cab:4"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The doorman looks him over. \"Rough night, sir? Let me get you a cab.\""
+        },
+        {
+          "do": "say",
+          "text": "He puts two fingers to his mouth and whistles. A black sedan noses in under the awning and stops."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the handle and opens the rear door himself."
+        },
+        {
+          "do": "say",
+          "text": "Dana Whitlock is tied in the back seat. The pencil is still in her bun. The red cardigan is crooked. She sees him. His mouth opens."
+        },
+        {
+          "do": "say",
+          "text": "The doorman's arm is already up behind him. A short leather club comes down on the back of Charlie's neck."
+        }
+      ],
+      "req": [],
+      "noun": "cab",
+      "second": "help",
+      "id": "street:hail-cab:5"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The doorman looks him over. \"Rough night, sir? Let me get you a cab.\""
+        },
+        {
+          "do": "say",
+          "text": "He puts two fingers to his mouth and whistles. A black sedan noses in under the awning and stops."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the handle and opens the rear door himself."
+        },
+        {
+          "do": "say",
+          "text": "Dana Whitlock is tied in the back seat. The pencil is still in her bun. The red cardigan is crooked. She sees him. His mouth opens."
+        },
+        {
+          "do": "say",
+          "text": "The doorman's arm is already up behind him. A short leather club comes down on the back of Charlie's neck."
+        }
+      ],
+      "req": [],
+      "noun": "cab",
+      "second": "doorman",
+      "id": "street:hail-cab:6"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The doorman looks him over. \"Rough night, sir? Let me get you a cab.\""
+        },
+        {
+          "do": "say",
+          "text": "He puts two fingers to his mouth and whistles. A black sedan noses in under the awning and stops."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the handle and opens the rear door himself."
+        },
+        {
+          "do": "say",
+          "text": "Dana Whitlock is tied in the back seat. The pencil is still in her bun. The red cardigan is crooked. She sees him. His mouth opens."
+        },
+        {
+          "do": "say",
+          "text": "The doorman's arm is already up behind him. A short leather club comes down on the back of Charlie's neck."
+        }
+      ],
+      "req": [],
+      "noun": "cab",
+      "second": "cab",
+      "id": "street:hail-cab:7"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The doorman is the one in the uniform. He looks ready to be helpful."
+        }
+      ],
+      "req": [],
+      "anySecond": true,
+      "id": "street:talk-air"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The lobby is behind him, and so is the chase. The street is the idea. The doorman is the man who seems to agree."
+        }
+      ],
+      "req": [],
+      "noun": "door",
+      "anySecond": true,
+      "id": "street:go-back"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The lobby is behind him, and so is the chase. The street is the idea. The doorman is the man who seems to agree."
+        }
+      ],
+      "req": [],
+      "noun": "lobby",
+      "anySecond": true,
+      "id": "street:go-back:1"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The lobby is behind him, and so is the chase. The street is the idea. The doorman is the man who seems to agree."
+        }
+      ],
+      "req": [],
+      "noun": "building",
+      "anySecond": true,
+      "id": "street:go-back:2"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Charlie is already out. The awning is the whole plan, and the doorman is standing in it."
+        }
+      ],
+      "req": [],
+      "noun": "out",
+      "anySecond": true,
+      "id": "street:go-out"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Charlie is already out. The awning is the whole plan, and the doorman is standing in it."
+        }
+      ],
+      "req": [],
+      "noun": "alley",
+      "anySecond": true,
+      "id": "street:go-out:1"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Charlie is already out. The awning is the whole plan, and the doorman is standing in it."
+        }
+      ],
+      "req": [],
+      "noun": "club",
+      "anySecond": true,
+      "id": "street:go-out:2"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Charlie is already out. The awning is the whole plan, and the doorman is standing in it."
+        }
+      ],
+      "req": [],
+      "noun": "bar",
+      "anySecond": true,
+      "id": "street:go-out:3"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Charlie is already out. The awning is the whole plan, and the doorman is standing in it."
+        }
+      ],
+      "req": [],
+      "noun": "bathroom",
+      "anySecond": true,
+      "id": "street:go-out:4"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "say",
+          "text": "No cab yet. The doorman has the whistle for that."
+        }
+      ],
+      "req": [],
+      "noun": "cab",
+      "anySecond": true,
+      "id": "street:go-cab"
+    },
+    {
+      "verb": "attack",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The doorman does not flinch. The smile stays rented. A man who tips his cap for a living has heard worse."
+        }
+      ],
+      "req": [],
+      "noun": "doorman",
+      "anySecond": true,
+      "id": "street:attack-doorman"
+    },
+    {
+      "verb": "attack",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The doorman does not flinch. The smile stays rented. A man who tips his cap for a living has heard worse."
+        }
+      ],
+      "req": [],
+      "anySecond": true,
+      "id": "street:attack-doorman:1"
+    },
+    {
+      "verb": "insult",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The doorman does not flinch. The smile stays rented. A man who tips his cap for a living has heard worse."
+        }
+      ],
+      "req": [],
+      "noun": "doorman",
+      "anySecond": true,
+      "id": "street:attack-doorman:2"
+    },
+    {
+      "verb": "insult",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The doorman does not flinch. The smile stays rented. A man who tips his cap for a living has heard worse."
+        }
+      ],
+      "req": [],
+      "anySecond": true,
+      "id": "street:attack-doorman:3"
+    },
+    {
+      "verb": "shout",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Charlie shouts. The doorman touches his cap, as if a shout were a greeting. \"Cab, sir?\""
+        }
+      ],
+      "req": [],
+      "noun": "doorman",
+      "anySecond": true,
+      "id": "street:shout-doorman"
+    },
+    {
+      "verb": "shout",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Charlie shouts. The doorman touches his cap, as if a shout were a greeting. \"Cab, sir?\""
+        }
+      ],
+      "req": [],
+      "noun": "cab",
+      "anySecond": true,
+      "id": "street:shout-doorman:1"
+    },
+    {
+      "verb": "shout",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Charlie shouts. The doorman touches his cap, as if a shout were a greeting. \"Cab, sir?\""
+        }
+      ],
+      "req": [],
+      "anySecond": true,
+      "id": "street:shout-doorman:2"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "dollar",
+      "id": "street:give-doorman"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "dollar",
+      "second": "doorman",
+      "id": "street:give-doorman:1"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "dollar",
+      "second": "dollar",
+      "id": "street:give-doorman:2"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "dollar",
+      "second": "money",
+      "id": "street:give-doorman:3"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "dollar",
+      "second": "five",
+      "id": "street:give-doorman:4"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "dollar",
+      "second": "ten",
+      "id": "street:give-doorman:5"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "dollar",
+      "second": "twenty",
+      "id": "street:give-doorman:6"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "dollar",
+      "second": "quarters",
+      "id": "street:give-doorman:7"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "money",
+      "id": "street:give-doorman:8"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "money",
+      "second": "doorman",
+      "id": "street:give-doorman:9"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "money",
+      "second": "dollar",
+      "id": "street:give-doorman:10"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "money",
+      "second": "money",
+      "id": "street:give-doorman:11"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "money",
+      "second": "five",
+      "id": "street:give-doorman:12"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "money",
+      "second": "ten",
+      "id": "street:give-doorman:13"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "money",
+      "second": "twenty",
+      "id": "street:give-doorman:14"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "money",
+      "second": "quarters",
+      "id": "street:give-doorman:15"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "five",
+      "id": "street:give-doorman:16"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "five",
+      "second": "doorman",
+      "id": "street:give-doorman:17"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "five",
+      "second": "dollar",
+      "id": "street:give-doorman:18"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "five",
+      "second": "money",
+      "id": "street:give-doorman:19"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "five",
+      "second": "five",
+      "id": "street:give-doorman:20"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "five",
+      "second": "ten",
+      "id": "street:give-doorman:21"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "five",
+      "second": "twenty",
+      "id": "street:give-doorman:22"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "five",
+      "second": "quarters",
+      "id": "street:give-doorman:23"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "ten",
+      "id": "street:give-doorman:24"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "ten",
+      "second": "doorman",
+      "id": "street:give-doorman:25"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "ten",
+      "second": "dollar",
+      "id": "street:give-doorman:26"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "ten",
+      "second": "money",
+      "id": "street:give-doorman:27"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "ten",
+      "second": "five",
+      "id": "street:give-doorman:28"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "ten",
+      "second": "ten",
+      "id": "street:give-doorman:29"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "ten",
+      "second": "twenty",
+      "id": "street:give-doorman:30"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "ten",
+      "second": "quarters",
+      "id": "street:give-doorman:31"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "twenty",
+      "id": "street:give-doorman:32"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "twenty",
+      "second": "doorman",
+      "id": "street:give-doorman:33"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "twenty",
+      "second": "dollar",
+      "id": "street:give-doorman:34"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "twenty",
+      "second": "money",
+      "id": "street:give-doorman:35"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "twenty",
+      "second": "five",
+      "id": "street:give-doorman:36"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "twenty",
+      "second": "ten",
+      "id": "street:give-doorman:37"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "twenty",
+      "second": "twenty",
+      "id": "street:give-doorman:38"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "twenty",
+      "second": "quarters",
+      "id": "street:give-doorman:39"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "quarters",
+      "id": "street:give-doorman:40"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "quarters",
+      "second": "doorman",
+      "id": "street:give-doorman:41"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "quarters",
+      "second": "dollar",
+      "id": "street:give-doorman:42"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "quarters",
+      "second": "money",
+      "id": "street:give-doorman:43"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "quarters",
+      "second": "five",
+      "id": "street:give-doorman:44"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "quarters",
+      "second": "ten",
+      "id": "street:give-doorman:45"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "quarters",
+      "second": "twenty",
+      "id": "street:give-doorman:46"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "quarters",
+      "second": "quarters",
+      "id": "street:give-doorman:47"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "doorman",
+      "id": "street:give-doorman:48"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "doorman",
+      "second": "doorman",
+      "id": "street:give-doorman:49"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "doorman",
+      "second": "dollar",
+      "id": "street:give-doorman:50"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "doorman",
+      "second": "money",
+      "id": "street:give-doorman:51"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "doorman",
+      "second": "five",
+      "id": "street:give-doorman:52"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "doorman",
+      "second": "ten",
+      "id": "street:give-doorman:53"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "doorman",
+      "second": "twenty",
+      "id": "street:give-doorman:54"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't take it. \"The cab's on the house, sir.\" The smile does not reach the cufflinks."
+        }
+      ],
+      "req": [],
+      "noun": "doorman",
+      "second": "quarters",
+      "id": "street:give-doorman:55"
+    },
+    {
+      "verb": "open",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The brass doors are the way back into the lobby. Charlie has had enough of indoors. The doorman is still offering the street."
+        }
+      ],
+      "req": [],
+      "noun": "door",
+      "anySecond": true,
+      "id": "street:open-doors"
+    },
+    {
+      "verb": "knock",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The brass doors are the way back into the lobby. Charlie has had enough of indoors. The doorman is still offering the street."
+        }
+      ],
+      "req": [],
+      "noun": "door",
+      "anySecond": true,
+      "id": "street:open-doors:1"
+    },
+    {
+      "verb": "push",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The brass doors are the way back into the lobby. Charlie has had enough of indoors. The doorman is still offering the street."
+        }
+      ],
+      "req": [],
+      "noun": "door",
+      "anySecond": true,
+      "id": "street:open-doors:2"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The brass doors are the way back into the lobby. Charlie has had enough of indoors. The doorman is still offering the street."
+        }
+      ],
+      "req": [],
+      "noun": "door",
+      "anySecond": true,
+      "id": "street:open-doors:3"
+    }
+  ]
+}

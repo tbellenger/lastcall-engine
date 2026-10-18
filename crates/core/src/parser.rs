@@ -21,9 +21,12 @@ pub struct VocabIndex {
     pub verb_meta: BTreeMap<String, bool>,
     pub verb_ranged: BTreeMap<String, bool>,
     pub verb_default: BTreeMap<String, String>,
+    /// verb id → room id → noun to walk toward.
+    pub verb_targets: BTreeMap<String, BTreeMap<String, String>>,
     pub rooms: BTreeMap<String, BTreeMap<String, String>>,
     pub unknown_word: String,
     pub unknown_command: String,
+    pub bare: BTreeMap<String, String>,
 }
 
 impl VocabIndex {
@@ -32,11 +35,15 @@ impl VocabIndex {
         let mut verb_meta = BTreeMap::new();
         let mut verb_ranged = BTreeMap::new();
         let mut verb_default = BTreeMap::new();
+        let mut verb_targets = BTreeMap::new();
         for verb in &vocab.verbs {
             verb_meta.insert(verb.id.clone(), verb.meta);
             verb_ranged.insert(verb.id.clone(), verb.ranged);
             if let Some(reply) = &verb.default_reply {
                 verb_default.insert(verb.id.clone(), reply.clone());
+            }
+            if !verb.targets.is_empty() {
+                verb_targets.insert(verb.id.clone(), verb.targets.clone());
             }
             for word in &verb.words {
                 let word = word.to_lowercase();
@@ -88,9 +95,11 @@ impl VocabIndex {
             verb_meta,
             verb_ranged,
             verb_default,
+            verb_targets,
             rooms,
             unknown_word: vocab.unknown_word.clone(),
             unknown_command: vocab.unknown_command.clone(),
+            bare: vocab.bare.clone(),
         })
     }
 
@@ -143,10 +152,17 @@ impl VocabIndex {
         } else {
             (rest, &[])
         };
+        let mut noun = self.resolve_noun(room, noun_toks);
+        let second = self.resolve_noun(room, second_toks);
+        if noun.is_none() {
+            if let Some(fill) = self.bare.get(&verb) {
+                noun = Some(fill.clone());
+            }
+        }
         Parsed {
             verb: Some(verb),
-            noun: self.resolve_noun(room, noun_toks),
-            second: self.resolve_noun(room, second_toks),
+            noun,
+            second,
             unknown: None,
         }
     }
@@ -248,6 +264,7 @@ mod tests {
                     ranged: false,
                     meta: false,
                     default_reply: Some("You can't take that.".into()),
+                    targets: BTreeMap::new(),
                 },
                 VerbDef {
                     id: "look".into(),
@@ -255,6 +272,7 @@ mod tests {
                     ranged: true,
                     meta: false,
                     default_reply: None,
+                    targets: BTreeMap::new(),
                 },
                 VerbDef {
                     id: "use".into(),
@@ -262,6 +280,7 @@ mod tests {
                     ranged: false,
                     meta: false,
                     default_reply: None,
+                    targets: BTreeMap::new(),
                 },
             ],
             nouns: vec![

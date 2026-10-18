@@ -1,0 +1,88 @@
+{
+  "id": "office",
+  "name": "Vic's Office",
+  "look": "Vic's office. Dana is tied to a chair, pencil in her bun, red cardigan crooked. A desk phone. A drawer.",
+  "spawns": {
+    "default": [
+      100,
+      206
+    ]
+  },
+  "exits": [],
+  "hotspots": [
+    {
+      "id": "dana",
+      "rect": [
+        150,
+        80,
+        60,
+        120
+      ],
+      "nouns": [
+        "woman",
+        "chair",
+        "stairs"
+      ],
+      "look": "Dana Whitlock, tied to a chair. The pencil is still in her bun. The red cardigan is crooked.",
+      "stand": [
+        180,
+        206
+      ]
+    },
+    {
+      "id": "phone",
+      "rect": [
+        220,
+        120,
+        24,
+        16
+      ],
+      "nouns": [
+        "phone"
+      ],
+      "look": "A desk phone. Order matters.",
+      "stand": [
+        230,
+        204
+      ]
+    },
+    {
+      "id": "desk",
+      "rect": [
+        200,
+        130,
+        90,
+        50
+      ],
+      "nouns": [
+        "desk",
+        "books"
+      ],
+      "look": "A blotter, a drawer, and a phone. The drawer can wait until the police are coming.",
+      "stand": [
+        240,
+        206
+      ]
+    },
+    {
+      "id": "officer",
+      "rect": [
+        270,
+        70,
+        50,
+        120
+      ],
+      "nouns": [
+        "officer"
+      ],
+      "look": "A uniform, a notebook, and the patience of a man who heard the siren from the inside.",
+      "stand": [
+        300,
+        206
+      ]
+    }
+  ],
+  "actors": [],
+  "props": [],
+  "rules": []
+}

@@ -1,0 +1,1824 @@
+{
+  "ignore": [
+    "a",
+    "an",
+    "the"
+  ],
+  "prepositions": [
+    "to",
+    "on",
+    "in",
+    "into",
+    "with",
+    "for",
+    "at",
+    "about",
+    "from",
+    "by"
+  ],
+  "phrases": [
+    {
+      "from": "pick up",
+      "to": "get"
+    },
+    {
+      "from": "look at",
+      "to": "look"
+    },
+    {
+      "from": "look in",
+      "to": "search"
+    },
+    {
+      "from": "talk to",
+      "to": "talk"
+    },
+    {
+      "from": "speak to",
+      "to": "talk"
+    },
+    {
+      "from": "speak with",
+      "to": "talk"
+    },
+    {
+      "from": "chat with",
+      "to": "talk"
+    },
+    {
+      "from": "ask for",
+      "to": "ask"
+    },
+    {
+      "from": "ask about",
+      "to": "ask"
+    },
+    {
+      "from": "brooklyn moon",
+      "to": "b7"
+    },
+    {
+      "from": "tire iron",
+      "to": "iron"
+    },
+    {
+      "from": "tyre iron",
+      "to": "iron"
+    },
+    {
+      "from": "fire escape",
+      "to": "ladder"
+    },
+    {
+      "from": "tip jar",
+      "to": "jar"
+    },
+    {
+      "from": "old man",
+      "to": "earl"
+    },
+    {
+      "from": "homeless man",
+      "to": "professor"
+    },
+    {
+      "from": "bar man",
+      "to": "sal"
+    },
+    {
+      "from": "midnight stallion",
+      "to": "cologne"
+    },
+    {
+      "from": "bar of soap",
+      "to": "soap"
+    },
+    {
+      "from": "vending machine",
+      "to": "machine"
+    },
+    {
+      "from": "cologne machine",
+      "to": "machine"
+    },
+    {
+      "from": "dollar bill",
+      "to": "dollar"
+    },
+    {
+      "from": "put on",
+      "to": "wear"
+    },
+    {
+      "from": "license plate",
+      "to": "note"
+    },
+    {
+      "from": "licence plate",
+      "to": "note"
+    },
+    {
+      "from": "domino brothers",
+      "to": "regulars"
+    },
+    {
+      "from": "purple rhino",
+      "to": "club"
+    },
+    {
+      "from": "hair pick",
+      "to": "pick"
+    },
+    {
+      "from": "bobby pin",
+      "to": "pick"
+    },
+    {
+      "from": "water tank",
+      "to": "tank"
+    },
+    {
+      "from": "velvet sign",
+      "to": "sign"
+    },
+    {
+      "from": "rhino sign",
+      "to": "sign"
+    },
+    {
+      "from": "mirror ball",
+      "to": "ball"
+    },
+    {
+      "from": "dance floor",
+      "to": "floor"
+    },
+    {
+      "from": "private door",
+      "to": "private"
+    },
+    {
+      "from": "brass doors",
+      "to": "door"
+    },
+    {
+      "from": "brass door",
+      "to": "door"
+    },
+    {
+      "from": "vip stairs",
+      "to": "stairs"
+    },
+    {
+      "from": "billiard ball",
+      "to": "ball"
+    },
+    {
+      "from": "cue ball",
+      "to": "ball"
+    },
+    {
+      "from": "pool ball",
+      "to": "ball"
+    },
+    {
+      "from": "golden cow",
+      "to": "chips"
+    },
+    {
+      "from": "chlorine tablets",
+      "to": "chlorine"
+    },
+    {
+      "from": "smoke bomb",
+      "to": "bomb"
+    },
+    {
+      "from": "account books",
+      "to": "books"
+    },
+    {
+      "from": "desk phone",
+      "to": "phone"
+    },
+    {
+      "from": "stand up",
+      "to": "stand"
+    },
+    {
+      "from": "get up",
+      "to": "stand"
+    },
+    {
+      "from": "hold your breath",
+      "to": "hold breath"
+    },
+    {
+      "from": "hold his breath",
+      "to": "hold breath"
+    },
+    {
+      "from": "hold my breath",
+      "to": "hold breath"
+    },
+    {
+      "from": "hold breath",
+      "to": "hold breath"
+    },
+    {
+      "from": "climb out",
+      "to": "surface"
+    },
+    {
+      "from": "get into the water",
+      "to": "dive pool"
+    },
+    {
+      "from": "get into the pool",
+      "to": "dive pool"
+    },
+    {
+      "from": "get in the water",
+      "to": "dive pool"
+    },
+    {
+      "from": "get in the pool",
+      "to": "dive pool"
+    },
+    {
+      "from": "get into water",
+      "to": "dive pool"
+    },
+    {
+      "from": "get into pool",
+      "to": "dive pool"
+    },
+    {
+      "from": "get in water",
+      "to": "dive pool"
+    },
+    {
+      "from": "get in pool",
+      "to": "dive pool"
+    },
+    {
+      "from": "thugs clothes",
+      "to": "clothes"
+    },
+    {
+      "from": "goons clothes",
+      "to": "clothes"
+    },
+    {
+      "from": "dry clothes",
+      "to": "clothes"
+    }
+  ],
+  "rewrites": [
+    {
+      "pattern": "\\$20",
+      "replace": " twenty "
+    },
+    {
+      "pattern": "\\$10",
+      "replace": " ten "
+    },
+    {
+      "pattern": "\\$5",
+      "replace": " five "
+    },
+    {
+      "pattern": "\\$1",
+      "replace": " dollar "
+    }
+  ],
+  "verbs": [
+    {
+      "id": "look",
+      "words": [
+        "look",
+        "l",
+        "examine",
+        "inspect",
+        "check",
+        "read"
+      ],
+      "ranged": true,
+      "default": "You see nothing special about that."
+    },
+    {
+      "id": "get",
+      "words": [
+        "get",
+        "take",
+        "grab",
+        "pickup",
+        "scoot"
+      ],
+      "default": "You can't take that."
+    },
+    {
+      "id": "pick",
+      "words": [
+        "pick",
+        "unlock"
+      ]
+    },
+    {
+      "id": "knock",
+      "words": [
+        "knock",
+        "rap"
+      ]
+    },
+    {
+      "id": "push",
+      "words": [
+        "push",
+        "shove"
+      ]
+    },
+    {
+      "id": "use",
+      "words": [
+        "use"
+      ],
+      "default": "That doesn't seem to do anything."
+    },
+    {
+      "id": "give",
+      "words": [
+        "give",
+        "hand",
+        "offer"
+      ],
+      "default": "That doesn't change any hands."
+    },
+    {
+      "id": "talk",
+      "words": [
+        "talk",
+        "speak",
+        "chat",
+        "ask",
+        "say",
+        "tell"
+      ],
+      "default": "You get no answer worth repeating."
+    },
+    {
+      "id": "buy",
+      "words": [
+        "buy",
+        "order",
+        "purchase",
+        "pay"
+      ],
+      "default": "Nobody is selling that.",
+      "targets": {
+        "bar": "sal"
+      }
+    },
+    {
+      "id": "play",
+      "words": [
+        "play",
+        "select",
+        "choose",
+        "press"
+      ],
+      "default": "That doesn't play.",
+      "targets": {
+        "bar": "jukebox"
+      }
+    },
+    {
+      "id": "put",
+      "words": [
+        "put",
+        "insert",
+        "feed"
+      ],
+      "default": "That doesn't fit."
+    },
+    {
+      "id": "tip",
+      "words": [
+        "tip"
+      ],
+      "targets": {
+        "bar": "sal",
+        "club": "dancer"
+      }
+    },
+    {
+      "id": "wear",
+      "words": [
+        "wear",
+        "spray",
+        "apply"
+      ],
+      "ranged": true,
+      "default": "You can't wear that."
+    },
+    {
+      "id": "open",
+      "words": [
+        "open"
+      ],
+      "default": "It doesn't open."
+    },
+    {
+      "id": "close",
+      "words": [
+        "close"
+      ],
+      "default": "It doesn't close."
+    },
+    {
+      "id": "search",
+      "words": [
+        "search",
+        "rummage"
+      ],
+      "default": "You find nothing you want."
+    },
+    {
+      "id": "pet",
+      "words": [
+        "pet",
+        "stroke"
+      ],
+      "default": "You keep your hands to yourself."
+    },
+    {
+      "id": "touch",
+      "words": [
+        "touch",
+        "kiss",
+        "feel",
+        "grope",
+        "pat"
+      ]
+    },
+    {
+      "id": "drink",
+      "words": [
+        "drink",
+        "sip",
+        "chug"
+      ],
+      "ranged": true,
+      "default": "You can't drink that."
+    },
+    {
+      "id": "wash",
+      "words": [
+        "wash"
+      ],
+      "default": "You don't wash that."
+    },
+    {
+      "id": "go",
+      "words": [
+        "go",
+        "walk",
+        "enter",
+        "exit",
+        "leave"
+      ],
+      "ranged": true,
+      "default": "You can't go that way."
+    },
+    {
+      "id": "inventory",
+      "words": [
+        "inventory",
+        "inv",
+        "i"
+      ],
+      "ranged": true
+    },
+    {
+      "id": "score",
+      "words": [
+        "score"
+      ],
+      "ranged": true
+    },
+    {
+      "id": "help",
+      "words": [
+        "help"
+      ],
+      "ranged": true
+    },
+    {
+      "id": "save",
+      "words": [
+        "save"
+      ],
+      "ranged": true,
+      "meta": true
+    },
+    {
+      "id": "restore",
+      "words": [
+        "restore",
+        "load"
+      ],
+      "ranged": true,
+      "meta": true
+    },
+    {
+      "id": "restart",
+      "words": [
+        "restart"
+      ],
+      "ranged": true,
+      "meta": true
+    },
+    {
+      "id": "quit",
+      "words": [
+        "quit"
+      ],
+      "ranged": true,
+      "meta": true
+    },
+    {
+      "id": "attack",
+      "words": [
+        "attack",
+        "hit",
+        "punch",
+        "fight",
+        "kick"
+      ],
+      "default": "Violence is a hobby for people with better insurance."
+    },
+    {
+      "id": "shout",
+      "words": [
+        "shout",
+        "yell",
+        "scream",
+        "wave"
+      ],
+      "ranged": true,
+      "default": "You shout. The city does not take your call."
+    },
+    {
+      "id": "show",
+      "words": [
+        "show"
+      ],
+      "default": "You have nothing to show, or nobody who cares."
+    },
+    {
+      "id": "jump",
+      "words": [
+        "jump",
+        "climb"
+      ],
+      "default": "You hop in place. The suit squelches."
+    },
+    {
+      "id": "insult",
+      "words": [
+        "insult",
+        "mouth"
+      ],
+      "ranged": true,
+      "default": "You think better of it."
+    },
+    {
+      "id": "drop",
+      "words": [
+        "drop",
+        "throw"
+      ],
+      "ranged": true,
+      "default": "You hang onto it."
+    },
+    {
+      "id": "pull",
+      "words": [
+        "pull"
+      ]
+    },
+    {
+      "id": "hook",
+      "words": [
+        "hook"
+      ]
+    },
+    {
+      "id": "burn",
+      "words": [
+        "burn",
+        "light"
+      ],
+      "ranged": true
+    },
+    {
+      "id": "wait",
+      "words": [
+        "wait",
+        "z"
+      ],
+      "ranged": true
+    },
+    {
+      "id": "dive",
+      "words": [
+        "dive",
+        "swim"
+      ],
+      "ranged": true
+    },
+    {
+      "id": "hold",
+      "words": [
+        "hold"
+      ],
+      "ranged": true
+    },
+    {
+      "id": "combine",
+      "words": [
+        "combine",
+        "mix"
+      ]
+    },
+    {
+      "id": "untie",
+      "words": [
+        "untie",
+        "cut",
+        "free"
+      ]
+    },
+    {
+      "id": "call",
+      "words": [
+        "call",
+        "dial",
+        "phone"
+      ]
+    },
+    {
+      "id": "surface",
+      "words": [
+        "surface"
+      ],
+      "ranged": true
+    },
+    {
+      "id": "make",
+      "words": [
+        "make",
+        "rig"
+      ]
+    },
+    {
+      "id": "no",
+      "words": [
+        "no"
+      ],
+      "ranged": true
+    },
+    {
+      "id": "change",
+      "words": [
+        "change"
+      ]
+    },
+    {
+      "id": "stand",
+      "words": [
+        "stand"
+      ],
+      "ranged": true
+    }
+  ],
+  "nouns": [
+    {
+      "id": "sal",
+      "words": [
+        "sal",
+        "barman",
+        "bartender",
+        "barkeep"
+      ]
+    },
+    {
+      "id": "earl",
+      "words": [
+        "earl",
+        "regular",
+        "drunk",
+        "guy"
+      ]
+    },
+    {
+      "id": "regulars",
+      "words": [
+        "regulars",
+        "patrons",
+        "brothers",
+        "dominos",
+        "dominoes"
+      ]
+    },
+    {
+      "id": "jukebox",
+      "words": [
+        "jukebox",
+        "juke",
+        "music"
+      ]
+    },
+    {
+      "id": "b7",
+      "words": [
+        "b7"
+      ]
+    },
+    {
+      "id": "bar",
+      "words": [
+        "bar",
+        "counter"
+      ]
+    },
+    {
+      "id": "jar",
+      "words": [
+        "jar",
+        "tips"
+      ]
+    },
+    {
+      "id": "beer",
+      "words": [
+        "beer",
+        "pint",
+        "brew"
+      ]
+    },
+    {
+      "id": "dollar",
+      "words": [
+        "dollar",
+        "bill",
+        "buck",
+        "single",
+        "ones"
+      ]
+    },
+    {
+      "id": "five",
+      "words": [
+        "five",
+        "fiver"
+      ]
+    },
+    {
+      "id": "ten",
+      "words": [
+        "ten"
+      ]
+    },
+    {
+      "id": "twenty",
+      "words": [
+        "twenty"
+      ]
+    },
+    {
+      "id": "quarters",
+      "words": [
+        "quarters",
+        "quarter",
+        "coins"
+      ]
+    },
+    {
+      "id": "money",
+      "words": [
+        "money",
+        "cash"
+      ]
+    },
+    {
+      "id": "change",
+      "words": [
+        "change"
+      ]
+    },
+    {
+      "id": "bathroom",
+      "words": [
+        "bathroom",
+        "restroom",
+        "toilet",
+        "john",
+        "gents"
+      ]
+    },
+    {
+      "id": "alley",
+      "words": [
+        "alley",
+        "back"
+      ]
+    },
+    {
+      "id": "stall",
+      "words": [
+        "stall",
+        "stalls"
+      ]
+    },
+    {
+      "id": "urinal",
+      "words": [
+        "urinal"
+      ]
+    },
+    {
+      "id": "sink",
+      "words": [
+        "sink",
+        "basin"
+      ]
+    },
+    {
+      "id": "machine",
+      "words": [
+        "machine",
+        "dispenser"
+      ]
+    },
+    {
+      "id": "cologne",
+      "words": [
+        "cologne",
+        "perfume",
+        "scent",
+        "stallion"
+      ]
+    },
+    {
+      "id": "car",
+      "words": [
+        "car",
+        "buick",
+        "wreck"
+      ]
+    },
+    {
+      "id": "iron",
+      "words": [
+        "iron",
+        "crowbar"
+      ]
+    },
+    {
+      "id": "ladder",
+      "words": [
+        "ladder",
+        "fireescape",
+        "escape"
+      ]
+    },
+    {
+      "id": "umbrella",
+      "words": [
+        "umbrella",
+        "brolly"
+      ]
+    },
+    {
+      "id": "bouncer",
+      "words": [
+        "bouncer"
+      ]
+    },
+    {
+      "id": "club",
+      "words": [
+        "club",
+        "velvet",
+        "nightclub",
+        "rhino"
+      ]
+    },
+    {
+      "id": "professor",
+      "words": [
+        "professor",
+        "bum"
+      ]
+    },
+    {
+      "id": "cat",
+      "words": [
+        "cat",
+        "kitty"
+      ]
+    },
+    {
+      "id": "note",
+      "words": [
+        "note",
+        "paper",
+        "plate"
+      ]
+    },
+    {
+      "id": "matchbook",
+      "words": [
+        "matchbook",
+        "matches",
+        "match"
+      ]
+    },
+    {
+      "id": "pick",
+      "words": [
+        "pick",
+        "hairpick",
+        "pin",
+        "bobby"
+      ]
+    },
+    {
+      "id": "puddle",
+      "words": [
+        "puddle",
+        "puddles"
+      ]
+    },
+    {
+      "id": "lock",
+      "words": [
+        "lock",
+        "keyhole"
+      ]
+    },
+    {
+      "id": "vent",
+      "words": [
+        "vent",
+        "vents"
+      ]
+    },
+    {
+      "id": "tank",
+      "words": [
+        "tank"
+      ]
+    },
+    {
+      "id": "doorman",
+      "words": [
+        "doorman",
+        "porter"
+      ]
+    },
+    {
+      "id": "awning",
+      "words": [
+        "awning"
+      ]
+    },
+    {
+      "id": "cab",
+      "words": [
+        "cab",
+        "taxi"
+      ]
+    },
+    {
+      "id": "woman",
+      "words": [
+        "woman",
+        "dana",
+        "whitlock"
+      ]
+    },
+    {
+      "id": "soap",
+      "words": [
+        "soap"
+      ]
+    },
+    {
+      "id": "window",
+      "words": [
+        "window",
+        "windows"
+      ]
+    },
+    {
+      "id": "list",
+      "words": [
+        "list",
+        "songs",
+        "card"
+      ]
+    },
+    {
+      "id": "mirror",
+      "words": [
+        "mirror"
+      ]
+    },
+    {
+      "id": "towel",
+      "words": [
+        "towel",
+        "towels"
+      ]
+    },
+    {
+      "id": "table",
+      "words": [
+        "table",
+        "tables"
+      ]
+    },
+    {
+      "id": "stool",
+      "words": [
+        "stool",
+        "stools"
+      ]
+    },
+    {
+      "id": "tap",
+      "words": [
+        "tap",
+        "taps",
+        "bottles"
+      ]
+    },
+    {
+      "id": "door",
+      "words": [
+        "door",
+        "doors",
+        "doorway"
+      ]
+    },
+    {
+      "id": "building",
+      "words": [
+        "building",
+        "facade"
+      ]
+    },
+    {
+      "id": "lobby",
+      "words": [
+        "lobby",
+        "inside",
+        "hallway",
+        "elevator"
+      ]
+    },
+    {
+      "id": "trash",
+      "words": [
+        "trash",
+        "garbage",
+        "bin",
+        "dumpster",
+        "can"
+      ]
+    },
+    {
+      "id": "sign",
+      "words": [
+        "sign",
+        "neon"
+      ]
+    },
+    {
+      "id": "out",
+      "words": [
+        "out",
+        "outside",
+        "street",
+        "leave"
+      ]
+    },
+    {
+      "id": "face",
+      "words": [
+        "face"
+      ]
+    },
+    {
+      "id": "song",
+      "words": [
+        "song",
+        "record",
+        "tune"
+      ]
+    },
+    {
+      "id": "dancer",
+      "words": [
+        "dancer",
+        "burlesque",
+        "stripper",
+        "girl"
+      ]
+    },
+    {
+      "id": "guard",
+      "words": [
+        "guard",
+        "goon",
+        "thug"
+      ]
+    },
+    {
+      "id": "private",
+      "words": [
+        "private"
+      ]
+    },
+    {
+      "id": "booth",
+      "words": [
+        "booth",
+        "booths"
+      ]
+    },
+    {
+      "id": "stairs",
+      "words": [
+        "stairs",
+        "vip",
+        "rope",
+        "ropes"
+      ]
+    },
+    {
+      "id": "floor",
+      "words": [
+        "floor",
+        "tiles",
+        "dancefloor"
+      ]
+    },
+    {
+      "id": "ball",
+      "words": [
+        "ball",
+        "disco",
+        "mirrorball"
+      ]
+    },
+    {
+      "id": "stage",
+      "words": [
+        "stage",
+        "curtains"
+      ]
+    },
+    {
+      "id": "bartender",
+      "words": [
+        "mixologist"
+      ]
+    },
+    {
+      "id": "handkerchief",
+      "words": [
+        "handkerchief",
+        "hanky",
+        "hankie"
+      ]
+    },
+    {
+      "id": "chips",
+      "words": [
+        "chips",
+        "chip"
+      ]
+    },
+    {
+      "id": "knife",
+      "words": [
+        "knife",
+        "shiv"
+      ]
+    },
+    {
+      "id": "chair",
+      "words": [
+        "chair"
+      ]
+    },
+    {
+      "id": "vic",
+      "words": [
+        "vic",
+        "boss"
+      ]
+    },
+    {
+      "id": "trophy",
+      "words": [
+        "trophy",
+        "antlers",
+        "antler"
+      ]
+    },
+    {
+      "id": "cart",
+      "words": [
+        "cart"
+      ]
+    },
+    {
+      "id": "chlorine",
+      "words": [
+        "chlorine",
+        "tablets",
+        "tablet"
+      ]
+    },
+    {
+      "id": "bomb",
+      "words": [
+        "bomb"
+      ]
+    },
+    {
+      "id": "pantry",
+      "words": [
+        "pantry"
+      ]
+    },
+    {
+      "id": "phone",
+      "words": [
+        "phone",
+        "telephone"
+      ]
+    },
+    {
+      "id": "officer",
+      "words": [
+        "officer",
+        "police",
+        "cop",
+        "cops"
+      ]
+    },
+    {
+      "id": "books",
+      "words": [
+        "books",
+        "book",
+        "ledger",
+        "ledgers",
+        "drawer"
+      ]
+    },
+    {
+      "id": "desk",
+      "words": [
+        "desk",
+        "blotter"
+      ]
+    },
+    {
+      "id": "breath",
+      "words": [
+        "breath"
+      ]
+    },
+    {
+      "id": "hallway",
+      "words": [
+        "corridor"
+      ]
+    },
+    {
+      "id": "hall",
+      "words": [
+        "hall"
+      ]
+    },
+    {
+      "id": "shed",
+      "words": [
+        "shed"
+      ]
+    },
+    {
+      "id": "pool",
+      "words": [
+        "pool",
+        "water",
+        "deck"
+      ]
+    },
+    {
+      "id": "kitchen",
+      "words": [
+        "kitchen"
+      ]
+    },
+    {
+      "id": "billiard",
+      "words": [
+        "billiard"
+      ]
+    },
+    {
+      "id": "office",
+      "words": [
+        "office"
+      ]
+    },
+    {
+      "id": "clothes",
+      "words": [
+        "clothes",
+        "outfit",
+        "threads"
+      ]
+    },
+    {
+      "id": "self",
+      "words": [
+        "self",
+        "myself",
+        "me"
+      ]
+    },
+    {
+      "id": "a1",
+      "words": [
+        "a1"
+      ]
+    },
+    {
+      "id": "a2",
+      "words": [
+        "a2"
+      ]
+    },
+    {
+      "id": "a3",
+      "words": [
+        "a3"
+      ]
+    },
+    {
+      "id": "a4",
+      "words": [
+        "a4"
+      ]
+    },
+    {
+      "id": "b1",
+      "words": [
+        "b1"
+      ]
+    },
+    {
+      "id": "b2",
+      "words": [
+        "b2"
+      ]
+    },
+    {
+      "id": "b3",
+      "words": [
+        "b3"
+      ]
+    },
+    {
+      "id": "b4",
+      "words": [
+        "b4"
+      ]
+    },
+    {
+      "id": "b5",
+      "words": [
+        "b5"
+      ]
+    },
+    {
+      "id": "b6",
+      "words": [
+        "b6"
+      ]
+    },
+    {
+      "id": "b8",
+      "words": [
+        "b8"
+      ]
+    },
+    {
+      "id": "c1",
+      "words": [
+        "c1"
+      ]
+    },
+    {
+      "id": "c2",
+      "words": [
+        "c2"
+      ]
+    },
+    {
+      "id": "c3",
+      "words": [
+        "c3"
+      ]
+    },
+    {
+      "id": "c4",
+      "words": [
+        "c4"
+      ]
+    },
+    {
+      "id": "d1",
+      "words": [
+        "d1"
+      ]
+    },
+    {
+      "id": "d2",
+      "words": [
+        "d2"
+      ]
+    },
+    {
+      "id": "d3",
+      "words": [
+        "d3"
+      ]
+    },
+    {
+      "id": "d4",
+      "words": [
+        "d4"
+      ]
+    },
+    {
+      "id": "rope",
+      "words": [
+        "ropeWord"
+      ]
+    },
+    {
+      "id": "drink",
+      "words": [
+        "drink"
+      ]
+    },
+    {
+      "id": "around",
+      "words": [
+        "around"
+      ]
+    },
+    {
+      "id": "room",
+      "words": [
+        "room"
+      ]
+    },
+    {
+      "id": "down",
+      "words": [
+        "down"
+      ]
+    },
+    {
+      "id": "off",
+      "words": [
+        "off"
+      ]
+    },
+    {
+      "id": "no",
+      "words": [
+        "no"
+      ]
+    },
+    {
+      "id": "help",
+      "words": [
+        "help"
+      ]
+    },
+    {
+      "id": "exit",
+      "words": [
+        "exit"
+      ]
+    },
+    {
+      "id": "back",
+      "words": [
+        "backWord"
+      ]
+    },
+    {
+      "id": "seat",
+      "words": [
+        "seat"
+      ]
+    },
+    {
+      "id": "bottle",
+      "words": [
+        "bottle"
+      ]
+    },
+    {
+      "id": "booze",
+      "words": [
+        "booze"
+      ]
+    },
+    {
+      "id": "liquor",
+      "words": [
+        "liquor"
+      ]
+    },
+    {
+      "id": "shelf",
+      "words": [
+        "shelf"
+      ]
+    },
+    {
+      "id": "rusty nail",
+      "words": [
+        "rusty nail"
+      ]
+    },
+    {
+      "id": "lamp",
+      "words": [
+        "lamp"
+      ]
+    },
+    {
+      "id": "lamps",
+      "words": [
+        "lamps"
+      ]
+    },
+    {
+      "id": "light",
+      "words": [
+        "light"
+      ]
+    },
+    {
+      "id": "lights",
+      "words": [
+        "lights"
+      ]
+    },
+    {
+      "id": "stall 1",
+      "words": [
+        "stall 1"
+      ]
+    },
+    {
+      "id": "first stall",
+      "words": [
+        "first stall"
+      ]
+    },
+    {
+      "id": "stall 2",
+      "words": [
+        "stall 2"
+      ]
+    },
+    {
+      "id": "second stall",
+      "words": [
+        "second stall"
+      ]
+    },
+    {
+      "id": "vending machine",
+      "words": [
+        "vending machine"
+      ]
+    },
+    {
+      "id": "bar of soap",
+      "words": [
+        "bar of soap"
+      ]
+    },
+    {
+      "id": "trash can",
+      "words": [
+        "trash can"
+      ]
+    },
+    {
+      "id": "velvet sign",
+      "words": [
+        "velvet sign"
+      ]
+    },
+    {
+      "id": "rhino sign",
+      "words": [
+        "rhino sign"
+      ]
+    },
+    {
+      "id": "fire escape",
+      "words": [
+        "fire escape"
+      ]
+    },
+    {
+      "id": "box",
+      "words": [
+        "box"
+      ]
+    },
+    {
+      "id": "cardboard",
+      "words": [
+        "cardboard"
+      ]
+    },
+    {
+      "id": "streetlight",
+      "words": [
+        "streetlight"
+      ]
+    },
+    {
+      "id": "street light",
+      "words": [
+        "street light"
+      ]
+    },
+    {
+      "id": "alley mouth",
+      "words": [
+        "alley mouth"
+      ]
+    },
+    {
+      "id": "road",
+      "words": [
+        "road"
+      ]
+    },
+    {
+      "id": "man",
+      "words": [
+        "man"
+      ]
+    },
+    {
+      "id": "rack",
+      "words": [
+        "rack"
+      ]
+    },
+    {
+      "id": "coat",
+      "words": [
+        "coat"
+      ]
+    }
+  ],
+  "rooms": {
+    "bar": {
+      "man": "sal",
+      "tank": "bouncer",
+      "doorman": "bouncer",
+      "machine": "jukebox",
+      "rope": "stairs"
+    },
+    "bathroom": {
+      "man": "sal",
+      "tank": "bouncer",
+      "doorman": "bouncer",
+      "rope": "stairs"
+    },
+    "alley": {
+      "man": "professor",
+      "tank": "bouncer",
+      "doorman": "bouncer",
+      "machine": "jukebox",
+      "rope": "stairs"
+    },
+    "club": {
+      "man": "guard",
+      "tank": "bouncer",
+      "doorman": "bouncer",
+      "sal": "mixologist",
+      "machine": "jukebox",
+      "rope": "stairs"
+    },
+    "rooftop": {
+      "man": "sal",
+      "doorman": "bouncer",
+      "machine": "jukebox",
+      "rope": "stairs"
+    },
+    "street": {
+      "man": "doorman",
+      "tank": "bouncer",
+      "machine": "jukebox",
+      "rope": "stairs"
+    },
+    "billiard": {
+      "man": "guard",
+      "tank": "bouncer",
+      "doorman": "bouncer",
+      "machine": "jukebox",
+      "hallway": "corridor",
+      "stairs": "rope",
+      "vip": "rope",
+      "ropes": "rope"
+    },
+    "deck": {
+      "man": "sal",
+      "tank": "bouncer",
+      "doorman": "bouncer",
+      "machine": "jukebox",
+      "hallway": "corridor",
+      "stairs": "rope",
+      "vip": "rope",
+      "ropes": "rope"
+    },
+    "hall": {
+      "man": "sal",
+      "tank": "bouncer",
+      "doorman": "bouncer",
+      "machine": "jukebox",
+      "hallway": "corridor",
+      "stairs": "rope",
+      "vip": "rope",
+      "ropes": "rope"
+    },
+    "kitchen": {
+      "man": "sal",
+      "tank": "bouncer",
+      "doorman": "bouncer",
+      "machine": "jukebox",
+      "hallway": "corridor",
+      "stairs": "rope",
+      "vip": "rope",
+      "ropes": "rope"
+    },
+    "hallway": {
+      "man": "sal",
+      "tank": "bouncer",
+      "doorman": "bouncer",
+      "machine": "jukebox",
+      "hallway": "corridor",
+      "stairs": "rope",
+      "vip": "rope",
+      "ropes": "rope"
+    },
+    "office": {
+      "man": "sal",
+      "tank": "bouncer",
+      "doorman": "bouncer",
+      "machine": "jukebox",
+      "hallway": "corridor",
+      "stairs": "rope",
+      "vip": "rope",
+      "ropes": "rope"
+    }
+  },
+  "unknownWord": "I don't know the word '{word}'.",
+  "unknownCommand": "I don't understand that.",
+  "bare": {
+    "go": "out"
+  }
+}
