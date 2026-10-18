@@ -12,7 +12,29 @@
       206
     ]
   },
-  "exits": [],
+  "exits": [
+    {
+      "id": "doorway",
+      "trigger": [
+        24,
+        198,
+        24,
+        12
+      ],
+      "to": "bar",
+      "spawn": "fromBathroom",
+      "rect": [
+        16,
+        70,
+        48,
+        126
+      ],
+      "approach": [
+        36,
+        204
+      ]
+    }
+  ],
   "hotspots": [
     {
       "id": "doorway",

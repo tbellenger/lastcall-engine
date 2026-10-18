@@ -488,6 +488,41 @@ function clamp(n, lo, hi) {
   return Math.max(lo, Math.min(hi, n | 0));
 }
 
+function engineExits(doc) {
+  const exits = [];
+  for (const exit of doc.exits || []) {
+    if (exit.blocked && !exit.to) {
+      if (!exit.rect) continue;
+      // The alley mouth is a sign high on the wall. Its line stays on the go rule.
+      const bottom = exit.rect[1] + exit.rect[3];
+      if (bottom < 160) continue;
+      exits.push({
+        id: exit.id,
+        trigger: exit.rect,
+        to: doc.id,
+        spawn: "default",
+        blockedIf: `room:${doc.id}`,
+        blockedText: exit.blocked,
+        rect: exit.rect,
+      });
+      continue;
+    }
+    if (!exit.to || exit.to === "blocked" || !exit.trigger) continue;
+    const entry = {
+      id: exit.id,
+      trigger: exit.trigger,
+      to: exit.to,
+      spawn: exit.spawn || "default",
+    };
+    if (exit.rect) entry.rect = exit.rect;
+    if (exit.approach) entry.approach = exit.approach;
+    // The live game runs `go out` for a club doorway so the chase rules apply.
+    if (doc.id === "club") entry.command = "go out";
+    exits.push(entry);
+  }
+  return exits;
+}
+
 function standOf(hotspot) {
   const point = hotspot.interact || hotspot.approach;
   if (!point) return null;
@@ -785,7 +820,7 @@ for (const id of ROOMS) {
     name: doc.name,
     look: doc.look || doc.name,
     spawns,
-    exits: [],
+    exits: engineExits(doc),
     hotspots,
     actors: [],
     props: [],

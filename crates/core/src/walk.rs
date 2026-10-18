@@ -54,6 +54,30 @@ fn at_command(
         "expect" => expect(engine, line_no, args),
         "walk" => walk_dir(engine, line_no, args),
         "walkto" => walk_to(engine, line_no, args),
+        "settle" => {
+            let mut dismissed = 0u32;
+            for _ in 0..4_000 {
+                let mut ticks = 0;
+                while engine.route_active() {
+                    engine.step(1);
+                    ticks += 1;
+                    if ticks > 1_800 {
+                        return Err(fail(line_no, "settle walk timed out"));
+                    }
+                }
+                if !engine.presenting() {
+                    return Ok(());
+                }
+                if dismissed >= 80 {
+                    return Ok(());
+                }
+                match engine.dismiss_narration() {
+                    Ok(()) => dismissed += 1,
+                    Err(_) => engine.step(1),
+                }
+            }
+            Err(fail(line_no, "narration did not settle"))
+        }
         "wait" => {
             let ticks: u32 = args
                 .parse()

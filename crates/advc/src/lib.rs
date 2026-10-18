@@ -190,6 +190,52 @@ fn run_parity(bytes: &[u8], dir: &Path, game_dir: &Path, update: bool) -> Result
                 engine.interrupt_line(line);
             } else if let Some(line) = &step.cmd {
                 engine.submit_line(line);
+            } else if let Some(target) = &step.walkto {
+                let (x, y) = if let Some(id) = target.strip_prefix("exit:") {
+                    engine.exit_target(id).ok_or_else(|| {
+                        Error::msg(format!(
+                            "{} step {}: no target for exit {id}",
+                            path.display(),
+                            index + 1
+                        ))
+                    })?
+                } else {
+                    let (x, y) = target.split_once(',').ok_or_else(|| {
+                        Error::msg(format!(
+                            "{} step {}: walkto expects x,y or exit:id",
+                            path.display(),
+                            index + 1
+                        ))
+                    })?;
+                    (
+                        x.trim()
+                            .parse::<i32>()
+                            .map_err(|err| Error::msg(err.to_string()))?,
+                        y.trim()
+                            .parse::<i32>()
+                            .map_err(|err| Error::msg(err.to_string()))?,
+                    )
+                };
+                engine.script_walk_to(x, y).map_err(|err| {
+                    Error::msg(format!("{} step {}: {err}", path.display(), index + 1))
+                })?;
+                finish_motion(&mut engine);
+            } else if let Some([x, y]) = step.tap {
+                engine.input(lastcall_core::Input::Tap { x, y });
+                finish_motion(&mut engine);
+            } else if let Some(spec) = &step.dir {
+                let mut parts = spec.split_whitespace();
+                let name = parts.next().unwrap_or("");
+                let ticks: u32 = parts.next().unwrap_or("0").parse().unwrap_or(0);
+                let dir = lastcall_core::model::Dir::from_name(name).ok_or_else(|| {
+                    Error::msg(format!(
+                        "{} step {}: unknown direction {name}",
+                        path.display(),
+                        index + 1
+                    ))
+                })?;
+                engine.force_walk(dir, ticks);
+                engine.step(ticks);
             }
             let limit = step
                 .dismiss
@@ -408,6 +454,15 @@ struct ParityStep {
     ending: Option<String>,
     #[serde(default)]
     shot: Option<String>,
+    /// Walk to `x,y` or `exit:<id>` before checking this step.
+    #[serde(default)]
+    walkto: Option<String>,
+    /// Click the picture at view pixels.
+    #[serde(default)]
+    tap: Option<[i32; 2]>,
+    /// Hold an arrow. `n 40` walks north for 40 ticks.
+    #[serde(default)]
+    dir: Option<String>,
 }
 
 fn load_dir(dir: &Path) -> Result<PackageParts> {

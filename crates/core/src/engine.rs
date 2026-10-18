@@ -168,18 +168,15 @@ impl Engine {
         match event {
             Input::KeyDown { key } => self.key_down(&key),
             Input::KeyUp { .. } => {}
-            Input::Char { ch } if !self.locked() => {
+            Input::Char { ch } => {
                 for c in ch.chars().filter(|c| !c.is_control()) {
                     self.input_line.push(c);
                 }
             }
-            Input::Char { .. } => {}
-            Input::Backspace if !self.locked() => {
+            Input::Backspace => {
                 self.input_line.pop();
             }
-            Input::Backspace => {}
-            Input::SetLine { text } if !self.locked() => self.input_line = text,
-            Input::SetLine { .. } => {}
+            Input::SetLine { text } => self.input_line = text,
             Input::Submit => self.submit(),
             Input::Dismiss => {
                 if matches!(self.active, Active::Saying) {
@@ -463,9 +460,6 @@ impl Engine {
     pub fn exit_target(&self, id: &str) -> Option<(i32, i32)> {
         let room = &self.pkg.rooms[&self.world.room];
         let exit = room.def.exits.iter().find(|ex| ex.id == id)?;
-        if let Some(approach) = exit.approach {
-            return Some((approach[0], approach[1]));
-        }
         let w = SCREEN_W as i32;
         let h = SCREEN_H as i32;
         let mut best: Option<(i64, i32, i32)> = None;
@@ -1202,21 +1196,48 @@ impl Engine {
         if self.locked() || self.world.held {
             return;
         }
-        let w = SCREEN_W as i32;
-        let h = SCREEN_H as i32;
-        let mask = &self.pkg.rooms[&self.world.room].walk;
-        let Some(goal) = nearest_walkable(mask, w, h, x, y, 24) else {
-            return;
+        let goal = if let Some(door) = self.exit_click_target(x, y) {
+            door
+        } else {
+            let w = SCREEN_W as i32;
+            let h = SCREEN_H as i32;
+            let mask = &self.pkg.rooms[&self.world.room].walk;
+            let Some(spot) = nearest_walkable(mask, w, h, x, y, 24) else {
+                return;
+            };
+            spot
         };
-        if let RoutePlan::Path(points) = self.plan_route(goal.0, goal.1) {
-            self.walk_dir = None;
-            self.route = Some(Route {
-                points,
-                index: 0,
-                stuck: 0,
-            });
-            self.route_is_effect = false;
+        match self.plan_route(goal.0, goal.1) {
+            RoutePlan::Path(points) => {
+                self.walk_dir = None;
+                self.route = Some(Route {
+                    points,
+                    index: 0,
+                    stuck: 0,
+                });
+                self.route_is_effect = false;
+            }
+            RoutePlan::AlreadyThere => self.check_exits(),
+            RoutePlan::Unreachable => {}
         }
+    }
+
+    /// A click on a door picture walks to a floor pixel inside that exit's trigger.
+    fn exit_click_target(&self, x: i32, y: i32) -> Option<(i32, i32)> {
+        let exits = self.pkg.rooms[&self.world.room].def.exits.clone();
+        for exit in exits {
+            if let Some(cond) = &exit.blocked_if {
+                if self.reqs_ok(std::slice::from_ref(cond)) {
+                    continue;
+                }
+            }
+            let rect = exit.rect.unwrap_or(exit.trigger);
+            if !point_in_rect(x, y, rect) {
+                continue;
+            }
+            return self.exit_target(&exit.id);
+        }
+        None
     }
 
     fn free_move(&mut self) {
@@ -1387,35 +1408,65 @@ impl Engine {
         }
     }
 
+    fn stop_travel(&mut self) {
+        self.route = None;
+        self.route_is_effect = false;
+        self.walk_dir = None;
+        self.forced_ticks = 0;
+        if matches!(self.active, Active::Walking) {
+            self.active = Active::Idle;
+        }
+    }
+
     fn check_exits(&mut self) {
         let (px, py) = self.hero_px();
         let exits = self.pkg.rooms[&self.world.room].def.exits.clone();
         let inside = exits
             .into_iter()
             .find(|exit| point_in_rect(px, py, exit.trigger));
-        if let Some(exit) = inside {
-            if self.overlap.as_deref() == Some(exit.id.as_str()) {
+        let Some(exit) = inside else {
+            self.overlap = None;
+            return;
+        };
+        if self.overlap.as_deref() == Some(exit.id.as_str()) {
+            return;
+        }
+        self.overlap = Some(exit.id.clone());
+        if let Some(cond) = &exit.blocked_if {
+            if self.reqs_ok(std::slice::from_ref(cond)) {
+                self.stop_travel();
+                let text = exit
+                    .blocked_text
+                    .clone()
+                    .unwrap_or_else(|| "You can't go that way.".into());
+                self.force_say(text);
                 return;
             }
-            self.overlap = Some(exit.id);
-            if let Some(cond) = &exit.blocked_if {
-                if self.reqs_ok(std::slice::from_ref(cond)) {
-                    let text = exit
-                        .blocked_text
-                        .clone()
-                        .unwrap_or_else(|| "You can't go that way.".into());
-                    self.force_say(text);
-                    return;
-                }
-            }
-            let room = exit.to.clone();
-            let spawn = exit.spawn.clone();
-            if self.place(&room, &spawn).is_ok() {
-                self.queue_on_enter();
-                self.pump();
-            }
-        } else {
-            self.overlap = None;
+        }
+        if let Some(command) = exit.command.clone() {
+            self.stop_travel();
+            self.run_command(&command);
+            return;
+        }
+        let saved_verb = self.hook_verb.clone();
+        let saved_noun = self.hook_noun.clone();
+        let saved_second = self.hook_second.clone();
+        self.hook_verb = "exit".into();
+        self.hook_noun = exit.to.clone();
+        self.hook_second = exit.id.clone();
+        let handled = self.hook_handles("exit");
+        self.hook_verb = saved_verb;
+        self.hook_noun = saved_noun;
+        self.hook_second = saved_second;
+        if handled {
+            self.stop_travel();
+            self.pump();
+            return;
+        }
+        self.stop_travel();
+        if self.place(&exit.to, &exit.spawn).is_ok() {
+            self.queue_on_enter();
+            self.pump();
         }
     }
 
@@ -1626,6 +1677,7 @@ impl Engine {
             "cutscene_end" => self.pkg.game.hooks.cutscene_end.clone(),
             "cutscene_command" => self.pkg.game.hooks.cutscene_command.clone(),
             "after" => self.pkg.game.hooks.after.clone(),
+            "exit" => self.pkg.game.hooks.exit.clone(),
             _ => None,
         };
         match name {

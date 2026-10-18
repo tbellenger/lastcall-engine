@@ -12,7 +12,25 @@
       196
     ]
   },
-  "exits": [],
+  "exits": [
+    {
+      "id": "to_billiard",
+      "trigger": [
+        150,
+        202,
+        80,
+        10
+      ],
+      "to": "billiard",
+      "spawn": "fromDeck",
+      "rect": [
+        120,
+        20,
+        120,
+        70
+      ]
+    }
+  ],
   "hotspots": [
     {
       "id": "pool",

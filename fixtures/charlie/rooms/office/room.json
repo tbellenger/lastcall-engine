@@ -8,7 +8,25 @@
       206
     ]
   },
-  "exits": [],
+  "exits": [
+    {
+      "id": "to_hallway",
+      "trigger": [
+        16,
+        196,
+        28,
+        12
+      ],
+      "to": "hallway",
+      "spawn": "fromOffice",
+      "rect": [
+        8,
+        40,
+        48,
+        154
+      ]
+    }
+  ],
   "hotspots": [
     {
       "id": "dana",

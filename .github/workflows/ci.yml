@@ -54,6 +54,7 @@ jobs:
           npm ci
           npm run typecheck
           npm run build
+          npm run build:bundle
       - name: Browser smoke
         working-directory: web
         run: |
