@@ -20,7 +20,59 @@
       188
     ]
   },
-  "exits": [],
+  "exits": [
+    {
+      "id": "to_hallway",
+      "trigger": [
+        24,
+        178,
+        28,
+        12
+      ],
+      "to": "hallway",
+      "spawn": "fromHall",
+      "rect": [
+        12,
+        40,
+        56,
+        136
+      ]
+    },
+    {
+      "id": "to_kitchen",
+      "trigger": [
+        316,
+        180,
+        32,
+        12
+      ],
+      "to": "kitchen",
+      "spawn": "default",
+      "rect": [
+        316,
+        56,
+        34,
+        134
+      ]
+    },
+    {
+      "id": "to_billiard",
+      "trigger": [
+        150,
+        190,
+        60,
+        10
+      ],
+      "to": "billiard",
+      "spawn": "fromHall",
+      "rect": [
+        120,
+        186,
+        120,
+        16
+      ]
+    }
+  ],
   "hotspots": [
     {
       "id": "rack",

@@ -78,12 +78,20 @@
 }
 
 .lastcall-player #line {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 44px;
-  opacity: 0;
-  font-size: 16px;
-  border: 0;
+  position: relative;
+  width: min(100%, calc(384px * var(--scale, 2)));
+  height: 32px;
+  margin: 0;
+  padding: 4px 8px;
+  box-sizing: border-box;
+  background: #000;
+  color: #f0d878;
+  caret-color: #f0d878;
+  border: 1px solid #3a3648;
+  font: 16px/1.2 ui-monospace, ui-sans-serif, monospace;
+}
+
+.lastcall-player #line:focus {
+  outline: 1px solid #f0d878;
+  outline-offset: 1px;
 }

@@ -24,6 +24,7 @@ playwright/.cache/
 # Snapshot failures (golden hashes and PNGs are committed)
 fixtures/**/snapshots/_actual/
 fixtures/**/snapshots/_diff/
+fixtures/**/snapshots/_saves/
 
 # Secrets and local env
 .env

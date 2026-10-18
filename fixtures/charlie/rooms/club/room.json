@@ -12,7 +12,30 @@
       206
     ]
   },
-  "exits": [],
+  "exits": [
+    {
+      "id": "alley_exit",
+      "trigger": [
+        70,
+        204,
+        80,
+        10
+      ],
+      "to": "alley",
+      "spawn": "fromClub",
+      "rect": [
+        40,
+        200,
+        160,
+        16
+      ],
+      "approach": [
+        110,
+        208
+      ],
+      "command": "go out"
+    }
+  ],
   "hotspots": [
     {
       "id": "dancer",

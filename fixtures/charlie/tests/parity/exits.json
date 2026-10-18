@@ -1,0 +1,126 @@
+{
+  "steps": [
+    {
+      "tap": [216, 126],
+      "lines": [
+        "You step into the gents. The storm is only a rumor through the vent."
+      ],
+      "score": 0,
+      "room": "bathroom",
+      "flags": [],
+      "items": {
+        "twenty": 1,
+        "dollar": 3
+      },
+      "vars": {
+        "clockClub": 0,
+        "clockAlley": 0,
+        "thug": 0,
+        "police": 0
+      },
+      "dead": false,
+      "ending": null
+    },
+    {
+      "dir": "w 160",
+      "lines": [
+        "Thunder rolls a long way off. Rain ticks the bar windows."
+      ],
+      "score": 0,
+      "room": "bar",
+      "flags": [
+        "heardThunder"
+      ],
+      "items": {
+        "twenty": 1,
+        "dollar": 3
+      },
+      "vars": {
+        "clockClub": 0,
+        "clockAlley": 0,
+        "thug": 0,
+        "police": 0
+      },
+      "dead": false,
+      "ending": null
+    },
+    {
+      "walkto": "exit:alley_door",
+      "lines": [
+        "The storm has broken. Rain comes down hard enough to bounce.",
+        "Charlie squints. The red cardigan. The pencil in the bun. That's Dana Whitlock from Accounts. She signed off on his expenses this morning.",
+        "Charlie has two options: call it a night, or find out why Dana from Accounts is being dragged into a nightclub. Unfortunately for him, he's the curious type.",
+        "As the sedan pulls away, something small tumbles from a goon's pocket and lands in a puddle near the Purple Rhino door."
+      ],
+      "score": 4,
+      "room": "alley",
+      "flags": [
+        "heardThunder",
+        "matchbookHere",
+        "seenCutscene"
+      ],
+      "items": {
+        "twenty": 1,
+        "dollar": 3
+      },
+      "vars": {
+        "clockClub": 0,
+        "clockAlley": 0,
+        "thug": 0,
+        "police": 0
+      },
+      "dead": false,
+      "ending": null
+    },
+    {
+      "walkto": "exit:nail_door",
+      "lines": [
+        "You step back into the Rusty Nail."
+      ],
+      "score": 4,
+      "room": "bar",
+      "flags": [
+        "heardThunder",
+        "matchbookHere",
+        "seenCutscene"
+      ],
+      "items": {
+        "twenty": 1,
+        "dollar": 3
+      },
+      "vars": {
+        "clockClub": 0,
+        "clockAlley": 0,
+        "thug": 0,
+        "police": 0
+      },
+      "dead": false,
+      "ending": null
+    },
+    {
+      "walkto": "exit:front_exit",
+      "lines": [
+        "It's even hotter out there. You've come too far to turn back now."
+      ],
+      "score": 4,
+      "room": "bar",
+      "flags": [
+        "heardThunder",
+        "matchbookHere",
+        "seenCutscene"
+      ],
+      "items": {
+        "twenty": 1,
+        "dollar": 3
+      },
+      "vars": {
+        "clockClub": 0,
+        "clockAlley": 0,
+        "thug": 0,
+        "police": 0
+      },
+      "dead": false,
+      "ending": null
+    }
+  ]
+}

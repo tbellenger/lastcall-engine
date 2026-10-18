@@ -16,7 +16,29 @@
       200
     ]
   },
-  "exits": [],
+  "exits": [
+    {
+      "id": "nail_door",
+      "trigger": [
+        258,
+        188,
+        24,
+        12
+      ],
+      "to": "bar",
+      "spawn": "fromAlley",
+      "rect": [
+        250,
+        48,
+        48,
+        138
+      ],
+      "approach": [
+        270,
+        194
+      ]
+    }
+  ],
   "hotspots": [
     {
       "id": "nail_door",

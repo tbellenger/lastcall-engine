@@ -16,7 +16,42 @@
       206
     ]
   },
-  "exits": [],
+  "exits": [
+    {
+      "id": "to_office",
+      "trigger": [
+        320,
+        196,
+        28,
+        12
+      ],
+      "to": "office",
+      "spawn": "default",
+      "rect": [
+        300,
+        40,
+        70,
+        154
+      ]
+    },
+    {
+      "id": "to_hall",
+      "trigger": [
+        16,
+        204,
+        24,
+        10
+      ],
+      "to": "hall",
+      "spawn": "fromHallway",
+      "rect": [
+        0,
+        196,
+        40,
+        20
+      ]
+    }
+  ],
   "hotspots": [
     {
       "id": "guard",

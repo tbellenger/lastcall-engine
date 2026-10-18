@@ -16,7 +16,42 @@
       204
     ]
   },
-  "exits": [],
+  "exits": [
+    {
+      "id": "to_hall",
+      "trigger": [
+        28,
+        190,
+        28,
+        12
+      ],
+      "to": "hall",
+      "spawn": "fromBilliard",
+      "rect": [
+        12,
+        50,
+        56,
+        138
+      ]
+    },
+    {
+      "id": "to_deck",
+      "trigger": [
+        300,
+        190,
+        36,
+        12
+      ],
+      "to": "deck",
+      "spawn": "fromBilliard",
+      "rect": [
+        270,
+        30,
+        100,
+        150
+      ]
+    }
+  ],
   "hotspots": [
     {
       "id": "door",

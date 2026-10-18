@@ -55,6 +55,7 @@ export function mountPlayer(el: HTMLElement, options: MountOptions = {}): Promis
   const canvasContext = context;
   const canvas = screen;
   const title = titleCard;
+  const commandLine = command;
 
   const charlieAudio = new CharlieAudio();
   const cleanups: Array<() => void> = [];
@@ -84,8 +85,29 @@ export function mountPlayer(el: HTMLElement, options: MountOptions = {}): Promis
     }
   }
 
-  function hideTitle(): void {
+  function focusLine(): void {
+    commandLine.focus({ preventScroll: true });
+  }
+
+  function dismissTitle(): void {
     title.hidden = true;
+    focusLine();
+  }
+
+  function hostOwnsKeys(): boolean {
+    const active = document.activeElement;
+    if (!(active instanceof HTMLElement)) {
+      return false;
+    }
+    if (active === command || active === document.body) {
+      return false;
+    }
+    const field = active.closest("input, textarea, select, button, a, [contenteditable='true']");
+    return field !== null && !el.contains(field);
+  }
+
+  function isPrintable(ev: KeyboardEvent): boolean {
+    return ev.key.length === 1 && !ev.ctrlKey && !ev.metaKey && !ev.altKey;
   }
 
   function fit(): void {
@@ -202,33 +224,72 @@ export function mountPlayer(el: HTMLElement, options: MountOptions = {}): Promis
         }
       };
 
-      const onPointer = (ev: Event): void => {
+      const onPointerDown = (ev: Event): void => {
         unlock();
-        hideTitle();
         const target = ev.target;
         if (!(target instanceof Element)) {
+          return;
+        }
+        if (!page && !el.contains(target)) {
           return;
         }
         if (target.closest("button")) {
           return;
         }
-        if (target === screen) {
+        const foreign = target.closest("input, textarea, select, [contenteditable='true']");
+        if (foreign && foreign !== command) {
+          return;
+        }
+        if (!title.hidden) {
+          ev.preventDefault();
+          dismissTitle();
+          queueMicrotask(() => focusLine());
+          return;
+        }
+        if (target === canvas) {
+          ev.preventDefault();
           const pointer = ev as PointerEvent;
-          const rect = screen.getBoundingClientRect();
+          const rect = canvas.getBoundingClientRect();
           const x = Math.floor(((pointer.clientX - rect.left) * WIDTH) / rect.width);
           const y = Math.floor(((pointer.clientY - rect.top) * HEIGHT) / rect.height);
           send({ type: "tap", x, y });
           void pump();
+        } else if (target !== command) {
+          ev.preventDefault();
+        }
+        queueMicrotask(() => focusLine());
+      };
+
+      const onPointerUp = (ev: Event): void => {
+        const target = ev.target;
+        if (!(target instanceof Element)) {
           return;
         }
-        command.focus();
+        if (!page && !el.contains(target)) {
+          return;
+        }
+        if (target.closest("button")) {
+          return;
+        }
+        const foreign = target.closest("input, textarea, select, [contenteditable='true']");
+        if (foreign && foreign !== command) {
+          return;
+        }
+        if (title.hidden) {
+          focusLine();
+        }
       };
 
       const onKey = (ev: Event): void => {
         const keyEvent = ev as KeyboardEvent;
+        if (hostOwnsKeys()) {
+          return;
+        }
         unlock();
-        hideTitle();
-        if (keyEvent.repeat) {
+        if (!title.hidden && (isPrintable(keyEvent) || keyEvent.key === "Enter" || keyEvent.key === "Backspace")) {
+          dismissTitle();
+        }
+        if (keyEvent.repeat && keyEvent.key !== "Backspace") {
           return;
         }
         const arrows: Record<string, string> = {
@@ -246,9 +307,27 @@ export function mountPlayer(el: HTMLElement, options: MountOptions = {}): Promis
         }
         if (keyEvent.key === "Enter") {
           keyEvent.preventDefault();
+          focusLine();
           send({ type: "set_line", text: command.value });
           send({ type: "submit" });
           command.value = "";
+          send({ type: "set_line", text: "" });
+          void pump();
+          return;
+        }
+        if (isPrintable(keyEvent) && document.activeElement !== command) {
+          keyEvent.preventDefault();
+          focusLine();
+          command.value += keyEvent.key;
+          send({ type: "set_line", text: command.value });
+          void pump();
+          return;
+        }
+        if (keyEvent.key === "Backspace" && document.activeElement !== command) {
+          keyEvent.preventDefault();
+          focusLine();
+          command.value = command.value.slice(0, -1);
+          send({ type: "set_line", text: command.value });
           void pump();
           return;
         }
@@ -271,10 +350,12 @@ export function mountPlayer(el: HTMLElement, options: MountOptions = {}): Promis
 
       const pointerTarget: EventTarget = page ? document : el;
       const keyTarget: EventTarget = page ? window : el;
-      pointerTarget.addEventListener("pointerdown", onPointer);
+      pointerTarget.addEventListener("pointerdown", onPointerDown);
+      pointerTarget.addEventListener("pointerup", onPointerUp);
       keyTarget.addEventListener("keydown", onKey);
       cleanups.push(() => {
-        pointerTarget.removeEventListener("pointerdown", onPointer);
+        pointerTarget.removeEventListener("pointerdown", onPointerDown);
+        pointerTarget.removeEventListener("pointerup", onPointerUp);
         keyTarget.removeEventListener("keydown", onKey);
       });
 
@@ -329,6 +410,9 @@ export function mountPlayer(el: HTMLElement, options: MountOptions = {}): Promis
 
       await pump();
       paint(engine, wasm);
+      if (title.hidden) {
+        focusLine();
+      }
 
       let acc = 0;
       let last = performance.now();
@@ -389,5 +473,5 @@ function markup(): string {
         `<button type="button" data-save="${slot}">Save ${slot}</button><button type="button" data-load="${slot}">Load ${slot}</button>`,
     )
     .join("");
-  return `<div class="stage"><canvas id="screen" width="384" height="216" role="img" aria-label="Game picture"></canvas><img id="title" alt="Charlie: Last Call" hidden /></div><p id="live" aria-live="polite"></p><div class="bar">${slots}<button type="button" id="autosave">Load autosave</button><span id="note"></span></div><input id="line" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Command line" />`;
+  return `<div class="stage"><canvas id="screen" width="384" height="216" role="img" aria-label="Game picture"></canvas><img id="title" alt="Charlie: Last Call" hidden /></div><input id="line" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Command line" /><p id="live" aria-live="polite"></p><div class="bar">${slots}<button type="button" id="autosave">Load autosave</button><span id="note"></span></div>`;
 }

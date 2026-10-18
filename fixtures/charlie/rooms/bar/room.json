@@ -16,7 +16,69 @@
       196
     ]
   },
-  "exits": [],
+  "exits": [
+    {
+      "id": "gents_door",
+      "trigger": [
+        204,
+        178,
+        22,
+        12
+      ],
+      "to": "bathroom",
+      "spawn": "fromBar",
+      "rect": [
+        198,
+        72,
+        36,
+        108
+      ],
+      "approach": [
+        215,
+        190
+      ]
+    },
+    {
+      "id": "alley_door",
+      "trigger": [
+        252,
+        178,
+        22,
+        12
+      ],
+      "to": "alley",
+      "spawn": "fromBar",
+      "rect": [
+        248,
+        72,
+        36,
+        108
+      ],
+      "approach": [
+        263,
+        190
+      ]
+    },
+    {
+      "id": "front_exit",
+      "trigger": [
+        0,
+        210,
+        384,
+        8
+      ],
+      "to": "bar",
+      "spawn": "default",
+      "blockedIf": "room:bar",
+      "blockedText": "It's even hotter out there. You've come too far to turn back now.",
+      "rect": [
+        0,
+        210,
+        384,
+        8
+      ]
+    }
+  ],
   "hotspots": [
     {
       "id": "gents_door",
