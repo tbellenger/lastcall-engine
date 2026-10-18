@@ -70,6 +70,7 @@
           "costume": { "type": "string" },
           "anim": { "type": "string" },
           "priorityOverride": { "type": "integer", "minimum": 0, "maximum": 255 },
+          "occlude": { "type": "string", "minLength": 1 },
           "states": {
             "type": "array",
             "items": {
@@ -95,6 +96,7 @@
           "id": { "type": "string", "minLength": 1 },
           "pos": { "$ref": "point.schema.json" },
           "showIf": { "type": "string" },
+          "req": { "type": "array", "items": { "type": "string" } },
           "priority": { "type": "integer", "minimum": 0, "maximum": 255 },
           "frame": { "$ref": "frame.schema.json" }
         }

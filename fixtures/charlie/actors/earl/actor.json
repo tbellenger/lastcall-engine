@@ -1,0 +1,134 @@
+{
+  "id": "earl",
+  "costumes": {
+    "default": {
+      "sheets": [
+        {
+          "sheet": "stand_s.png",
+          "frameW": 146,
+          "frameH": 146,
+          "ax": 73,
+          "ay": 127,
+          "animations": {
+            "stand_s": {
+              "fps": 1,
+              "loop": false,
+              "frames": [
+                0
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "stand_w.png",
+          "frameW": 146,
+          "frameH": 146,
+          "ax": 73,
+          "ay": 129,
+          "animations": {
+            "stand_w": {
+              "fps": 1,
+              "loop": false,
+              "frames": [
+                0
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "stand_e.png",
+          "frameW": 146,
+          "frameH": 146,
+          "ax": 73,
+          "ay": 129,
+          "animations": {
+            "stand_e": {
+              "fps": 1,
+              "loop": false,
+              "frames": [
+                0
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "stand_n.png",
+          "frameW": 146,
+          "frameH": 146,
+          "ax": 73,
+          "ay": 127,
+          "animations": {
+            "stand_n": {
+              "fps": 1,
+              "loop": false,
+              "frames": [
+                0
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "seated_idle_OLD_EARL.png",
+          "frameW": 172,
+          "frameH": 172,
+          "ax": 86,
+          "ay": 148,
+          "animations": {
+            "seated_idle_OLD_EARL": {
+              "fps": 8,
+              "loop": true,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "seated_idle.png",
+          "frameW": 172,
+          "frameH": 172,
+          "ax": 86,
+          "ay": 148,
+          "animations": {
+            "seated_idle": {
+              "fps": 8,
+              "loop": true,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "sit_down.png",
+          "frameW": 172,
+          "frameH": 172,
+          "ax": 86,
+          "ay": 140,
+          "animations": {
+            "sit_down": {
+              "fps": 8,
+              "loop": true,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

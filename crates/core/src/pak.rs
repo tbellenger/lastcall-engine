@@ -35,6 +35,7 @@ pub struct RoomPart {
     pub priority: GrayImage,
     pub props: Option<RgbaImage>,
     pub pictures: BTreeMap<String, RgbaImage>,
+    pub occluders: BTreeMap<String, GrayImage>,
 }
 
 pub struct CutscenePart {
@@ -65,6 +66,7 @@ pub struct LoadedRoom {
     pub walk: Vec<u8>,
     pub priority: Vec<u8>,
     pub prop_frames: Vec<SpriteFrame>,
+    pub occluders: BTreeMap<String, Vec<u8>>,
 }
 
 #[derive(Debug)]
@@ -141,6 +143,12 @@ pub fn build_pak(parts: &PackageParts) -> Result<Vec<u8>> {
             files.insert(
                 format!("rooms/{id}/variant-{name}.png"),
                 (imageutil::encode_rgba(image)?, true),
+            );
+        }
+        for (name, image) in &room.occluders {
+            files.insert(
+                format!("rooms/{id}/occlude-{name}.png"),
+                (imageutil::encode_gray(image)?, true),
             );
         }
     }
@@ -384,8 +392,30 @@ pub fn load_pak(bytes: &[u8]) -> Result<Package> {
             }
             pictures.insert(name.clone(), image);
         }
+        let mut occluders = BTreeMap::new();
+        for place in &def.actors {
+            let Some(name) = &place.occlude else {
+                continue;
+            };
+            if occluders.contains_key(name) {
+                continue;
+            }
+            let key = format!("rooms/{id}/occlude-{name}.png");
+            let image = decode_gray(
+                files
+                    .get(&key)
+                    .ok_or_else(|| Error::msg(format!("room {id} is missing occluder {name}")))?,
+                "occlude",
+            )?;
+            if image.w != SCREEN_W || image.h != SCREEN_H {
+                return Err(Error::msg(format!(
+                    "room {id} occluder {name} is not {SCREEN_W}x{SCREEN_H}"
+                )));
+            }
+            occluders.insert(name.clone(), image.pixels);
+        }
         rooms.insert(
-            id,
+            id.clone(),
             LoadedRoom {
                 def,
                 picture,
@@ -393,6 +423,7 @@ pub fn load_pak(bytes: &[u8]) -> Result<Package> {
                 walk: walk.pixels,
                 priority: priority.pixels,
                 prop_frames,
+                occluders,
             },
         );
     }

@@ -123,7 +123,20 @@
       "look": "A wooden chair. Charlie is tied to it, hands behind the back, ankles to the legs."
     }
   ],
-  "actors": [],
+  "actors": [
+    {
+      "id": "thug",
+      "actor": "thug",
+      "pos": [
+        120,
+        198
+      ],
+      "facing": "s"
+    }
+  ],
   "props": [],
-  "rules": []
+  "rules": [],
+  "pictures": [
+    "tied"
+  ]
 }

@@ -66,6 +66,7 @@ fn on_cutscene_command() {
 fn on_enter() {
     if !flag("live") {
         set_flag("live");
+        face("n");
         return;
     }
     clear_flag("onDumpster");
@@ -75,6 +76,9 @@ fn on_enter() {
         if flag("tied") {
             hold(true);
             teleport(114, 152);
+            picture("tied");
+            hide_actor("charlie");
+            hide_actor("thug");
         }
         return;
     }
@@ -129,10 +133,49 @@ fn on_enter() {
     } else if where == "bar" {
         say("You step back into the Rusty Nail.");
     }
+    if where == "alley" {
+        if flag("alleyChase") {
+            hide_actor("tank");
+        } else {
+            clear_pose("tank");
+        }
+    } else if where == "club" {
+        if flag("clubChase") {
+            hide_actor("goon");
+        } else {
+            clear_pose("goon");
+        }
+    } else if where == "hallway" {
+        if flag("hallClear") {
+            picture("clear");
+            hide_actor("guard");
+        } else {
+            picture("");
+            clear_pose("guard");
+        }
+    } else if where == "office" {
+        if flag("policeHere") {
+            picture("police");
+            hide_actor("dana");
+        } else if flag("danaFree") {
+            picture("");
+            hide_actor("dana");
+        } else {
+            picture("");
+            clear_pose("dana");
+        }
+    } else if where == "billiard" && flag("thugDown") {
+        pose_at("thug", "thug_ko", 230, 195);
+    } else if where == "billiard" && !flag("tied") {
+        clear_pose("thug");
+    }
     drip();
     if flag("tied") {
         hold(true);
         teleport(114, 152);
+        picture("tied");
+        hide_actor("charlie");
+        hide_actor("thug");
     } else {
         hold(false);
     }
@@ -1128,6 +1171,9 @@ fn billiard_cmd() {
             hold(false);
             teleport(140, 200);
             face("s");
+            picture("");
+            show_actor("charlie");
+            pose_at("thug", "thug_ko", 230, 195);
             score("bean-thug", 4);
             sfx("score");
             say("All those years of Little League finally paid off.");
@@ -1279,6 +1325,7 @@ fn on_after() {
         set_flag("quietEnter");
         set_flag("tied");
         hold(true);
+        picture("door");
         lake_lines();
         arrival_lines();
         goto_room("billiard", "default");

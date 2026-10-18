@@ -1,0 +1,165 @@
+{
+  "id": "sal",
+  "costumes": {
+    "default": {
+      "sheets": [
+        {
+          "sheet": "stand_s.png",
+          "frameW": 146,
+          "frameH": 146,
+          "ax": 73,
+          "ay": 126,
+          "animations": {
+            "stand_s": {
+              "fps": 1,
+              "loop": false,
+              "frames": [
+                0
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "stand_w.png",
+          "frameW": 146,
+          "frameH": 146,
+          "ax": 73,
+          "ay": 129,
+          "animations": {
+            "stand_w": {
+              "fps": 1,
+              "loop": false,
+              "frames": [
+                0
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "stand_e.png",
+          "frameW": 146,
+          "frameH": 146,
+          "ax": 73,
+          "ay": 129,
+          "animations": {
+            "stand_e": {
+              "fps": 1,
+              "loop": false,
+              "frames": [
+                0
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "stand_n.png",
+          "frameW": 146,
+          "frameH": 146,
+          "ax": 73,
+          "ay": 126,
+          "animations": {
+            "stand_n": {
+              "fps": 1,
+              "loop": false,
+              "frames": [
+                0
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "wipe.png",
+          "frameW": 161,
+          "frameH": 161,
+          "ax": 81,
+          "ay": 134,
+          "animations": {
+            "wipe": {
+              "fps": 8,
+              "loop": true,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "turn.png",
+          "frameW": 161,
+          "frameH": 161,
+          "ax": 81,
+          "ay": 134,
+          "animations": {
+            "turn": {
+              "fps": 8,
+              "loop": true,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "look.png",
+          "frameW": 161,
+          "frameH": 161,
+          "ax": 81,
+          "ay": 134,
+          "animations": {
+            "look": {
+              "fps": 8,
+              "loop": true,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "glass.png",
+          "frameW": 161,
+          "frameH": 161,
+          "ax": 81,
+          "ay": 134,
+          "animations": {
+            "glass": {
+              "fps": 8,
+              "loop": true,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

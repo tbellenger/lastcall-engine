@@ -4,22 +4,34 @@
     {
       "say": [
         "The storm has broken. Rain comes down hard enough to bounce."
-      ]
+      ],
+      "flipFrom": 0,
+      "flipTo": 25,
+      "flipTicks": 8
     },
     {
       "say": [
         "Charlie squints. The red cardigan. The pencil in the bun. That's Dana Whitlock from Accounts. She signed off on his expenses this morning."
-      ]
+      ],
+      "flipFrom": 26,
+      "flipTo": 51,
+      "flipTicks": 8
     },
     {
       "say": [
         "Charlie has two options: call it a night, or find out why Dana from Accounts is being dragged into a nightclub. Unfortunately for him, he's the curious type."
-      ]
+      ],
+      "flipFrom": 52,
+      "flipTo": 77,
+      "flipTicks": 8
     },
     {
       "say": [
         "As the sedan pulls away, something small tumbles from a goon's pocket and lands in a puddle near the Purple Rhino door."
-      ]
+      ],
+      "flipFrom": 78,
+      "flipTo": 103,
+      "flipTicks": 8
     }
   ],
   "onEnd": [

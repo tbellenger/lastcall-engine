@@ -1,0 +1,73 @@
+{
+  "id": "tank",
+  "costumes": {
+    "default": {
+      "sheets": [
+        {
+          "sheet": "stand_s.png",
+          "frameW": 109,
+          "frameH": 109,
+          "ax": 55,
+          "ay": 100,
+          "animations": {
+            "stand_s": {
+              "fps": 1,
+              "loop": false,
+              "frames": [
+                0
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "stand_w.png",
+          "frameW": 109,
+          "frameH": 109,
+          "ax": 55,
+          "ay": 102,
+          "animations": {
+            "stand_w": {
+              "fps": 1,
+              "loop": false,
+              "frames": [
+                0
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "stand_e.png",
+          "frameW": 109,
+          "frameH": 109,
+          "ax": 55,
+          "ay": 101,
+          "animations": {
+            "stand_e": {
+              "fps": 1,
+              "loop": false,
+              "frames": [
+                0
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "stand_n.png",
+          "frameW": 109,
+          "frameH": 109,
+          "ax": 55,
+          "ay": 101,
+          "animations": {
+            "stand_n": {
+              "fps": 1,
+              "loop": false,
+              "frames": [
+                0
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

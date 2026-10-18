@@ -26,7 +26,13 @@ main {
   box-sizing: border-box;
 }
 
-canvas {
+.stage {
+  position: relative;
+  line-height: 0;
+}
+
+canvas,
+#title {
   background: #000;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
@@ -34,6 +40,12 @@ canvas {
   height: calc(216px * var(--scale, 2));
   max-width: 100%;
   touch-action: none;
+}
+
+#title {
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 
 #live {

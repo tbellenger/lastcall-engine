@@ -112,7 +112,7 @@
         "vending machine",
         "cologne"
       ],
-      "look": "SMELL LIKE A WINNER — 4 QUARTERS. The brands are Midnight Stallion, Executive Musk, and Ocean Regret. It takes coins. It barely has dignity.",
+      "look": "SMELL LIKE A WINNER \u2014 4 QUARTERS. The brands are Midnight Stallion, Executive Musk, and Ocean Regret. It takes coins. It barely has dignity.",
       "stand": [
         270,
         206
@@ -164,7 +164,24 @@
     }
   ],
   "actors": [],
-  "props": [],
+  "props": [
+    {
+      "id": "soap",
+      "pos": [
+        218,
+        127
+      ],
+      "showIf": "!has:soap",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 6,
+        "ax": 0,
+        "ay": 0
+      }
+    }
+  ],
   "rules": [
     {
       "verb": "look",

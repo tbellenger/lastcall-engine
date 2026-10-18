@@ -16,6 +16,8 @@ pub struct Layer {
     pub dest_x: i32,
     pub dest_y: i32,
     pub sprite: SpriteFrame,
+    /// Screen-sized mask. Nonzero pixels undo this sprite so a counter can sit in front of one actor.
+    pub occlude: Option<Vec<u8>>,
 }
 
 pub fn band_for_y(bands: &[Band], y: i32) -> u8 {
@@ -49,13 +51,34 @@ pub fn composite(
             .then(a.id.cmp(&b.id))
     });
     for layer in layers {
+        let before = if layer.occlude.is_some() {
+            Some(fb.to_vec())
+        } else {
+            None
+        };
         blit_sprite(fb, width, height, priority, &layer);
+        if let (Some(before), Some(mask)) = (before, layer.occlude.as_deref()) {
+            restore_occluded(fb, &before, mask);
+        }
     }
     draw_status(fb, width, height, status_left, status_right);
     if let Some(text) = narrator {
         draw_narrator(fb, width, height, text);
     }
     draw_input(fb, width, height, input_line);
+}
+
+fn restore_occluded(fb: &mut [u8], before: &[u8], mask: &[u8]) {
+    let pixels = fb.len() / 4;
+    if before.len() != fb.len() || mask.len() != pixels {
+        return;
+    }
+    for (i, bit) in mask.iter().enumerate() {
+        if *bit != 0 {
+            let di = i * 4;
+            fb[di..di + 4].copy_from_slice(&before[di..di + 4]);
+        }
+    }
 }
 
 fn blit_background(fb: &mut [u8], width: i32, height: i32, background: &RgbaImage) {

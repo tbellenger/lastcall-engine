@@ -55,7 +55,21 @@
       ]
     }
   ],
-  "actors": [],
+  "actors": [
+    {
+      "id": "guard",
+      "actor": "lakehouse_guard",
+      "pos": [
+        296,
+        192
+      ],
+      "facing": "s",
+      "anim": "guard_asleep"
+    }
+  ],
   "props": [],
-  "rules": []
+  "rules": [],
+  "pictures": [
+    "clear"
+  ]
 }
