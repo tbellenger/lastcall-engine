@@ -1,0 +1,102 @@
+[
+  {
+    "id": "ball",
+    "name": "a billiard ball",
+    "plural": "billiard balls"
+  },
+  {
+    "id": "beer",
+    "name": "a cold beer",
+    "plural": "cold beers"
+  },
+  {
+    "id": "bomb",
+    "name": "a smoke bomb",
+    "plural": "smoke bombs"
+  },
+  {
+    "id": "books",
+    "name": "a set of account books",
+    "plural": "sets of account books"
+  },
+  {
+    "id": "chips",
+    "name": "a few casino chips",
+    "plural": "piles of casino chips"
+  },
+  {
+    "id": "chlorine",
+    "name": "a tin of chlorine tablets",
+    "plural": "tins of chlorine tablets"
+  },
+  {
+    "id": "cologne",
+    "name": "a bottle of Midnight Stallion",
+    "plural": "bottles of Midnight Stallion"
+  },
+  {
+    "id": "dollar",
+    "name": "a one-dollar bill",
+    "plural": "one-dollar bills"
+  },
+  {
+    "id": "five",
+    "name": "a five-dollar bill",
+    "plural": "five-dollar bills"
+  },
+  {
+    "id": "handkerchief",
+    "name": "a handkerchief",
+    "plural": "handkerchiefs"
+  },
+  {
+    "id": "iron",
+    "name": "a tyre iron",
+    "plural": "tyre irons"
+  },
+  {
+    "id": "knife",
+    "name": "a short knife",
+    "plural": "short knives"
+  },
+  {
+    "id": "matchbook",
+    "name": "a Purple Rhino matchbook",
+    "plural": "Purple Rhino matchbooks"
+  },
+  {
+    "id": "note",
+    "name": "a folded licence-plate note",
+    "plural": "folded notes"
+  },
+  {
+    "id": "pick",
+    "name": "a black hair pick",
+    "plural": "black hair picks"
+  },
+  {
+    "id": "quarters",
+    "name": "a roll of quarters",
+    "plural": "rolls of quarters"
+  },
+  {
+    "id": "soap",
+    "name": "a slimy bar of soap",
+    "plural": "slimy bars of soap"
+  },
+  {
+    "id": "ten",
+    "name": "a ten-dollar bill",
+    "plural": "ten-dollar bills"
+  },
+  {
+    "id": "twenty",
+    "name": "a twenty-dollar bill",
+    "plural": "twenty-dollar bills"
+  },
+  {
+    "id": "umbrella",
+    "name": "a hooked black umbrella",
+    "plural": "hooked black umbrellas"
+  }
+]

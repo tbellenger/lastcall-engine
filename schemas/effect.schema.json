@@ -24,7 +24,15 @@
         "wait",
         "sfx",
         "face",
-        "markOnce"
+        "markOnce",
+        "call",
+        "cutscene",
+        "costume",
+        "teleport",
+        "hold",
+        "picture",
+        "pose",
+        "keepAutosave"
       ]
     },
     "text": { "type": "string" },
@@ -40,6 +48,11 @@
     "x": { "type": "integer" },
     "y": { "type": "integer" },
     "ticks": { "type": "integer", "minimum": 0 },
-    "dir": { "type": "string" }
+    "dir": { "type": "string" },
+    "restoreTo": { "type": "string" },
+    "actor": { "type": "string" },
+    "anim": { "type": "string" },
+    "hidden": { "type": "boolean" },
+    "locked": { "type": "boolean" }
   }
 }

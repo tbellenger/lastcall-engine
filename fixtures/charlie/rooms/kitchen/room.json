@@ -1,0 +1,48 @@
+{
+  "id": "kitchen",
+  "name": "Kitchen",
+  "look": "A kitchen that has fed worse men. The pantry door is the interesting one. The open door on the left goes back to the hall.",
+  "spawns": {
+    "default": [
+      160,
+      200
+    ]
+  },
+  "exits": [],
+  "hotspots": [
+    {
+      "id": "pantry",
+      "rect": [
+        250,
+        50,
+        80,
+        130
+      ],
+      "nouns": [
+        "pantry",
+        "jar"
+      ],
+      "look": "The pantry door. Mr. Hadley had opinions about what was on those shelves.",
+      "stand": [
+        300,
+        198
+      ]
+    },
+    {
+      "id": "hall_door",
+      "rect": [
+        3,
+        48,
+        42,
+        133
+      ],
+      "nouns": [
+        "door"
+      ],
+      "look": "An open doorway back to the entrance hall. The floor runs straight through."
+    }
+  ],
+  "actors": [],
+  "props": [],
+  "rules": []
+}

@@ -101,6 +101,7 @@
       }
     },
     "onEnter": { "type": "array", "items": { "$ref": "rule.schema.json" } },
-    "rules": { "type": "array", "items": { "$ref": "rule.schema.json" } }
+    "rules": { "type": "array", "items": { "$ref": "rule.schema.json" } },
+    "pictures": { "type": "array", "items": { "type": "string" } }
   }
 }

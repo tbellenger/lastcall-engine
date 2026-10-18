@@ -1,0 +1,8572 @@
+{
+  "id": "bar",
+  "name": "The Rusty Nail",
+  "look": "A dingy bar that smells like stale beer and broken promises. Rain ticks the front windows. Thunder mutters over the river, still a long way off. Sal the bartender is behind the counter. Earl, an old regular, is on a stool. A scarred wooden bar runs down the left wall. Wobbly tables crowd the right. An old jukebox glows in the corner. Two doorways wait in the back: one marked GENTS, one propped open on the alley.",
+  "spawns": {
+    "default": [
+      280,
+      205
+    ],
+    "fromBathroom": [
+      214,
+      196
+    ],
+    "fromAlley": [
+      300,
+      196
+    ]
+  },
+  "exits": [],
+  "hotspots": [
+    {
+      "id": "gents_door",
+      "rect": [
+        198,
+        72,
+        36,
+        108
+      ],
+      "nouns": [
+        "door",
+        "bathroom"
+      ],
+      "look": "A door marked GENTS. The paint is losing."
+    },
+    {
+      "id": "alley_door",
+      "rect": [
+        248,
+        72,
+        36,
+        108
+      ],
+      "nouns": [
+        "door",
+        "alley"
+      ],
+      "look": "Propped open. The alley breathes hot rain at you."
+    },
+    {
+      "id": "jukebox",
+      "rect": [
+        300,
+        120,
+        70,
+        70
+      ],
+      "nouns": [
+        "jukebox"
+      ],
+      "look": "A 1960s Seeburg full of old 45s. A hand-written sign: \"$1 BILLS ONLY. NO SINGLES SMALLER THAN A DOLLAR, WISE GUY.\"",
+      "stand": [
+        320,
+        196
+      ]
+    },
+    {
+      "id": "counter",
+      "rect": [
+        8,
+        90,
+        90,
+        70
+      ],
+      "nouns": [
+        "bar"
+      ],
+      "look": "Decades of wood, rings, and initials. Somebody carved SAL WAS HERE. Sal is still here."
+    },
+    {
+      "id": "stools",
+      "rect": [
+        120,
+        150,
+        50,
+        40
+      ],
+      "nouns": [
+        "stool",
+        "seat"
+      ],
+      "look": "Wobbly, and proud of it."
+    },
+    {
+      "id": "bottles",
+      "rect": [
+        16,
+        70,
+        40,
+        36
+      ],
+      "nouns": [
+        "bottle",
+        "tap",
+        "booze",
+        "liquor",
+        "shelf"
+      ],
+      "look": "Bottles, a spotted mirror, and taps that have pulled a lot of bad decisions."
+    },
+    {
+      "id": "tables",
+      "rect": [
+        230,
+        130,
+        70,
+        40
+      ],
+      "nouns": [
+        "table"
+      ],
+      "look": "Sticky. One holds Earl's empty glass, spiritually. The near table is close enough to walk behind."
+    },
+    {
+      "id": "sign",
+      "rect": [
+        8,
+        8,
+        72,
+        28
+      ],
+      "nouns": [
+        "sign",
+        "rusty nail"
+      ],
+      "look": "A flickering sign reads RUSTY NAIL. The N is out. Charlie doesn't care."
+    },
+    {
+      "id": "lamps",
+      "rect": [
+        140,
+        16,
+        80,
+        24
+      ],
+      "nouns": [
+        "lamp",
+        "lamps",
+        "light",
+        "lights"
+      ],
+      "look": "Two lamps that have given up on being bright."
+    },
+    {
+      "id": "front_exit",
+      "rect": [
+        0,
+        208,
+        384,
+        8
+      ],
+      "nouns": [
+        "door",
+        "out"
+      ],
+      "look": "The street is hotter than the bar, which is saying something."
+    },
+    {
+      "id": "sal",
+      "rect": [
+        40,
+        80,
+        50,
+        80
+      ],
+      "nouns": [
+        "sal"
+      ],
+      "look": "Tattooed forearms, an anchor and a heart that reads MA. A towel rides his shoulder. He looks like change is a personal insult.",
+      "stand": [
+        200,
+        190
+      ]
+    },
+    {
+      "id": "earl",
+      "rect": [
+        130,
+        100,
+        60,
+        90
+      ],
+      "nouns": [
+        "earl"
+      ],
+      "look": "An old regular nursing a glass that has already given up.",
+      "stand": [
+        176,
+        196
+      ]
+    },
+    {
+      "id": "window",
+      "rect": [
+        150,
+        36,
+        60,
+        28
+      ],
+      "nouns": [
+        "window"
+      ],
+      "look": "Rain ticks the glass, a few drops at a time. Thunder rolls somewhere over the river. Close enough to feel. Not close enough to help."
+    },
+    {
+      "id": "jar",
+      "rect": [
+        70,
+        120,
+        18,
+        16
+      ],
+      "nouns": [
+        "jar"
+      ],
+      "look": "An empty pickle jar labelled TIPS — KARMA IS REAL.",
+      "stand": [
+        200,
+        188
+      ]
+    }
+  ],
+  "actors": [],
+  "props": [],
+  "rules": [
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "twenty"
+        },
+        {
+          "do": "take",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "beer"
+        },
+        {
+          "do": "set",
+          "flag": "orderedBeer"
+        },
+        {
+          "do": "score",
+          "id": "order-beer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the twenty. \"Five bucks. Here's fifteen. I'm out of quarters. Ran a register for drunks all night.\""
+        }
+      ],
+      "req": [
+        "has:twenty",
+        "!flag:orderedBeer"
+      ],
+      "noun": "beer",
+      "id": "bar:order-beer"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "twenty"
+        },
+        {
+          "do": "take",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "beer"
+        },
+        {
+          "do": "set",
+          "flag": "orderedBeer"
+        },
+        {
+          "do": "score",
+          "id": "order-beer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the twenty. \"Five bucks. Here's fifteen. I'm out of quarters. Ran a register for drunks all night.\""
+        }
+      ],
+      "req": [
+        "has:twenty",
+        "!flag:orderedBeer"
+      ],
+      "noun": "drink",
+      "id": "bar:order-beer:1"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "say",
+          "text": "One beer. You're here to stop smelling like a gym sock, not to start a tab."
+        }
+      ],
+      "req": [
+        "flag:orderedBeer"
+      ],
+      "noun": "beer",
+      "id": "bar:order-beer-again"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "say",
+          "text": "One beer. You're here to stop smelling like a gym sock, not to start a tab."
+        }
+      ],
+      "req": [
+        "flag:orderedBeer"
+      ],
+      "noun": "drink",
+      "id": "bar:order-beer-again:1"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Sal squints at your wallet. The twenty is gone, and so is his patience."
+        }
+      ],
+      "req": [],
+      "noun": "beer",
+      "id": "bar:order-beer-broke"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Sal squints at your wallet. The twenty is gone, and so is his patience."
+        }
+      ],
+      "req": [],
+      "noun": "drink",
+      "id": "bar:order-beer-broke:1"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "earlTalked"
+        },
+        {
+          "do": "score",
+          "id": "talk-earl",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "Earl lifts the empty glass. \"My glass is lookin' awful lonely, friend.\""
+        }
+      ],
+      "req": [
+        "!flag:earlTalked"
+      ],
+      "noun": "earl",
+      "id": "bar:talk-earl"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "earlTalked"
+        },
+        {
+          "do": "score",
+          "id": "talk-earl",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "Earl lifts the empty glass. \"My glass is lookin' awful lonely, friend.\""
+        }
+      ],
+      "req": [
+        "!flag:earlTalked"
+      ],
+      "noun": "earl",
+      "second": "earl",
+      "id": "bar:talk-earl:1"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Earl nods at the jukebox. \"B7. Brooklyn Moon. Don't say I never did you a favour.\""
+        }
+      ],
+      "req": [
+        "flag:earlClue"
+      ],
+      "noun": "earl",
+      "anySecond": true,
+      "id": "bar:talk-earl-after"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Earl rattles the empty glass. It is still empty. He is still Earl."
+        }
+      ],
+      "req": [],
+      "noun": "earl",
+      "anySecond": true,
+      "id": "bar:talk-earl-again"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You're a gentleman. Earl leans in. \"Lemme tell you something. Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "has:five",
+        "!flag:earlDrink"
+      ],
+      "noun": "earl",
+      "second": "earl",
+      "id": "bar:buy-earl-five"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You're a gentleman. Earl leans in. \"Lemme tell you something. Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "has:five",
+        "!flag:earlDrink"
+      ],
+      "noun": "earl",
+      "second": "drink",
+      "id": "bar:buy-earl-five:1"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You're a gentleman. Earl leans in. \"Lemme tell you something. Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "has:five",
+        "!flag:earlDrink"
+      ],
+      "noun": "drink",
+      "second": "earl",
+      "id": "bar:buy-earl-five:2"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You're a gentleman. Earl leans in. \"Lemme tell you something. Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "has:five",
+        "!flag:earlDrink"
+      ],
+      "noun": "drink",
+      "second": "drink",
+      "id": "bar:buy-earl-five:3"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You're a gentleman. Earl leans in. \"Lemme tell you something. Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "has:five",
+        "!flag:earlDrink"
+      ],
+      "noun": "five",
+      "second": "earl",
+      "id": "bar:buy-earl-five:4"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You're a gentleman. Earl leans in. \"Lemme tell you something. Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "has:five",
+        "!flag:earlDrink"
+      ],
+      "noun": "five",
+      "second": "drink",
+      "id": "bar:buy-earl-five:5"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You're a gentleman. Earl leans in. \"Lemme tell you something. Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "has:five",
+        "!flag:earlDrink"
+      ],
+      "noun": "money",
+      "second": "earl",
+      "id": "bar:buy-earl-five:6"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You're a gentleman. Earl leans in. \"Lemme tell you something. Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "has:five",
+        "!flag:earlDrink"
+      ],
+      "noun": "money",
+      "second": "drink",
+      "id": "bar:buy-earl-five:7"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You're a gentleman. Earl leans in. \"Lemme tell you something. Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "has:five",
+        "!flag:earlDrink"
+      ],
+      "noun": "earl",
+      "second": "earl",
+      "id": "bar:buy-earl-five:8"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You're a gentleman. Earl leans in. \"Lemme tell you something. Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "has:five",
+        "!flag:earlDrink"
+      ],
+      "noun": "earl",
+      "second": "drink",
+      "id": "bar:buy-earl-five:9"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You're a gentleman. Earl leans in. \"Lemme tell you something. Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "has:five",
+        "!flag:earlDrink"
+      ],
+      "noun": "drink",
+      "second": "earl",
+      "id": "bar:buy-earl-five:10"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You're a gentleman. Earl leans in. \"Lemme tell you something. Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "has:five",
+        "!flag:earlDrink"
+      ],
+      "noun": "drink",
+      "second": "drink",
+      "id": "bar:buy-earl-five:11"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You're a gentleman. Earl leans in. \"Lemme tell you something. Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "has:five",
+        "!flag:earlDrink"
+      ],
+      "noun": "five",
+      "second": "earl",
+      "id": "bar:buy-earl-five:12"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You're a gentleman. Earl leans in. \"Lemme tell you something. Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "has:five",
+        "!flag:earlDrink"
+      ],
+      "noun": "five",
+      "second": "drink",
+      "id": "bar:buy-earl-five:13"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You're a gentleman. Earl leans in. \"Lemme tell you something. Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "has:five",
+        "!flag:earlDrink"
+      ],
+      "noun": "money",
+      "second": "earl",
+      "id": "bar:buy-earl-five:14"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You're a gentleman. Earl leans in. \"Lemme tell you something. Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "has:five",
+        "!flag:earlDrink"
+      ],
+      "noun": "money",
+      "second": "drink",
+      "id": "bar:buy-earl-five:15"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You're a gentleman. Earl leans in. \"Lemme tell you something. Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "has:five",
+        "!flag:earlDrink"
+      ],
+      "noun": "earl",
+      "second": "earl",
+      "id": "bar:buy-earl-five:16"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You're a gentleman. Earl leans in. \"Lemme tell you something. Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "has:five",
+        "!flag:earlDrink"
+      ],
+      "noun": "earl",
+      "second": "drink",
+      "id": "bar:buy-earl-five:17"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You're a gentleman. Earl leans in. \"Lemme tell you something. Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "has:five",
+        "!flag:earlDrink"
+      ],
+      "noun": "drink",
+      "second": "earl",
+      "id": "bar:buy-earl-five:18"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You're a gentleman. Earl leans in. \"Lemme tell you something. Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "has:five",
+        "!flag:earlDrink"
+      ],
+      "noun": "drink",
+      "second": "drink",
+      "id": "bar:buy-earl-five:19"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You're a gentleman. Earl leans in. \"Lemme tell you something. Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "has:five",
+        "!flag:earlDrink"
+      ],
+      "noun": "five",
+      "second": "earl",
+      "id": "bar:buy-earl-five:20"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You're a gentleman. Earl leans in. \"Lemme tell you something. Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "has:five",
+        "!flag:earlDrink"
+      ],
+      "noun": "five",
+      "second": "drink",
+      "id": "bar:buy-earl-five:21"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You're a gentleman. Earl leans in. \"Lemme tell you something. Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "has:five",
+        "!flag:earlDrink"
+      ],
+      "noun": "money",
+      "second": "earl",
+      "id": "bar:buy-earl-five:22"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You're a gentleman. Earl leans in. \"Lemme tell you something. Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "has:five",
+        "!flag:earlDrink"
+      ],
+      "noun": "money",
+      "second": "drink",
+      "id": "bar:buy-earl-five:23"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal breaks the ten, keeps five for Earl's drink, and slides a five back. Earl grins. \"Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "!flag:earlDrink"
+      ],
+      "noun": "earl",
+      "second": "earl",
+      "id": "bar:buy-earl-ten"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal breaks the ten, keeps five for Earl's drink, and slides a five back. Earl grins. \"Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "!flag:earlDrink"
+      ],
+      "noun": "earl",
+      "second": "drink",
+      "id": "bar:buy-earl-ten:1"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal breaks the ten, keeps five for Earl's drink, and slides a five back. Earl grins. \"Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "!flag:earlDrink"
+      ],
+      "noun": "drink",
+      "second": "earl",
+      "id": "bar:buy-earl-ten:2"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal breaks the ten, keeps five for Earl's drink, and slides a five back. Earl grins. \"Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "!flag:earlDrink"
+      ],
+      "noun": "drink",
+      "second": "drink",
+      "id": "bar:buy-earl-ten:3"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal breaks the ten, keeps five for Earl's drink, and slides a five back. Earl grins. \"Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "!flag:earlDrink"
+      ],
+      "noun": "ten",
+      "second": "earl",
+      "id": "bar:buy-earl-ten:4"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal breaks the ten, keeps five for Earl's drink, and slides a five back. Earl grins. \"Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "!flag:earlDrink"
+      ],
+      "noun": "ten",
+      "second": "drink",
+      "id": "bar:buy-earl-ten:5"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal breaks the ten, keeps five for Earl's drink, and slides a five back. Earl grins. \"Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "!flag:earlDrink"
+      ],
+      "noun": "money",
+      "second": "earl",
+      "id": "bar:buy-earl-ten:6"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal breaks the ten, keeps five for Earl's drink, and slides a five back. Earl grins. \"Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "!flag:earlDrink"
+      ],
+      "noun": "money",
+      "second": "drink",
+      "id": "bar:buy-earl-ten:7"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal breaks the ten, keeps five for Earl's drink, and slides a five back. Earl grins. \"Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "!flag:earlDrink"
+      ],
+      "noun": "earl",
+      "second": "earl",
+      "id": "bar:buy-earl-ten:8"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal breaks the ten, keeps five for Earl's drink, and slides a five back. Earl grins. \"Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "!flag:earlDrink"
+      ],
+      "noun": "earl",
+      "second": "drink",
+      "id": "bar:buy-earl-ten:9"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal breaks the ten, keeps five for Earl's drink, and slides a five back. Earl grins. \"Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "!flag:earlDrink"
+      ],
+      "noun": "drink",
+      "second": "earl",
+      "id": "bar:buy-earl-ten:10"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal breaks the ten, keeps five for Earl's drink, and slides a five back. Earl grins. \"Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "!flag:earlDrink"
+      ],
+      "noun": "drink",
+      "second": "drink",
+      "id": "bar:buy-earl-ten:11"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal breaks the ten, keeps five for Earl's drink, and slides a five back. Earl grins. \"Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "!flag:earlDrink"
+      ],
+      "noun": "ten",
+      "second": "earl",
+      "id": "bar:buy-earl-ten:12"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal breaks the ten, keeps five for Earl's drink, and slides a five back. Earl grins. \"Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "!flag:earlDrink"
+      ],
+      "noun": "ten",
+      "second": "drink",
+      "id": "bar:buy-earl-ten:13"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal breaks the ten, keeps five for Earl's drink, and slides a five back. Earl grins. \"Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "!flag:earlDrink"
+      ],
+      "noun": "money",
+      "second": "earl",
+      "id": "bar:buy-earl-ten:14"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal breaks the ten, keeps five for Earl's drink, and slides a five back. Earl grins. \"Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "!flag:earlDrink"
+      ],
+      "noun": "money",
+      "second": "drink",
+      "id": "bar:buy-earl-ten:15"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal breaks the ten, keeps five for Earl's drink, and slides a five back. Earl grins. \"Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "!flag:earlDrink"
+      ],
+      "noun": "earl",
+      "second": "earl",
+      "id": "bar:buy-earl-ten:16"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal breaks the ten, keeps five for Earl's drink, and slides a five back. Earl grins. \"Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "!flag:earlDrink"
+      ],
+      "noun": "earl",
+      "second": "drink",
+      "id": "bar:buy-earl-ten:17"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal breaks the ten, keeps five for Earl's drink, and slides a five back. Earl grins. \"Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "!flag:earlDrink"
+      ],
+      "noun": "drink",
+      "second": "earl",
+      "id": "bar:buy-earl-ten:18"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal breaks the ten, keeps five for Earl's drink, and slides a five back. Earl grins. \"Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "!flag:earlDrink"
+      ],
+      "noun": "drink",
+      "second": "drink",
+      "id": "bar:buy-earl-ten:19"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal breaks the ten, keeps five for Earl's drink, and slides a five back. Earl grins. \"Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "!flag:earlDrink"
+      ],
+      "noun": "ten",
+      "second": "earl",
+      "id": "bar:buy-earl-ten:20"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal breaks the ten, keeps five for Earl's drink, and slides a five back. Earl grins. \"Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "!flag:earlDrink"
+      ],
+      "noun": "ten",
+      "second": "drink",
+      "id": "bar:buy-earl-ten:21"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal breaks the ten, keeps five for Earl's drink, and slides a five back. Earl grins. \"Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "!flag:earlDrink"
+      ],
+      "noun": "money",
+      "second": "earl",
+      "id": "bar:buy-earl-ten:22"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "set",
+          "flag": "earlDrink"
+        },
+        {
+          "do": "set",
+          "flag": "earlClue"
+        },
+        {
+          "do": "score",
+          "id": "buy-earl",
+          "points": 6
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal breaks the ten, keeps five for Earl's drink, and slides a five back. Earl grins. \"Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+        }
+      ],
+      "req": [
+        "!has:five",
+        "has:ten",
+        "!flag:earlDrink"
+      ],
+      "noun": "money",
+      "second": "drink",
+      "id": "bar:buy-earl-ten:23"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Earl's glass has company now. Don't push your luck, or his liver."
+        }
+      ],
+      "req": [
+        "flag:earlDrink"
+      ],
+      "noun": "earl",
+      "second": "earl",
+      "id": "bar:buy-earl-done"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Earl's glass has company now. Don't push your luck, or his liver."
+        }
+      ],
+      "req": [
+        "flag:earlDrink"
+      ],
+      "noun": "earl",
+      "second": "drink",
+      "id": "bar:buy-earl-done:1"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Earl's glass has company now. Don't push your luck, or his liver."
+        }
+      ],
+      "req": [
+        "flag:earlDrink"
+      ],
+      "noun": "drink",
+      "second": "earl",
+      "id": "bar:buy-earl-done:2"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Earl's glass has company now. Don't push your luck, or his liver."
+        }
+      ],
+      "req": [
+        "flag:earlDrink"
+      ],
+      "noun": "drink",
+      "second": "drink",
+      "id": "bar:buy-earl-done:3"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Earl's glass has company now. Don't push your luck, or his liver."
+        }
+      ],
+      "req": [
+        "flag:earlDrink"
+      ],
+      "noun": "five",
+      "second": "earl",
+      "id": "bar:buy-earl-done:4"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Earl's glass has company now. Don't push your luck, or his liver."
+        }
+      ],
+      "req": [
+        "flag:earlDrink"
+      ],
+      "noun": "five",
+      "second": "drink",
+      "id": "bar:buy-earl-done:5"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Earl's glass has company now. Don't push your luck, or his liver."
+        }
+      ],
+      "req": [
+        "flag:earlDrink"
+      ],
+      "noun": "ten",
+      "second": "earl",
+      "id": "bar:buy-earl-done:6"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Earl's glass has company now. Don't push your luck, or his liver."
+        }
+      ],
+      "req": [
+        "flag:earlDrink"
+      ],
+      "noun": "ten",
+      "second": "drink",
+      "id": "bar:buy-earl-done:7"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Earl's glass has company now. Don't push your luck, or his liver."
+        }
+      ],
+      "req": [
+        "flag:earlDrink"
+      ],
+      "noun": "money",
+      "second": "earl",
+      "id": "bar:buy-earl-done:8"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Earl's glass has company now. Don't push your luck, or his liver."
+        }
+      ],
+      "req": [
+        "flag:earlDrink"
+      ],
+      "noun": "money",
+      "second": "drink",
+      "id": "bar:buy-earl-done:9"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Earl's glass has company now. Don't push your luck, or his liver."
+        }
+      ],
+      "req": [
+        "flag:earlDrink"
+      ],
+      "noun": "earl",
+      "second": "earl",
+      "id": "bar:buy-earl-done:10"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Earl's glass has company now. Don't push your luck, or his liver."
+        }
+      ],
+      "req": [
+        "flag:earlDrink"
+      ],
+      "noun": "earl",
+      "second": "drink",
+      "id": "bar:buy-earl-done:11"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Earl's glass has company now. Don't push your luck, or his liver."
+        }
+      ],
+      "req": [
+        "flag:earlDrink"
+      ],
+      "noun": "drink",
+      "second": "earl",
+      "id": "bar:buy-earl-done:12"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Earl's glass has company now. Don't push your luck, or his liver."
+        }
+      ],
+      "req": [
+        "flag:earlDrink"
+      ],
+      "noun": "drink",
+      "second": "drink",
+      "id": "bar:buy-earl-done:13"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Earl's glass has company now. Don't push your luck, or his liver."
+        }
+      ],
+      "req": [
+        "flag:earlDrink"
+      ],
+      "noun": "five",
+      "second": "earl",
+      "id": "bar:buy-earl-done:14"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Earl's glass has company now. Don't push your luck, or his liver."
+        }
+      ],
+      "req": [
+        "flag:earlDrink"
+      ],
+      "noun": "five",
+      "second": "drink",
+      "id": "bar:buy-earl-done:15"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Earl's glass has company now. Don't push your luck, or his liver."
+        }
+      ],
+      "req": [
+        "flag:earlDrink"
+      ],
+      "noun": "ten",
+      "second": "earl",
+      "id": "bar:buy-earl-done:16"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Earl's glass has company now. Don't push your luck, or his liver."
+        }
+      ],
+      "req": [
+        "flag:earlDrink"
+      ],
+      "noun": "ten",
+      "second": "drink",
+      "id": "bar:buy-earl-done:17"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Earl's glass has company now. Don't push your luck, or his liver."
+        }
+      ],
+      "req": [
+        "flag:earlDrink"
+      ],
+      "noun": "money",
+      "second": "earl",
+      "id": "bar:buy-earl-done:18"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Earl's glass has company now. Don't push your luck, or his liver."
+        }
+      ],
+      "req": [
+        "flag:earlDrink"
+      ],
+      "noun": "money",
+      "second": "drink",
+      "id": "bar:buy-earl-done:19"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Earl's glass has company now. Don't push your luck, or his liver."
+        }
+      ],
+      "req": [
+        "flag:earlDrink"
+      ],
+      "noun": "earl",
+      "second": "earl",
+      "id": "bar:buy-earl-done:20"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Earl's glass has company now. Don't push your luck, or his liver."
+        }
+      ],
+      "req": [
+        "flag:earlDrink"
+      ],
+      "noun": "earl",
+      "second": "drink",
+      "id": "bar:buy-earl-done:21"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Earl's glass has company now. Don't push your luck, or his liver."
+        }
+      ],
+      "req": [
+        "flag:earlDrink"
+      ],
+      "noun": "drink",
+      "second": "earl",
+      "id": "bar:buy-earl-done:22"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Earl's glass has company now. Don't push your luck, or his liver."
+        }
+      ],
+      "req": [
+        "flag:earlDrink"
+      ],
+      "noun": "drink",
+      "second": "drink",
+      "id": "bar:buy-earl-done:23"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Earl's glass has company now. Don't push your luck, or his liver."
+        }
+      ],
+      "req": [
+        "flag:earlDrink"
+      ],
+      "noun": "five",
+      "second": "earl",
+      "id": "bar:buy-earl-done:24"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Earl's glass has company now. Don't push your luck, or his liver."
+        }
+      ],
+      "req": [
+        "flag:earlDrink"
+      ],
+      "noun": "five",
+      "second": "drink",
+      "id": "bar:buy-earl-done:25"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Earl's glass has company now. Don't push your luck, or his liver."
+        }
+      ],
+      "req": [
+        "flag:earlDrink"
+      ],
+      "noun": "ten",
+      "second": "earl",
+      "id": "bar:buy-earl-done:26"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Earl's glass has company now. Don't push your luck, or his liver."
+        }
+      ],
+      "req": [
+        "flag:earlDrink"
+      ],
+      "noun": "ten",
+      "second": "drink",
+      "id": "bar:buy-earl-done:27"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Earl's glass has company now. Don't push your luck, or his liver."
+        }
+      ],
+      "req": [
+        "flag:earlDrink"
+      ],
+      "noun": "money",
+      "second": "earl",
+      "id": "bar:buy-earl-done:28"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Earl's glass has company now. Don't push your luck, or his liver."
+        }
+      ],
+      "req": [
+        "flag:earlDrink"
+      ],
+      "noun": "money",
+      "second": "drink",
+      "id": "bar:buy-earl-done:29"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "salMood"
+        },
+        {
+          "do": "score",
+          "id": "play-b7",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "moon"
+        },
+        {
+          "do": "say",
+          "text": "The jukebox warms up. Brooklyn Moon rolls out, a little waltz with a bruise in it. Sal stops wiping. His eyes go somewhere else. He is, against his will, in a giving mood."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:salMood"
+      ],
+      "noun": "b7",
+      "anySecond": true,
+      "id": "bar:play-b7"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Sal is already misty. Don't spend another dollar proving it."
+        }
+      ],
+      "req": [
+        "flag:salMood"
+      ],
+      "noun": "b7",
+      "anySecond": true,
+      "id": "bar:play-b7-again"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The song limps out of the speaker. Sal grimaces. \"Turn that garbage off.\""
+        }
+      ],
+      "req": [
+        "has:dollar"
+      ],
+      "noun": "song",
+      "anySecond": true,
+      "id": "bar:play-wrong"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The song limps out of the speaker. Sal grimaces. \"Turn that garbage off.\""
+        }
+      ],
+      "req": [
+        "has:dollar"
+      ],
+      "noun": "a1",
+      "anySecond": true,
+      "id": "bar:play-wrong:1"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The song limps out of the speaker. Sal grimaces. \"Turn that garbage off.\""
+        }
+      ],
+      "req": [
+        "has:dollar"
+      ],
+      "noun": "a2",
+      "anySecond": true,
+      "id": "bar:play-wrong:2"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The song limps out of the speaker. Sal grimaces. \"Turn that garbage off.\""
+        }
+      ],
+      "req": [
+        "has:dollar"
+      ],
+      "noun": "a3",
+      "anySecond": true,
+      "id": "bar:play-wrong:3"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The song limps out of the speaker. Sal grimaces. \"Turn that garbage off.\""
+        }
+      ],
+      "req": [
+        "has:dollar"
+      ],
+      "noun": "a4",
+      "anySecond": true,
+      "id": "bar:play-wrong:4"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The song limps out of the speaker. Sal grimaces. \"Turn that garbage off.\""
+        }
+      ],
+      "req": [
+        "has:dollar"
+      ],
+      "noun": "b1",
+      "anySecond": true,
+      "id": "bar:play-wrong:5"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The song limps out of the speaker. Sal grimaces. \"Turn that garbage off.\""
+        }
+      ],
+      "req": [
+        "has:dollar"
+      ],
+      "noun": "b2",
+      "anySecond": true,
+      "id": "bar:play-wrong:6"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The song limps out of the speaker. Sal grimaces. \"Turn that garbage off.\""
+        }
+      ],
+      "req": [
+        "has:dollar"
+      ],
+      "noun": "b3",
+      "anySecond": true,
+      "id": "bar:play-wrong:7"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The song limps out of the speaker. Sal grimaces. \"Turn that garbage off.\""
+        }
+      ],
+      "req": [
+        "has:dollar"
+      ],
+      "noun": "b4",
+      "anySecond": true,
+      "id": "bar:play-wrong:8"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The song limps out of the speaker. Sal grimaces. \"Turn that garbage off.\""
+        }
+      ],
+      "req": [
+        "has:dollar"
+      ],
+      "noun": "b5",
+      "anySecond": true,
+      "id": "bar:play-wrong:9"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The song limps out of the speaker. Sal grimaces. \"Turn that garbage off.\""
+        }
+      ],
+      "req": [
+        "has:dollar"
+      ],
+      "noun": "b6",
+      "anySecond": true,
+      "id": "bar:play-wrong:10"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The song limps out of the speaker. Sal grimaces. \"Turn that garbage off.\""
+        }
+      ],
+      "req": [
+        "has:dollar"
+      ],
+      "noun": "b8",
+      "anySecond": true,
+      "id": "bar:play-wrong:11"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The song limps out of the speaker. Sal grimaces. \"Turn that garbage off.\""
+        }
+      ],
+      "req": [
+        "has:dollar"
+      ],
+      "noun": "c1",
+      "anySecond": true,
+      "id": "bar:play-wrong:12"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The song limps out of the speaker. Sal grimaces. \"Turn that garbage off.\""
+        }
+      ],
+      "req": [
+        "has:dollar"
+      ],
+      "noun": "c2",
+      "anySecond": true,
+      "id": "bar:play-wrong:13"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The song limps out of the speaker. Sal grimaces. \"Turn that garbage off.\""
+        }
+      ],
+      "req": [
+        "has:dollar"
+      ],
+      "noun": "c3",
+      "anySecond": true,
+      "id": "bar:play-wrong:14"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The song limps out of the speaker. Sal grimaces. \"Turn that garbage off.\""
+        }
+      ],
+      "req": [
+        "has:dollar"
+      ],
+      "noun": "c4",
+      "anySecond": true,
+      "id": "bar:play-wrong:15"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The song limps out of the speaker. Sal grimaces. \"Turn that garbage off.\""
+        }
+      ],
+      "req": [
+        "has:dollar"
+      ],
+      "noun": "d1",
+      "anySecond": true,
+      "id": "bar:play-wrong:16"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The song limps out of the speaker. Sal grimaces. \"Turn that garbage off.\""
+        }
+      ],
+      "req": [
+        "has:dollar"
+      ],
+      "noun": "d2",
+      "anySecond": true,
+      "id": "bar:play-wrong:17"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The song limps out of the speaker. Sal grimaces. \"Turn that garbage off.\""
+        }
+      ],
+      "req": [
+        "has:dollar"
+      ],
+      "noun": "d3",
+      "anySecond": true,
+      "id": "bar:play-wrong:18"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The song limps out of the speaker. Sal grimaces. \"Turn that garbage off.\""
+        }
+      ],
+      "req": [
+        "has:dollar"
+      ],
+      "noun": "d4",
+      "anySecond": true,
+      "id": "bar:play-wrong:19"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Which song? The card runs A1 to D4. Somebody mentioned B7."
+        }
+      ],
+      "req": [],
+      "anySecond": true,
+      "id": "bar:play-which"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Which song? The card runs A1 to D4. Somebody mentioned B7."
+        }
+      ],
+      "req": [],
+      "noun": "list",
+      "anySecond": true,
+      "id": "bar:play-which:1"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Which song? The card runs A1 to D4. Somebody mentioned B7."
+        }
+      ],
+      "req": [],
+      "noun": "jukebox",
+      "anySecond": true,
+      "id": "bar:play-which:2"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Which song? The card runs A1 to D4. Somebody mentioned B7."
+        }
+      ],
+      "req": [],
+      "anySecond": true,
+      "id": "bar:play-which:3"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Which song? The card runs A1 to D4. Somebody mentioned B7."
+        }
+      ],
+      "req": [],
+      "noun": "list",
+      "anySecond": true,
+      "id": "bar:play-which:4"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Which song? The card runs A1 to D4. Somebody mentioned B7."
+        }
+      ],
+      "req": [],
+      "noun": "jukebox",
+      "anySecond": true,
+      "id": "bar:play-which:5"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "say",
+          "text": "Sal peels a five into singles. \"I can break a bill. I still ain't a bank.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:five"
+      ],
+      "noun": "b7",
+      "anySecond": true,
+      "id": "bar:break-five"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "say",
+          "text": "Sal peels a five into singles. \"I can break a bill. I still ain't a bank.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:five"
+      ],
+      "noun": "song",
+      "anySecond": true,
+      "id": "bar:break-five:1"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "say",
+          "text": "Sal peels a five into singles. \"I can break a bill. I still ain't a bank.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:five"
+      ],
+      "noun": "a1",
+      "anySecond": true,
+      "id": "bar:break-five:2"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "say",
+          "text": "Sal peels a five into singles. \"I can break a bill. I still ain't a bank.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:five"
+      ],
+      "noun": "jukebox",
+      "anySecond": true,
+      "id": "bar:break-five:3"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "say",
+          "text": "Sal peels a five into singles. \"I can break a bill. I still ain't a bank.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:five"
+      ],
+      "noun": "b7",
+      "anySecond": true,
+      "id": "bar:break-five:4"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "say",
+          "text": "Sal peels a five into singles. \"I can break a bill. I still ain't a bank.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:five"
+      ],
+      "noun": "song",
+      "anySecond": true,
+      "id": "bar:break-five:5"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "say",
+          "text": "Sal peels a five into singles. \"I can break a bill. I still ain't a bank.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:five"
+      ],
+      "noun": "a1",
+      "anySecond": true,
+      "id": "bar:break-five:6"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "say",
+          "text": "Sal peels a five into singles. \"I can break a bill. I still ain't a bank.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:five"
+      ],
+      "noun": "jukebox",
+      "anySecond": true,
+      "id": "bar:break-five:7"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "say",
+          "text": "Sal sighs and turns the ten into singles. Coins remain a fairy tale."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:ten"
+      ],
+      "noun": "b7",
+      "anySecond": true,
+      "id": "bar:break-ten"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "say",
+          "text": "Sal sighs and turns the ten into singles. Coins remain a fairy tale."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:ten"
+      ],
+      "noun": "song",
+      "anySecond": true,
+      "id": "bar:break-ten:1"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "say",
+          "text": "Sal sighs and turns the ten into singles. Coins remain a fairy tale."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:ten"
+      ],
+      "noun": "a1",
+      "anySecond": true,
+      "id": "bar:break-ten:2"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "take",
+          "id": "dollar"
+        },
+        {
+          "do": "say",
+          "text": "Sal sighs and turns the ten into singles. Coins remain a fairy tale."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:ten"
+      ],
+      "noun": "jukebox",
+      "anySecond": true,
+      "id": "bar:break-ten:3"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The jukebox wants a dollar bill. You don't have one."
+        }
+      ],
+      "req": [],
+      "noun": "b7",
+      "anySecond": true,
+      "id": "bar:play-broke"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The jukebox wants a dollar bill. You don't have one."
+        }
+      ],
+      "req": [],
+      "noun": "song",
+      "anySecond": true,
+      "id": "bar:play-broke:1"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The jukebox wants a dollar bill. You don't have one."
+        }
+      ],
+      "req": [],
+      "noun": "a1",
+      "anySecond": true,
+      "id": "bar:play-broke:2"
+    },
+    {
+      "verb": "play",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The jukebox wants a dollar bill. You don't have one."
+        }
+      ],
+      "req": [],
+      "noun": "jukebox",
+      "anySecond": true,
+      "id": "bar:play-broke:3"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "A1 Warm Asphalt. A2 Pickle Jar Blues. A3 Neon Debt. A4 Quarterless. B1 Sweat Equity. B2 Gents Sign. B3 Anchor Tattoo. B4 Dishrag Waltz. B5 Karma Jar. B6 August Ninth. B7 Brooklyn Moon — The Vespers. B8 Last Call. C1 Subway July. C2 Rhino Rope. C3 Tyre Iron. C4 Humid City. D1 Restraining Order. D2 Crisp This Morning. D3 Bloodshot. D4 The N Is Out. All of them original. One of them matters."
+        }
+      ],
+      "req": [],
+      "noun": "list",
+      "anySecond": true,
+      "id": "bar:read-list"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The professor isn't in the bar. Try the alley, if you like rain."
+        }
+      ],
+      "req": [],
+      "noun": "five",
+      "second": "professor",
+      "id": "bar:not-professor"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The professor isn't in the bar. Try the alley, if you like rain."
+        }
+      ],
+      "req": [],
+      "noun": "money",
+      "second": "professor",
+      "id": "bar:not-professor:1"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The professor isn't in the bar. Try the alley, if you like rain."
+        }
+      ],
+      "req": [],
+      "noun": "ten",
+      "second": "professor",
+      "id": "bar:not-professor:2"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The professor isn't in the bar. Try the alley, if you like rain."
+        }
+      ],
+      "req": [],
+      "noun": "dollar",
+      "second": "professor",
+      "id": "bar:not-professor:3"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The professor isn't in the bar. Try the alley, if you like rain."
+        }
+      ],
+      "req": [],
+      "noun": "five",
+      "second": "professor",
+      "id": "bar:not-professor:4"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The professor isn't in the bar. Try the alley, if you like rain."
+        }
+      ],
+      "req": [],
+      "noun": "money",
+      "second": "professor",
+      "id": "bar:not-professor:5"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The professor isn't in the bar. Try the alley, if you like rain."
+        }
+      ],
+      "req": [],
+      "noun": "ten",
+      "second": "professor",
+      "id": "bar:not-professor:6"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The professor isn't in the bar. Try the alley, if you like rain."
+        }
+      ],
+      "req": [],
+      "noun": "dollar",
+      "second": "professor",
+      "id": "bar:not-professor:7"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "sal",
+      "id": "bar:tip-five"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "sal",
+      "second": "sal",
+      "id": "bar:tip-five:1"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "sal",
+      "second": "jar",
+      "id": "bar:tip-five:2"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "jar",
+      "id": "bar:tip-five:3"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "jar",
+      "second": "sal",
+      "id": "bar:tip-five:4"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "jar",
+      "second": "jar",
+      "id": "bar:tip-five:5"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "five",
+      "id": "bar:tip-five:6"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "five",
+      "second": "sal",
+      "id": "bar:tip-five:7"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "five",
+      "second": "jar",
+      "id": "bar:tip-five:8"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "money",
+      "id": "bar:tip-five:9"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "money",
+      "second": "sal",
+      "id": "bar:tip-five:10"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "money",
+      "second": "jar",
+      "id": "bar:tip-five:11"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "id": "bar:tip-five:12"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "second": "sal",
+      "id": "bar:tip-five:13"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "second": "jar",
+      "id": "bar:tip-five:14"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "sal",
+      "id": "bar:tip-five:15"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "sal",
+      "second": "sal",
+      "id": "bar:tip-five:16"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "sal",
+      "second": "jar",
+      "id": "bar:tip-five:17"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "jar",
+      "id": "bar:tip-five:18"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "jar",
+      "second": "sal",
+      "id": "bar:tip-five:19"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "jar",
+      "second": "jar",
+      "id": "bar:tip-five:20"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "five",
+      "id": "bar:tip-five:21"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "five",
+      "second": "sal",
+      "id": "bar:tip-five:22"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "five",
+      "second": "jar",
+      "id": "bar:tip-five:23"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "money",
+      "id": "bar:tip-five:24"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "money",
+      "second": "sal",
+      "id": "bar:tip-five:25"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "money",
+      "second": "jar",
+      "id": "bar:tip-five:26"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "id": "bar:tip-five:27"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "second": "sal",
+      "id": "bar:tip-five:28"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "second": "jar",
+      "id": "bar:tip-five:29"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "sal",
+      "id": "bar:tip-five:30"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "sal",
+      "second": "sal",
+      "id": "bar:tip-five:31"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "sal",
+      "second": "jar",
+      "id": "bar:tip-five:32"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "jar",
+      "id": "bar:tip-five:33"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "jar",
+      "second": "sal",
+      "id": "bar:tip-five:34"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "jar",
+      "second": "jar",
+      "id": "bar:tip-five:35"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "five",
+      "id": "bar:tip-five:36"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "five",
+      "second": "sal",
+      "id": "bar:tip-five:37"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "five",
+      "second": "jar",
+      "id": "bar:tip-five:38"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "money",
+      "id": "bar:tip-five:39"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "money",
+      "second": "sal",
+      "id": "bar:tip-five:40"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "noun": "money",
+      "second": "jar",
+      "id": "bar:tip-five:41"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "id": "bar:tip-five:42"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "second": "sal",
+      "id": "bar:tip-five:43"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "You drop a five in the jar. Sal looks at the jar, then at you. \"Y'know what, kid? You need change? Here.\" He cracks a roll of quarters he was definitely not hiding."
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "has:five",
+        "!flag:tipped"
+      ],
+      "second": "jar",
+      "id": "bar:tip-five:44"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "sal",
+      "id": "bar:tip-ten"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "sal",
+      "second": "sal",
+      "id": "bar:tip-ten:1"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "sal",
+      "second": "jar",
+      "id": "bar:tip-ten:2"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "jar",
+      "id": "bar:tip-ten:3"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "jar",
+      "second": "sal",
+      "id": "bar:tip-ten:4"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "jar",
+      "second": "jar",
+      "id": "bar:tip-ten:5"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "ten",
+      "id": "bar:tip-ten:6"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "ten",
+      "second": "sal",
+      "id": "bar:tip-ten:7"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "ten",
+      "second": "jar",
+      "id": "bar:tip-ten:8"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "money",
+      "id": "bar:tip-ten:9"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "money",
+      "second": "sal",
+      "id": "bar:tip-ten:10"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "money",
+      "second": "jar",
+      "id": "bar:tip-ten:11"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "sal",
+      "id": "bar:tip-ten:12"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "sal",
+      "second": "sal",
+      "id": "bar:tip-ten:13"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "sal",
+      "second": "jar",
+      "id": "bar:tip-ten:14"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "jar",
+      "id": "bar:tip-ten:15"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "jar",
+      "second": "sal",
+      "id": "bar:tip-ten:16"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "jar",
+      "second": "jar",
+      "id": "bar:tip-ten:17"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "ten",
+      "id": "bar:tip-ten:18"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "ten",
+      "second": "sal",
+      "id": "bar:tip-ten:19"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "ten",
+      "second": "jar",
+      "id": "bar:tip-ten:20"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "money",
+      "id": "bar:tip-ten:21"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "money",
+      "second": "sal",
+      "id": "bar:tip-ten:22"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "money",
+      "second": "jar",
+      "id": "bar:tip-ten:23"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "sal",
+      "id": "bar:tip-ten:24"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "sal",
+      "second": "sal",
+      "id": "bar:tip-ten:25"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "sal",
+      "second": "jar",
+      "id": "bar:tip-ten:26"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "jar",
+      "id": "bar:tip-ten:27"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "jar",
+      "second": "sal",
+      "id": "bar:tip-ten:28"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "jar",
+      "second": "jar",
+      "id": "bar:tip-ten:29"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "ten",
+      "id": "bar:tip-ten:30"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "ten",
+      "second": "sal",
+      "id": "bar:tip-ten:31"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "ten",
+      "second": "jar",
+      "id": "bar:tip-ten:32"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "money",
+      "id": "bar:tip-ten:33"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "money",
+      "second": "sal",
+      "id": "bar:tip-ten:34"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "ten"
+        },
+        {
+          "do": "take",
+          "id": "five"
+        },
+        {
+          "do": "take",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tipped"
+        },
+        {
+          "do": "set",
+          "flag": "gotQuarters"
+        },
+        {
+          "do": "score",
+          "id": "tip-sal",
+          "points": 6
+        },
+        {
+          "do": "score",
+          "id": "get-quarters",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!has:five",
+        "has:ten",
+        "!flag:tipped"
+      ],
+      "noun": "money",
+      "second": "jar",
+      "id": "bar:tip-ten:35"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Sal slides the jar back with one finger. \"Play something decent first.\""
+        }
+      ],
+      "req": [
+        "!flag:salMood"
+      ],
+      "noun": "sal",
+      "id": "bar:tip-early"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Sal slides the jar back with one finger. \"Play something decent first.\""
+        }
+      ],
+      "req": [
+        "!flag:salMood"
+      ],
+      "noun": "sal",
+      "second": "sal",
+      "id": "bar:tip-early:1"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Sal slides the jar back with one finger. \"Play something decent first.\""
+        }
+      ],
+      "req": [
+        "!flag:salMood"
+      ],
+      "noun": "sal",
+      "second": "jar",
+      "id": "bar:tip-early:2"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Sal slides the jar back with one finger. \"Play something decent first.\""
+        }
+      ],
+      "req": [
+        "!flag:salMood"
+      ],
+      "noun": "jar",
+      "id": "bar:tip-early:3"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Sal slides the jar back with one finger. \"Play something decent first.\""
+        }
+      ],
+      "req": [
+        "!flag:salMood"
+      ],
+      "noun": "jar",
+      "second": "sal",
+      "id": "bar:tip-early:4"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Sal slides the jar back with one finger. \"Play something decent first.\""
+        }
+      ],
+      "req": [
+        "!flag:salMood"
+      ],
+      "noun": "jar",
+      "second": "jar",
+      "id": "bar:tip-early:5"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Sal slides the jar back with one finger. \"Play something decent first.\""
+        }
+      ],
+      "req": [
+        "!flag:salMood"
+      ],
+      "noun": "sal",
+      "id": "bar:tip-early:6"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Sal slides the jar back with one finger. \"Play something decent first.\""
+        }
+      ],
+      "req": [
+        "!flag:salMood"
+      ],
+      "noun": "sal",
+      "second": "sal",
+      "id": "bar:tip-early:7"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Sal slides the jar back with one finger. \"Play something decent first.\""
+        }
+      ],
+      "req": [
+        "!flag:salMood"
+      ],
+      "noun": "sal",
+      "second": "jar",
+      "id": "bar:tip-early:8"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Sal slides the jar back with one finger. \"Play something decent first.\""
+        }
+      ],
+      "req": [
+        "!flag:salMood"
+      ],
+      "noun": "jar",
+      "id": "bar:tip-early:9"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Sal slides the jar back with one finger. \"Play something decent first.\""
+        }
+      ],
+      "req": [
+        "!flag:salMood"
+      ],
+      "noun": "jar",
+      "second": "sal",
+      "id": "bar:tip-early:10"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Sal slides the jar back with one finger. \"Play something decent first.\""
+        }
+      ],
+      "req": [
+        "!flag:salMood"
+      ],
+      "noun": "jar",
+      "second": "jar",
+      "id": "bar:tip-early:11"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Sal slides the jar back with one finger. \"Play something decent first.\""
+        }
+      ],
+      "req": [
+        "!flag:salMood"
+      ],
+      "noun": "sal",
+      "id": "bar:tip-early:12"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Sal slides the jar back with one finger. \"Play something decent first.\""
+        }
+      ],
+      "req": [
+        "!flag:salMood"
+      ],
+      "noun": "sal",
+      "second": "sal",
+      "id": "bar:tip-early:13"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Sal slides the jar back with one finger. \"Play something decent first.\""
+        }
+      ],
+      "req": [
+        "!flag:salMood"
+      ],
+      "noun": "sal",
+      "second": "jar",
+      "id": "bar:tip-early:14"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Sal slides the jar back with one finger. \"Play something decent first.\""
+        }
+      ],
+      "req": [
+        "!flag:salMood"
+      ],
+      "noun": "jar",
+      "id": "bar:tip-early:15"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Sal slides the jar back with one finger. \"Play something decent first.\""
+        }
+      ],
+      "req": [
+        "!flag:salMood"
+      ],
+      "noun": "jar",
+      "second": "sal",
+      "id": "bar:tip-early:16"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Sal slides the jar back with one finger. \"Play something decent first.\""
+        }
+      ],
+      "req": [
+        "!flag:salMood"
+      ],
+      "noun": "jar",
+      "second": "jar",
+      "id": "bar:tip-early:17"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The jar has had enough of your money. Karma is real, and also full."
+        }
+      ],
+      "req": [
+        "flag:tipped"
+      ],
+      "noun": "sal",
+      "anySecond": true,
+      "id": "bar:tip-done"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The jar has had enough of your money. Karma is real, and also full."
+        }
+      ],
+      "req": [
+        "flag:tipped"
+      ],
+      "noun": "jar",
+      "anySecond": true,
+      "id": "bar:tip-done:1"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The jar has had enough of your money. Karma is real, and also full."
+        }
+      ],
+      "req": [
+        "flag:tipped"
+      ],
+      "anySecond": true,
+      "id": "bar:tip-done:2"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Sal folds his arms. \"Do I look like a bank? Machine in the john is your problem, pal.\""
+        }
+      ],
+      "req": [
+        "!flag:salMood"
+      ],
+      "noun": "change",
+      "anySecond": true,
+      "id": "bar:ask-change-early"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Sal's eyes are still wet from the song. \"Tip the jar. Then we'll talk about change.\""
+        }
+      ],
+      "req": [
+        "flag:salMood",
+        "!flag:tipped"
+      ],
+      "noun": "change",
+      "anySecond": true,
+      "id": "bar:ask-change-mood"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "say",
+          "text": "You already cleaned him out. He looks almost proud of you."
+        }
+      ],
+      "req": [],
+      "noun": "change",
+      "anySecond": true,
+      "id": "bar:ask-change-done"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "say",
+          "text": "\"What'll it be? And don't ask me for change. Change is for customers I like.\""
+        }
+      ],
+      "req": [
+        "!flag:salMood"
+      ],
+      "noun": "sal",
+      "id": "bar:talk-sal"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "say",
+          "text": "\"What'll it be? And don't ask me for change. Change is for customers I like.\""
+        }
+      ],
+      "req": [
+        "!flag:salMood"
+      ],
+      "noun": "sal",
+      "second": "sal",
+      "id": "bar:talk-sal:1"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "say",
+          "text": "\"What'll it be? And don't ask me for change. Change is for customers I like.\""
+        }
+      ],
+      "req": [
+        "!flag:salMood"
+      ],
+      "id": "bar:talk-sal:2"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "say",
+          "text": "\"What'll it be? And don't ask me for change. Change is for customers I like.\""
+        }
+      ],
+      "req": [
+        "!flag:salMood"
+      ],
+      "second": "sal",
+      "id": "bar:talk-sal:3"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Sal clears his throat, not quite successfully. \"Yeah. That song. What do you need, kid?\""
+        }
+      ],
+      "req": [
+        "flag:salMood"
+      ],
+      "noun": "sal",
+      "anySecond": true,
+      "id": "bar:talk-sal-mood"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "say",
+          "text": "One of them doesn't look up from the dominoes. \"We ain't seen nothin'. We never see nothin'.\" A beat. \"Busy night out back, though. Cars comin' and goin'.\""
+        }
+      ],
+      "req": [],
+      "noun": "regulars",
+      "anySecond": true,
+      "id": "bar:talk-regulars"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Two doors. The left one says GENTS. The right one is propped open on the alley, and on the weather."
+        }
+      ],
+      "req": [],
+      "noun": "door",
+      "anySecond": true,
+      "id": "bar:look-door"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "goto",
+          "room": "bathroom",
+          "spawn": "fromBar"
+        }
+      ],
+      "req": [],
+      "noun": "bathroom",
+      "anySecond": true,
+      "id": "bar:go-bathroom"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "goto",
+          "room": "alley",
+          "spawn": "fromBar"
+        }
+      ],
+      "req": [],
+      "noun": "alley",
+      "anySecond": true,
+      "id": "bar:go-alley"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "say",
+          "text": "It's even hotter out there. You've come too far to turn back now."
+        }
+      ],
+      "req": [],
+      "noun": "out",
+      "anySecond": true,
+      "id": "bar:go-out"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The Purple Rhino is through the alley. So is the rain."
+        }
+      ],
+      "req": [],
+      "noun": "club",
+      "anySecond": true,
+      "id": "bar:go-club"
+    }
+  ]
+}

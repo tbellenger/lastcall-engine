@@ -42,7 +42,8 @@
           "words": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
           "ranged": { "type": "boolean" },
           "meta": { "type": "boolean" },
-          "default": { "type": "string" }
+          "default": { "type": "string" },
+          "targets": { "type": "object", "additionalProperties": { "type": "string" } }
         }
       }
     },
@@ -66,6 +67,7 @@
       }
     },
     "unknownWord": { "type": "string" },
-    "unknownCommand": { "type": "string" }
+    "unknownCommand": { "type": "string" },
+    "bare": { "type": "object", "additionalProperties": { "type": "string" } }
   }
 }

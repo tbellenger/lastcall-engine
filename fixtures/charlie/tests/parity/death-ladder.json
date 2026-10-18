@@ -1,0 +1,75 @@
+{
+  "steps": [
+    {
+      "cmd": "go alley",
+      "lines": [
+        "The storm has broken. Rain comes down hard enough to bounce.",
+        "Charlie squints. The red cardigan. The pencil in the bun. That's Dana Whitlock from Accounts. She signed off on his expenses this morning.",
+        "Charlie has two options: call it a night, or find out why Dana from Accounts is being dragged into a nightclub. Unfortunately for him, he's the curious type.",
+        "As the sedan pulls away, something small tumbles from a goon's pocket and lands in a puddle near the Purple Rhino door."
+      ],
+      "score": 4,
+      "room": "alley",
+      "flags": [
+        "matchbookHere",
+        "seenCutscene"
+      ],
+      "items": {
+        "twenty": 1,
+        "dollar": 3
+      },
+      "vars": {
+        "clockClub": 0,
+        "clockAlley": 0,
+        "thug": 0,
+        "police": 0
+      },
+      "dead": false,
+      "ending": null
+    },
+    {
+      "cmd": "jump ladder",
+      "lines": [
+        "The ladder is pulled up for a reason. Charlie jumps anyway. Gravity, an old New York regular, catches the tab.",
+        "Restore, restart, or quit?"
+      ],
+      "score": 4,
+      "room": "alley",
+      "flags": [
+        "matchbookHere",
+        "seenCutscene"
+      ],
+      "items": {
+        "twenty": 1,
+        "dollar": 3
+      },
+      "vars": {
+        "clockClub": 0,
+        "clockAlley": 0,
+        "thug": 0,
+        "police": 0
+      },
+      "dead": true,
+      "ending": null
+    },
+    {
+      "cmd": "restore",
+      "lines": [],
+      "score": 0,
+      "room": "alley",
+      "flags": [],
+      "items": {
+        "twenty": 1,
+        "dollar": 3
+      },
+      "vars": {
+        "clockClub": 0,
+        "clockAlley": 0,
+        "thug": 0,
+        "police": 0
+      },
+      "dead": false,
+      "ending": null
+    }
+  ]
+}

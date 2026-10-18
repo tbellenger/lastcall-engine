@@ -28,6 +28,19 @@ fn run() -> Result<(), String> {
             advc::pack_dir(dir.as_ref(), output.as_ref()).map_err(|err| err.to_string())?;
             println!("packed {output}");
         }
+        "import-charlie" => {
+            let dw = args.next().ok_or_else(usage)?;
+            let out = args.next().ok_or_else(usage)?;
+            let status = std::process::Command::new("node")
+                .arg("tools/import-charlie.mjs")
+                .arg(&dw)
+                .arg(&out)
+                .status()
+                .map_err(|err| format!("node: {err}"))?;
+            if !status.success() {
+                return Err(format!("import-charlie failed ({status})"));
+            }
+        }
         "test" => {
             let dir = args.next().ok_or_else(usage)?;
             let mut update = false;
@@ -48,6 +61,6 @@ fn run() -> Result<(), String> {
 }
 
 fn usage() -> String {
-    "usage:\n  advc validate <game-dir>\n  advc pack <game-dir> -o <file.advpak>\n  advc test <game-dir> [--update-snapshots]"
+    "usage:\n  advc validate <game-dir>\n  advc pack <game-dir> -o <file.advpak>\n  advc test <game-dir> [--update-snapshots]\n  advc import-charlie <dw-root> <game-dir>"
         .into()
 }

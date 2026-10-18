@@ -1,0 +1,517 @@
+{
+  "steps": [
+    {
+      "cmd": "order beer",
+      "lines": [
+        "Sal takes the twenty. \"Five bucks. Here's fifteen. I'm out of quarters. Ran a register for drunks all night.\""
+      ],
+      "score": 2,
+      "room": "bar",
+      "flags": [
+        "orderedBeer"
+      ],
+      "items": {
+        "dollar": 3,
+        "ten": 1,
+        "five": 1,
+        "beer": 1
+      },
+      "vars": {
+        "clockClub": 0,
+        "clockAlley": 0,
+        "thug": 0,
+        "police": 0
+      },
+      "dead": false,
+      "ending": null
+    },
+    {
+      "cmd": "drink beer",
+      "lines": [
+        "Heaven, with a head on it."
+      ],
+      "score": 4,
+      "room": "bar",
+      "flags": [
+        "drankBeer",
+        "orderedBeer"
+      ],
+      "items": {
+        "dollar": 3,
+        "ten": 1,
+        "five": 1
+      },
+      "vars": {
+        "clockClub": 0,
+        "clockAlley": 0,
+        "thug": 0,
+        "police": 0
+      },
+      "dead": false,
+      "ending": null
+    },
+    {
+      "cmd": "talk to earl",
+      "lines": [
+        "Earl lifts the empty glass. \"My glass is lookin' awful lonely, friend.\""
+      ],
+      "score": 6,
+      "room": "bar",
+      "flags": [
+        "drankBeer",
+        "earlTalked",
+        "orderedBeer"
+      ],
+      "items": {
+        "dollar": 3,
+        "ten": 1,
+        "five": 1
+      },
+      "vars": {
+        "clockClub": 0,
+        "clockAlley": 0,
+        "thug": 0,
+        "police": 0
+      },
+      "dead": false,
+      "ending": null
+    },
+    {
+      "cmd": "buy drink for earl",
+      "lines": [
+        "You're a gentleman. Earl leans in. \"Lemme tell you something. Sal's a softie when he hears Brooklyn Moon. B7. Played it at his wedding. Puts him in a giving mood.\""
+      ],
+      "score": 12,
+      "room": "bar",
+      "flags": [
+        "drankBeer",
+        "earlClue",
+        "earlDrink",
+        "earlTalked",
+        "orderedBeer"
+      ],
+      "items": {
+        "dollar": 3,
+        "ten": 1
+      },
+      "vars": {
+        "clockClub": 0,
+        "clockAlley": 0,
+        "thug": 0,
+        "police": 0
+      },
+      "dead": false,
+      "ending": null
+    },
+    {
+      "cmd": "play b7",
+      "lines": [
+        "The jukebox warms up. Brooklyn Moon rolls out, a little waltz with a bruise in it. Sal stops wiping. His eyes go somewhere else. He is, against his will, in a giving mood."
+      ],
+      "score": 20,
+      "room": "bar",
+      "flags": [
+        "drankBeer",
+        "earlClue",
+        "earlDrink",
+        "earlTalked",
+        "orderedBeer",
+        "salMood"
+      ],
+      "items": {
+        "dollar": 2,
+        "ten": 1
+      },
+      "vars": {
+        "clockClub": 0,
+        "clockAlley": 0,
+        "thug": 0,
+        "police": 0
+      },
+      "dead": false,
+      "ending": null
+    },
+    {
+      "cmd": "tip sal",
+      "lines": [
+        "Sal takes the ten, feeds the jar a five, and slides the other five back with a roll of quarters. \"Don't tell the taxman.\""
+      ],
+      "score": 30,
+      "room": "bar",
+      "flags": [
+        "drankBeer",
+        "earlClue",
+        "earlDrink",
+        "earlTalked",
+        "gotQuarters",
+        "orderedBeer",
+        "salMood",
+        "tipped"
+      ],
+      "items": {
+        "dollar": 2,
+        "five": 1,
+        "quarters": 1
+      },
+      "vars": {
+        "clockClub": 0,
+        "clockAlley": 0,
+        "thug": 0,
+        "police": 0
+      },
+      "dead": false,
+      "ending": null
+    },
+    {
+      "cmd": "go bathroom",
+      "lines": [
+        "You step into the gents. The storm is only a rumor through the vent."
+      ],
+      "score": 30,
+      "room": "bathroom",
+      "flags": [
+        "drankBeer",
+        "earlClue",
+        "earlDrink",
+        "earlTalked",
+        "gotQuarters",
+        "orderedBeer",
+        "salMood",
+        "tipped"
+      ],
+      "items": {
+        "dollar": 2,
+        "five": 1,
+        "quarters": 1
+      },
+      "vars": {
+        "clockClub": 0,
+        "clockAlley": 0,
+        "thug": 0,
+        "police": 0
+      },
+      "dead": false,
+      "ending": null
+    },
+    {
+      "cmd": "get soap",
+      "lines": [
+        "Slimy. Slippery. The kind of slippery that could put a grown man on his back. He pockets it anyway."
+      ],
+      "score": 33,
+      "room": "bathroom",
+      "flags": [
+        "drankBeer",
+        "earlClue",
+        "earlDrink",
+        "earlTalked",
+        "gotQuarters",
+        "orderedBeer",
+        "salMood",
+        "soap",
+        "tipped"
+      ],
+      "items": {
+        "dollar": 2,
+        "five": 1,
+        "quarters": 1,
+        "soap": 1
+      },
+      "vars": {
+        "clockClub": 0,
+        "clockAlley": 0,
+        "thug": 0,
+        "police": 0
+      },
+      "dead": false,
+      "ending": null
+    },
+    {
+      "cmd": "put quarters in machine",
+      "lines": [
+        "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+      ],
+      "score": 41,
+      "room": "bathroom",
+      "flags": [
+        "drankBeer",
+        "earlClue",
+        "earlDrink",
+        "earlTalked",
+        "gotQuarters",
+        "orderedBeer",
+        "salMood",
+        "soap",
+        "tipped"
+      ],
+      "items": {
+        "dollar": 2,
+        "five": 1,
+        "soap": 1,
+        "cologne": 1
+      },
+      "vars": {
+        "clockClub": 0,
+        "clockAlley": 0,
+        "thug": 0,
+        "police": 0
+      },
+      "dead": false,
+      "ending": null
+    },
+    {
+      "cmd": "wear cologne",
+      "lines": [
+        "You smell like a Midnight Stallion. The suit is still a lost cause, but the air around it has hope."
+      ],
+      "score": 45,
+      "room": "bathroom",
+      "flags": [
+        "drankBeer",
+        "earlClue",
+        "earlDrink",
+        "earlTalked",
+        "gotQuarters",
+        "orderedBeer",
+        "salMood",
+        "soap",
+        "tipped",
+        "wearingCologne"
+      ],
+      "items": {
+        "dollar": 2,
+        "five": 1,
+        "soap": 1
+      },
+      "vars": {
+        "clockClub": 0,
+        "clockAlley": 0,
+        "thug": 0,
+        "police": 0
+      },
+      "dead": false,
+      "ending": null
+    },
+    {
+      "cmd": "go bar",
+      "lines": [
+        "Thunder rolls a long way off. Rain ticks the bar windows."
+      ],
+      "score": 45,
+      "room": "bar",
+      "flags": [
+        "drankBeer",
+        "earlClue",
+        "earlDrink",
+        "earlTalked",
+        "gotQuarters",
+        "heardThunder",
+        "orderedBeer",
+        "salMood",
+        "soap",
+        "tipped",
+        "wearingCologne"
+      ],
+      "items": {
+        "dollar": 2,
+        "five": 1,
+        "soap": 1
+      },
+      "vars": {
+        "clockClub": 0,
+        "clockAlley": 0,
+        "thug": 0,
+        "police": 0
+      },
+      "dead": false,
+      "ending": null
+    },
+    {
+      "cmd": "go alley",
+      "lines": [
+        "The storm has broken. Rain comes down hard enough to bounce.",
+        "Charlie squints. The red cardigan. The pencil in the bun. That's Dana Whitlock from Accounts. She signed off on his expenses this morning.",
+        "Charlie has two options: call it a night, or find out why Dana from Accounts is being dragged into a nightclub. Unfortunately for him, he's the curious type.",
+        "As the sedan pulls away, something small tumbles from a goon's pocket and lands in a puddle near the Purple Rhino door."
+      ],
+      "score": 49,
+      "room": "alley",
+      "flags": [
+        "drankBeer",
+        "earlClue",
+        "earlDrink",
+        "earlTalked",
+        "gotQuarters",
+        "heardThunder",
+        "matchbookHere",
+        "orderedBeer",
+        "salMood",
+        "seenCutscene",
+        "soap",
+        "tipped",
+        "wearingCologne"
+      ],
+      "items": {
+        "dollar": 2,
+        "five": 1,
+        "soap": 1
+      },
+      "vars": {
+        "clockClub": 0,
+        "clockAlley": 0,
+        "thug": 0,
+        "police": 0
+      },
+      "dead": false,
+      "ending": null
+    },
+    {
+      "cmd": "get matchbook",
+      "lines": [
+        "A matchbook lies where a goon dropped it. THE PURPLE RHINO — ASK FOR VIC. You pocket it."
+      ],
+      "score": 53,
+      "room": "alley",
+      "flags": [
+        "drankBeer",
+        "earlClue",
+        "earlDrink",
+        "earlTalked",
+        "gotQuarters",
+        "heardThunder",
+        "matchbookHere",
+        "orderedBeer",
+        "salMood",
+        "seenCutscene",
+        "soap",
+        "tipped",
+        "wearingCologne"
+      ],
+      "items": {
+        "dollar": 2,
+        "five": 1,
+        "soap": 1,
+        "matchbook": 1
+      },
+      "vars": {
+        "clockClub": 0,
+        "clockAlley": 0,
+        "thug": 0,
+        "police": 0
+      },
+      "dead": false,
+      "ending": null
+    },
+    {
+      "cmd": "talk to bouncer",
+      "lines": [
+        "Tank's nose does the math. \"...Midnight Stallion? Respect. Go on in.\"",
+        "Bass, smoke, and a mirror ball turning for almost nobody. The Purple Rhino is open."
+      ],
+      "score": 58,
+      "room": "club",
+      "flags": [
+        "drankBeer",
+        "earlClue",
+        "earlDrink",
+        "earlTalked",
+        "gotQuarters",
+        "heardThunder",
+        "matchbookHere",
+        "orderedBeer",
+        "salMood",
+        "seenCutscene",
+        "soap",
+        "tipped",
+        "wearingCologne"
+      ],
+      "items": {
+        "dollar": 2,
+        "five": 1,
+        "soap": 1,
+        "matchbook": 1
+      },
+      "vars": {
+        "clockClub": 0,
+        "clockAlley": 0,
+        "thug": 0,
+        "police": 0
+      },
+      "dead": false,
+      "ending": null
+    },
+    {
+      "cmd": "touch dancer",
+      "lines": [
+        "The guard explains the Purple Rhino's one rule with both hands. Charlie lands in a puddle in the alley. The door locks. Dana's trail goes cold. GAME OVER.",
+        "Restore, restart, or quit?"
+      ],
+      "score": 58,
+      "room": "club",
+      "flags": [
+        "drankBeer",
+        "earlClue",
+        "earlDrink",
+        "earlTalked",
+        "gotQuarters",
+        "heardThunder",
+        "matchbookHere",
+        "orderedBeer",
+        "salMood",
+        "seenCutscene",
+        "soap",
+        "tipped",
+        "wearingCologne"
+      ],
+      "items": {
+        "dollar": 2,
+        "five": 1,
+        "soap": 1,
+        "matchbook": 1
+      },
+      "vars": {
+        "clockClub": 0,
+        "clockAlley": 0,
+        "thug": 0,
+        "police": 0
+      },
+      "dead": true,
+      "ending": null
+    },
+    {
+      "cmd": "restore",
+      "lines": [],
+      "score": 58,
+      "room": "club",
+      "flags": [
+        "drankBeer",
+        "earlClue",
+        "earlDrink",
+        "earlTalked",
+        "gotQuarters",
+        "heardThunder",
+        "matchbookHere",
+        "orderedBeer",
+        "salMood",
+        "seenCutscene",
+        "soap",
+        "tipped",
+        "wearingCologne"
+      ],
+      "items": {
+        "dollar": 2,
+        "five": 1,
+        "soap": 1,
+        "matchbook": 1
+      },
+      "vars": {
+        "clockClub": 0,
+        "clockAlley": 0,
+        "thug": 0,
+        "police": 0
+      },
+      "dead": false,
+      "ending": null
+    }
+  ]
+}

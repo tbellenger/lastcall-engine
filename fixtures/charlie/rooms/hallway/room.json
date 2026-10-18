@@ -1,0 +1,61 @@
+{
+  "id": "hallway",
+  "name": "Hallway",
+  "look": "A hallway in Vic's lakehouse. A guard sleeps in a chair in front of the office door. Charlie is far enough back to stay a rumor.",
+  "spawns": {
+    "default": [
+      80,
+      206
+    ],
+    "fromHall": [
+      80,
+      206
+    ],
+    "fromOffice": [
+      120,
+      206
+    ]
+  },
+  "exits": [],
+  "hotspots": [
+    {
+      "id": "guard",
+      "rect": [
+        260,
+        90,
+        60,
+        110
+      ],
+      "nouns": [
+        "guard",
+        "chair"
+      ],
+      "look": "A guard sleeps in a chair in front of the office door. Close is how the nap ends.",
+      "stand": [
+        280,
+        206
+      ]
+    },
+    {
+      "id": "door",
+      "rect": [
+        310,
+        40,
+        60,
+        150
+      ],
+      "nouns": [
+        "door",
+        "office"
+      ],
+      "look": "Vic's office door. A sleeping guard in a chair is the lock.",
+      "stand": [
+        330,
+        206
+      ]
+    }
+  ],
+  "actors": [],
+  "props": [],
+  "rules": []
+}

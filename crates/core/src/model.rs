@@ -7,7 +7,7 @@ pub const SCREEN_H: u32 = 216;
 
 /// Package major this core accepts. Newer minors warn; other majors refuse.
 pub const FORMAT_MAJOR: u32 = 0;
-pub const FORMAT_MINOR: u32 = 1;
+pub const FORMAT_MINOR: u32 = 2;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
@@ -115,6 +115,18 @@ pub struct GameDef {
     pub intro: Vec<String>,
     #[serde(default)]
     pub rules: Vec<Rule>,
+    #[serde(default)]
+    pub hooks: Hooks,
+    #[serde(default)]
+    pub timers: Vec<MoveTimer>,
+    #[serde(default)]
+    pub declarations: Declarations,
+    /// Items the hero is holding when the game boots, before the first room line.
+    #[serde(default)]
+    pub carrying: Vec<String>,
+    /// While dead, any command but restore repeats this. Restart and quit stay available.
+    #[serde(default)]
+    pub death_prompt: Option<String>,
 }
 
 fn default_format() -> String {
@@ -134,6 +146,99 @@ fn default_seed() -> u64 {
 }
 fn default_reach() -> i32 {
     42
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+#[serde(rename_all = "camelCase")]
+pub struct Hooks {
+    /// Runs before move timers. Handling the command skips the timers and the rules.
+    #[serde(default)]
+    pub early: Option<String>,
+    /// Runs after move timers and after a reach walk. Handling skips the rule list.
+    #[serde(default)]
+    pub command: Option<String>,
+    /// Runs when the hero arrives, after the room's `onEnter` rules.
+    #[serde(default)]
+    pub enter: Option<String>,
+    /// Runs when a cutscene's last beat finishes.
+    #[serde(default)]
+    pub cutscene_end: Option<String>,
+    /// Runs for a typed command while a cutscene is up.
+    #[serde(default)]
+    pub cutscene_command: Option<String>,
+    /// Runs after the command's own effects, still before the player dismisses them.
+    #[serde(default)]
+    pub after: Option<String>,
+}
+
+/// Counts non-skipped commands while `when` holds. The command that would pass
+/// `limit` is replaced by `effects` and does not run.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct MoveTimer {
+    pub id: String,
+    #[serde(default)]
+    pub when: Vec<String>,
+    pub limit: i32,
+    pub var: String,
+    #[serde(default)]
+    pub skip_verbs: Vec<String>,
+    #[serde(default)]
+    pub effects: Vec<Effect>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ScoreDecl {
+    pub id: String,
+    pub points: i32,
+}
+
+/// Flags, vars, score ids, and endings that scripts set and the save checker allows.
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+pub struct Declarations {
+    #[serde(default)]
+    pub flags: Vec<String>,
+    #[serde(default)]
+    pub vars: Vec<String>,
+    #[serde(default)]
+    pub scores: Vec<ScoreDecl>,
+    #[serde(default)]
+    pub endings: Vec<String>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CutsceneBeat {
+    #[serde(default)]
+    pub say: Vec<String>,
+    #[serde(default)]
+    pub frame: u32,
+    /// Inclusive flipbook range played while this beat's narration is up.
+    #[serde(default)]
+    pub flip_from: Option<u32>,
+    #[serde(default)]
+    pub flip_to: Option<u32>,
+    #[serde(default)]
+    pub flip_ticks: u32,
+    #[serde(default)]
+    pub effects: Vec<Effect>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CutsceneDef {
+    pub id: String,
+    #[serde(default)]
+    pub beats: Vec<CutsceneBeat>,
+    /// How many ticks each flipbook frame stays up when the cutscene autoplays.
+    #[serde(default)]
+    pub frame_ticks: Vec<u32>,
+    #[serde(default)]
+    pub on_command: Vec<Rule>,
+    #[serde(default)]
+    pub on_end: Vec<Effect>,
+    #[serde(default)]
+    pub frame_count: u32,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -158,6 +263,9 @@ pub struct VerbDef {
     pub meta: bool,
     #[serde(default, rename = "default")]
     pub default_reply: Option<String>,
+    /// Room id → noun whose stand point this verb walks to when the sentence has none.
+    #[serde(default)]
+    pub targets: BTreeMap<String, String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -188,6 +296,9 @@ pub struct Vocab {
     pub unknown_word: String,
     #[serde(default = "default_unknown_command")]
     pub unknown_command: String,
+    /// Verb id → noun id used when the sentence has no noun. `go` becomes `go out`.
+    #[serde(default)]
+    pub bare: BTreeMap<String, String>,
 }
 
 fn default_unknown_word() -> String {
@@ -209,6 +320,7 @@ impl Default for Vocab {
             rooms: BTreeMap::new(),
             unknown_word: default_unknown_word(),
             unknown_command: default_unknown_command(),
+            bare: BTreeMap::new(),
         }
     }
 }
@@ -258,7 +370,10 @@ pub enum Effect {
         room: String,
         spawn: String,
     },
-    SetDead,
+    SetDead {
+        #[serde(default, rename = "restoreTo", skip_serializing_if = "Option::is_none")]
+        restore_to: Option<String>,
+    },
     SetEnding {
         id: String,
     },
@@ -281,6 +396,43 @@ pub enum Effect {
     MarkOnce {
         id: String,
     },
+    /// Run a Rhai function. It may queue more effects and mark the command handled.
+    Call {
+        name: String,
+    },
+    Cutscene {
+        id: String,
+    },
+    Costume {
+        id: String,
+    },
+    Teleport {
+        x: i32,
+        y: i32,
+    },
+    /// Lock or unlock free walking. A locked hero still plays scripted `walkTo` effects.
+    Hold {
+        locked: bool,
+    },
+    /// Select a room picture variant. An empty name restores the room plate.
+    Picture {
+        name: String,
+    },
+    /// Keep the current autosave. Later room changes do not replace it.
+    /// Charlie uses this after the cab, so a lake death returns to that arrival.
+    KeepAutosave,
+    /// Override a placed actor. `hidden` removes them. Empty `anim` keeps the state machine.
+    Pose {
+        actor: String,
+        #[serde(default, skip_serializing_if = "Option::is_none")]
+        anim: Option<String>,
+        #[serde(default, skip_serializing_if = "Option::is_none")]
+        x: Option<i32>,
+        #[serde(default, skip_serializing_if = "Option::is_none")]
+        y: Option<i32>,
+        #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+        hidden: bool,
+    },
 }
 
 fn one_i32() -> i32 {
@@ -297,6 +449,12 @@ pub struct Rule {
     pub noun: Option<String>,
     #[serde(default)]
     pub second: Option<String>,
+    /// Match whatever the second noun is, including none.
+    #[serde(default)]
+    pub any_second: bool,
+    /// Match whatever the noun is, including none.
+    #[serde(default)]
+    pub any_noun: bool,
     #[serde(default)]
     pub req: Vec<String>,
     #[serde(default)]
@@ -412,6 +570,9 @@ pub struct RoomDef {
     pub rules: Vec<Rule>,
     #[serde(default)]
     pub bands: Vec<Band>,
+    /// Extra full-screen plates, selected by the `picture` effect.
+    #[serde(default)]
+    pub pictures: Vec<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

@@ -58,11 +58,268 @@ pub fn test_dir(dir: &Path, update_snapshots: bool) -> Result<()> {
             failures.push(format!("{}: {err}", walk.display()));
         }
     }
+    let parity = dir.join("tests").join("parity");
+    if parity.is_dir() {
+        if let Err(err) = run_parity(&bytes, &parity, dir, update_snapshots) {
+            failures.push(err.to_string());
+        }
+    }
     if failures.is_empty() {
         Ok(())
     } else {
         Err(Error::msg(failures.join("\n")))
     }
+}
+
+fn run_parity(bytes: &[u8], dir: &Path, game_dir: &Path, update: bool) -> Result<()> {
+    let mut files = Vec::new();
+    for entry in fs::read_dir(dir)? {
+        let path = entry?.path();
+        if path.extension().and_then(|ext| ext.to_str()) == Some("json") {
+            files.push(path);
+        }
+    }
+    files.sort();
+    if files.is_empty() {
+        return Err(Error::msg(format!(
+            "no parity transcripts in {}",
+            dir.display()
+        )));
+    }
+    let mut failures = Vec::new();
+    for path in files {
+        let text = fs::read_to_string(&path)?;
+        let transcript: ParityFile = serde_json::from_str(&text)
+            .map_err(|err| Error::msg(format!("{}: {err}", path.display())))?;
+        let mut engine = Engine::load(bytes).map_err(|err| Error::msg(err.to_string()))?;
+        if let Err(err) = drain(&mut engine, 80) {
+            failures.push(format!("{} boot: {err}", path.display()));
+            continue;
+        }
+        for (index, step) in transcript.steps.iter().enumerate() {
+            let from = engine.said().len();
+            if let Some(line) = &step.interrupt {
+                engine.interrupt_line(line);
+            } else if let Some(line) = &step.cmd {
+                engine.submit_line(line);
+            }
+            let limit = step
+                .dismiss
+                .unwrap_or(if step.hold.unwrap_or(false) { 0 } else { 80 });
+            if step.hold.unwrap_or(false) && step.dismiss.is_none() {
+                finish_motion(&mut engine);
+            } else if let Err(err) = dismiss_some(&mut engine, limit) {
+                failures.push(format!("{} step {}: {err}", path.display(), index + 1));
+                break;
+            }
+            let said = engine.said();
+            let lines = said[from.min(said.len())..].to_vec();
+            if let Err(err) = check_step(&engine, step, &lines) {
+                failures.push(format!(
+                    "{} step {} ({}): {err}",
+                    path.display(),
+                    index + 1,
+                    step.cmd
+                        .as_deref()
+                        .or(step.interrupt.as_deref())
+                        .unwrap_or("")
+                ));
+                break;
+            }
+            if let Some(name) = &step.shot {
+                if let Err(err) = write_shot(game_dir, name, engine.framebuffer(), update) {
+                    failures.push(format!("{} shot {name}: {err}", path.display()));
+                    break;
+                }
+            }
+        }
+    }
+    if failures.is_empty() {
+        Ok(())
+    } else {
+        Err(Error::msg(failures.join("\n")))
+    }
+}
+
+fn finish_motion(engine: &mut Engine) {
+    for _ in 0..4_000 {
+        if !engine.route_active() {
+            break;
+        }
+        engine.step(1);
+    }
+}
+
+fn dismiss_some(engine: &mut Engine, limit: u32) -> std::result::Result<(), String> {
+    let mut dismissed = 0u32;
+    for _ in 0..4_000 {
+        finish_motion(engine);
+        if !engine.presenting() {
+            return Ok(());
+        }
+        if dismissed >= limit {
+            return Ok(());
+        }
+        match engine.dismiss_narration() {
+            Ok(()) => dismissed += 1,
+            Err(_) => engine.step(1),
+        }
+    }
+    Err("narration did not settle".into())
+}
+
+fn drain(engine: &mut Engine, limit: u32) -> std::result::Result<(), String> {
+    dismiss_some(engine, limit)
+}
+
+fn check_step(
+    engine: &Engine,
+    step: &ParityStep,
+    lines: &[String],
+) -> std::result::Result<(), String> {
+    if lines != step.lines.as_slice() {
+        let mut msg = format!(
+            "lines\n  expected:\n{}\n  actual:\n{}",
+            step.lines.join("\n"),
+            lines.join("\n")
+        );
+        if msg.len() > 1_200 {
+            msg.truncate(1_200);
+            msg.push_str("\n...");
+        }
+        return Err(msg);
+    }
+    if engine.score() != step.score {
+        return Err(format!("score {} != {}", engine.score(), step.score));
+    }
+    if engine.room_id() != step.room {
+        return Err(format!("room {} != {}", engine.room_id(), step.room));
+    }
+    if engine.is_dead() != step.dead {
+        return Err(format!("dead {} != {}", engine.is_dead(), step.dead));
+    }
+    if engine.ending() != step.ending.as_deref() {
+        return Err(format!("ending {:?} != {:?}", engine.ending(), step.ending));
+    }
+    let mut actual: BTreeSet<String> = engine
+        .flags()
+        .into_iter()
+        .filter(|flag| !matches!(flag.as_str(), "live" | "vicEntered" | "quietEnter"))
+        .collect();
+    for flag in &step.flags {
+        if flag == "live"
+            || flag == "vicEntered"
+            || flag == "quietEnter"
+            || flag.starts_with("did:")
+            || flag.starts_with("did_")
+        {
+            continue;
+        }
+        if !actual.remove(flag) {
+            return Err(format!("missing flag {flag}"));
+        }
+    }
+    actual.retain(|flag| !flag.starts_with("did_") && !flag.starts_with("did:"));
+    if !actual.is_empty() {
+        return Err(format!("extra flags {actual:?}"));
+    }
+    let mut items: BTreeMap<String, i32> = engine.inventory().into_iter().collect();
+    for (id, count) in &step.items {
+        let have = items.remove(id).unwrap_or(0);
+        if have != *count {
+            return Err(format!("item {id} count {have} != {count}"));
+        }
+    }
+    if !items.is_empty() {
+        return Err(format!("extra items {items:?}"));
+    }
+    for (name, value) in &step.vars {
+        if engine.var(name) != *value {
+            return Err(format!("var {name} {} != {value}", engine.var(name)));
+        }
+    }
+    Ok(())
+}
+
+fn write_shot(
+    game_dir: &Path,
+    name: &str,
+    rgba: &[u8],
+    update: bool,
+) -> std::result::Result<(), String> {
+    if name.is_empty() || name.contains('/') || name.contains("..") {
+        return Err(format!("bad shot name {name}"));
+    }
+    let image = RgbaImage {
+        w: SCREEN_W,
+        h: SCREEN_H,
+        rgba: rgba.to_vec(),
+    };
+    let encoded = imageutil::encode_rgba(&image).map_err(|err| err.to_string())?;
+    let path = game_dir
+        .join("tests")
+        .join("shots")
+        .join(format!("{name}.png"));
+    if update || !path.exists() {
+        if let Some(parent) = path.parent() {
+            fs::create_dir_all(parent).map_err(|err| err.to_string())?;
+        }
+        fs::write(&path, &encoded).map_err(|err| err.to_string())?;
+        return Ok(());
+    }
+    let previous = fs::read(&path).map_err(|err| err.to_string())?;
+    let decoded = imageutil::decode_png(&previous)
+        .map_err(|err| err.to_string())?
+        .into_rgba();
+    if decoded.w != SCREEN_W || decoded.h != SCREEN_H || decoded.rgba.len() != rgba.len() {
+        return Err("shot size changed".into());
+    }
+    let mut off = 0usize;
+    for i in 0..rgba.len() / 4 {
+        let d = (rgba[i * 4] as i16 - decoded.rgba[i * 4] as i16).unsigned_abs() as u16
+            + (rgba[i * 4 + 1] as i16 - decoded.rgba[i * 4 + 1] as i16).unsigned_abs() as u16
+            + (rgba[i * 4 + 2] as i16 - decoded.rgba[i * 4 + 2] as i16).unsigned_abs() as u16;
+        if d > 24 {
+            off += 1;
+        }
+    }
+    let pixels = (SCREEN_W * SCREEN_H) as usize;
+    if off * 100 / pixels > 2 {
+        let actual = game_dir.join("tests").join("shots").join("_actual");
+        fs::create_dir_all(&actual).map_err(|err| err.to_string())?;
+        fs::write(actual.join(format!("{name}.png")), encoded).map_err(|err| err.to_string())?;
+        return Err(format!("{off} pixels differ"));
+    }
+    Ok(())
+}
+
+#[derive(Debug, Deserialize)]
+struct ParityFile {
+    steps: Vec<ParityStep>,
+}
+
+#[derive(Debug, Deserialize)]
+struct ParityStep {
+    #[serde(default)]
+    cmd: Option<String>,
+    #[serde(default)]
+    interrupt: Option<String>,
+    #[serde(default)]
+    hold: Option<bool>,
+    #[serde(default)]
+    dismiss: Option<u32>,
+    lines: Vec<String>,
+    score: i32,
+    room: String,
+    flags: Vec<String>,
+    items: BTreeMap<String, i32>,
+    vars: BTreeMap<String, i32>,
+    #[serde(default)]
+    dead: bool,
+    #[serde(default)]
+    ending: Option<String>,
+    #[serde(default)]
+    shot: Option<String>,
 }
 
 fn load_dir(dir: &Path) -> Result<PackageParts> {
@@ -89,7 +346,7 @@ fn load_dir(dir: &Path) -> Result<PackageParts> {
             "unsupported format major {major}; this tool writes 0.x packages"
         )));
     }
-    if minor > 1 {
+    if minor > lastcall_core::model::FORMAT_MINOR {
         eprintln!(
             "advc: warning: format {} is newer than this tool",
             source_game.format_version
@@ -189,18 +446,27 @@ fn load_dir(dir: &Path) -> Result<PackageParts> {
         reach: source_game.reach,
         intro: source_game.intro,
         rules: game_rules,
+        hooks: source_game.hooks,
+        timers: source_game.timers,
+        declarations: source_game.declarations,
+        carrying: source_game.carrying,
+        death_prompt: source_game.death_prompt,
     };
 
     for (folder, source, walk, priority) in room_sources {
         rooms.push(compile_room(&folder, source, walk, priority)?);
     }
 
+    let script = fs::read_to_string(dir.join("scripts").join("game.rhai")).unwrap_or_default();
+    let cutscenes = load_cutscenes(dir)?;
     let parts = PackageParts {
         game,
         vocab,
         items,
         rooms,
         actors,
+        script,
+        cutscenes,
     };
     check_refs(&parts)?;
     Ok(parts)
@@ -275,6 +541,7 @@ fn compile_room(
         rules.push(compile_rule(rule, &format!("{}:{index}", source.id))?);
     }
     check_mask_points(&source.id, &mask, &source, &on_enter, &rules)?;
+    let variant_images = load_variants(folder, &source.id, &source.pictures)?;
 
     Ok(RoomPart {
         def: RoomDef {
@@ -290,6 +557,7 @@ fn compile_room(
             on_enter,
             rules,
             bands: priority.bands,
+            pictures: source.pictures.clone(),
         },
         picture,
         walk: lastcall_core::imageutil::GrayImage {
@@ -303,7 +571,92 @@ fn compile_room(
             pixels: merged,
         },
         props,
+        pictures: variant_images,
     })
+}
+
+fn extra_effects(parts: &PackageParts) -> Vec<Effect> {
+    let mut effects = Vec::new();
+    for timer in &parts.game.timers {
+        effects.extend(timer.effects.clone());
+    }
+    for cut in &parts.cutscenes {
+        effects.extend(cut.def.on_end.clone());
+        for beat in &cut.def.beats {
+            effects.extend(beat.effects.clone());
+        }
+        for rule in &cut.def.on_command {
+            effects.extend(rule.effects.clone());
+        }
+    }
+    effects
+}
+
+fn load_variants(
+    folder: &Path,
+    room_id: &str,
+    names: &[String],
+) -> Result<BTreeMap<String, lastcall_core::imageutil::RgbaImage>> {
+    let mut pictures = BTreeMap::new();
+    for name in names {
+        let path = folder.join(format!("variant-{name}.png"));
+        let image = load_rgba(&path)
+            .map_err(|err| Error::msg(format!("room {room_id} variant {name}: {err}")))?;
+        if image.w != SCREEN_W || image.h != SCREEN_H {
+            return Err(Error::msg(format!(
+                "room {room_id} variant {name} is not {SCREEN_W}x{SCREEN_H}"
+            )));
+        }
+        pictures.insert(name.clone(), image);
+    }
+    Ok(pictures)
+}
+
+fn load_cutscenes(dir: &Path) -> Result<Vec<lastcall_core::pak::CutscenePart>> {
+    let root = dir.join("cutscenes");
+    if !root.is_dir() {
+        return Ok(Vec::new());
+    }
+    let mut names = Vec::new();
+    for entry in fs::read_dir(&root)? {
+        let path = entry?.path();
+        if path.extension().and_then(|ext| ext.to_str()) == Some("json") {
+            names.push(path);
+        }
+    }
+    names.sort();
+    let mut cutscenes = Vec::new();
+    for path in names {
+        let value = read_json(&path)?;
+        let mut def: lastcall_core::model::CutsceneDef = serde_json::from_value(value)
+            .map_err(|err| Error::msg(format!("{}: {err}", path.display())))?;
+        let folder = root.join(&def.id);
+        let mut frames = Vec::new();
+        if folder.is_dir() {
+            let mut pngs = Vec::new();
+            for entry in fs::read_dir(&folder)? {
+                let png = entry?.path();
+                if png.extension().and_then(|ext| ext.to_str()) == Some("png") {
+                    pngs.push(png);
+                }
+            }
+            pngs.sort();
+            for png in pngs {
+                let image = load_rgba(&png)?;
+                if image.w != SCREEN_W || image.h != SCREEN_H {
+                    return Err(Error::msg(format!(
+                        "cutscene {} frame {} is not {SCREEN_W}x{SCREEN_H}",
+                        def.id,
+                        png.display()
+                    )));
+                }
+                frames.push(image);
+            }
+        }
+        def.frame_count = frames.len() as u32;
+        cutscenes.push(lastcall_core::pak::CutscenePart { def, frames });
+    }
+    Ok(cutscenes)
 }
 
 fn check_mask_points(
@@ -707,6 +1060,28 @@ fn check_refs(parts: &PackageParts) -> Result<()> {
         note_effects(rule, &items, &room_ids, parts, &mut scores)?;
     }
 
+    for effect in extra_effects(parts) {
+        if let Effect::Score { id, points } = effect {
+            if let Some(prev) = scores.insert(id.clone(), points) {
+                if prev != points {
+                    return Err(Error::msg(format!(
+                        "score id {id} is awarded as both {prev} and {points}"
+                    )));
+                }
+            }
+        }
+    }
+    for decl in &parts.game.declarations.scores {
+        if let Some(prev) = scores.insert(decl.id.clone(), decl.points) {
+            if prev != decl.points {
+                return Err(Error::msg(format!(
+                    "score id {} is awarded as both {prev} and {}",
+                    decl.id, decl.points
+                )));
+            }
+        }
+    }
+
     let total: i32 = scores.values().sum();
     if total != parts.game.score_max {
         return Err(Error::msg(format!(
@@ -797,6 +1172,8 @@ fn compile_rule(rule: &SourceRule, auto_id: &str) -> Result<Rule> {
         second: rule.second.clone(),
         req: rule.req.clone(),
         once: rule.once,
+        any_noun: rule.any_noun,
+        any_second: rule.any_second,
         effects,
     })
 }
@@ -890,7 +1267,9 @@ fn compact_effects(rule: &SourceRule) -> std::result::Result<Vec<Effect>, String
         });
     }
     if rule.death == Some(true) {
-        effects.push(Effect::SetDead);
+        effects.push(Effect::SetDead {
+            restore_to: rule.restore_to.clone(),
+        });
     }
     if let Some(id) = &rule.ending {
         effects.push(Effect::SetEnding { id: id.clone() });
@@ -1177,6 +1556,16 @@ struct SourceGame {
     intro: Vec<String>,
     #[serde(default)]
     rules: Vec<SourceRule>,
+    #[serde(default)]
+    hooks: lastcall_core::model::Hooks,
+    #[serde(default)]
+    timers: Vec<lastcall_core::model::MoveTimer>,
+    #[serde(default)]
+    declarations: lastcall_core::model::Declarations,
+    #[serde(default)]
+    carrying: Vec<String>,
+    #[serde(default)]
+    death_prompt: Option<String>,
 }
 
 fn default_format() -> String {
@@ -1216,6 +1605,8 @@ struct SourceRoom {
     #[serde(default)]
     props: Vec<lastcall_core::model::PropDef>,
     #[serde(default)]
+    pictures: Vec<String>,
+    #[serde(default)]
     on_enter: Vec<SourceRule>,
     #[serde(default)]
     rules: Vec<SourceRule>,
@@ -1232,6 +1623,10 @@ struct SourceRule {
     noun: Option<String>,
     #[serde(default)]
     second: Option<String>,
+    #[serde(default)]
+    any_second: bool,
+    #[serde(default)]
+    any_noun: bool,
     #[serde(default)]
     req: Vec<String>,
     #[serde(default)]
@@ -1274,6 +1669,8 @@ struct SourceRule {
     face: Option<String>,
     #[serde(default)]
     walk_to: Option<[i32; 2]>,
+    #[serde(default, rename = "restoreTo")]
+    restore_to: Option<String>,
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -1390,6 +1787,9 @@ mod tests {
             wait: None,
             face: None,
             walk_to: None,
+            restore_to: None,
+            any_noun: false,
+            any_second: false,
         };
         let compiled = compile_rule(&rule, "take_key").unwrap();
         assert!(matches!(compiled.effects[0], Effect::MarkOnce { .. }));
@@ -1423,9 +1823,15 @@ mod tests {
             wait: None,
             face: None,
             walk_to: None,
+            restore_to: None,
+            any_noun: false,
+            any_second: false,
         };
         let compiled = compile_rule(&death, "climb_well").unwrap();
         assert!(matches!(compiled.effects[0], Effect::Say { .. }));
-        assert!(matches!(compiled.effects[1], Effect::SetDead));
+        assert!(matches!(
+            compiled.effects[1],
+            Effect::SetDead { restore_to: None }
+        ));
     }
 }

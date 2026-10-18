@@ -1,0 +1,4 @@
+score
+@dismiss
+@expect score 0
+@expect room bar

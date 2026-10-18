@@ -1,0 +1,1781 @@
+{
+  "id": "bathroom",
+  "name": "Bathroom",
+  "look": "A bathroom that has seen things. Two stalls, one urinal, a cracked mirror, and a cologne machine that is the cleanest object in the building by a mile. A slimy bar of soap clings to the sink and is not competing for that title.",
+  "spawns": {
+    "default": [
+      96,
+      206
+    ],
+    "fromBar": [
+      96,
+      206
+    ]
+  },
+  "exits": [],
+  "hotspots": [
+    {
+      "id": "doorway",
+      "rect": [
+        16,
+        70,
+        48,
+        126
+      ],
+      "nouns": [
+        "door",
+        "bar",
+        "out"
+      ],
+      "look": "The way back to the bar, and to the sound of distant thunder."
+    },
+    {
+      "id": "stall1",
+      "rect": [
+        140,
+        70,
+        50,
+        80
+      ],
+      "nouns": [
+        "stall",
+        "stall 1",
+        "first stall",
+        "bathroom"
+      ],
+      "look": "Stall one is locked. Someone inside is humming, badly."
+    },
+    {
+      "id": "stall2",
+      "rect": [
+        196,
+        70,
+        50,
+        80
+      ],
+      "nouns": [
+        "stall 2",
+        "second stall"
+      ],
+      "look": "You'd rather not."
+    },
+    {
+      "id": "urinal",
+      "rect": [
+        260,
+        90,
+        30,
+        50
+      ],
+      "nouns": [
+        "urinal"
+      ],
+      "look": "Nope."
+    },
+    {
+      "id": "mirror",
+      "rect": [
+        300,
+        60,
+        50,
+        30
+      ],
+      "nouns": [
+        "mirror"
+      ],
+      "look": "A sweaty blond man in a ruined grey suit stares back. Even your reflection is judging you."
+    },
+    {
+      "id": "sink",
+      "rect": [
+        300,
+        100,
+        60,
+        50
+      ],
+      "nouns": [
+        "sink",
+        "tap"
+      ],
+      "look": "The tap runs warm and brown. A slimy, gross bar of soap clings to the rim. Charlie wrinkles his nose. It could still be useful."
+    },
+    {
+      "id": "machine",
+      "rect": [
+        250,
+        110,
+        40,
+        70
+      ],
+      "nouns": [
+        "machine",
+        "vending machine",
+        "cologne"
+      ],
+      "look": "SMELL LIKE A WINNER — 4 QUARTERS. The brands are Midnight Stallion, Executive Musk, and Ocean Regret. It takes coins. It barely has dignity.",
+      "stand": [
+        270,
+        206
+      ]
+    },
+    {
+      "id": "soap",
+      "rect": [
+        214,
+        124,
+        24,
+        12
+      ],
+      "nouns": [
+        "soap",
+        "bar of soap"
+      ],
+      "look": "A slimy, gross bar of soap clings to the sink. Charlie wrinkles his nose. It could still be useful.",
+      "stand": [
+        336,
+        206
+      ]
+    },
+    {
+      "id": "towels",
+      "rect": [
+        350,
+        90,
+        24,
+        40
+      ],
+      "nouns": [
+        "towel"
+      ],
+      "look": "A stack of towels that gave up on being white a long time ago."
+    },
+    {
+      "id": "bin",
+      "rect": [
+        70,
+        160,
+        28,
+        30
+      ],
+      "nouns": [
+        "trash"
+      ],
+      "look": "A bin under the sink line. It is winning."
+    }
+  ],
+  "actors": [],
+  "props": [],
+  "rules": [
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "score",
+          "id": "look-mirror",
+          "points": 1
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "A sweaty blond man in a ruined grey suit stares back. Even your reflection is judging you."
+        }
+      ],
+      "req": [],
+      "noun": "mirror",
+      "anySecond": true,
+      "id": "bathroom:look-mirror"
+    },
+    {
+      "verb": "get",
+      "effects": [
+        {
+          "do": "take",
+          "id": "soap"
+        },
+        {
+          "do": "set",
+          "flag": "soap"
+        },
+        {
+          "do": "score",
+          "id": "get-soap",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "Slimy. Slippery. The kind of slippery that could put a grown man on his back. He pockets it anyway."
+        }
+      ],
+      "req": [
+        "!has:soap"
+      ],
+      "noun": "soap",
+      "anySecond": true,
+      "id": "bathroom:get-soap"
+    },
+    {
+      "verb": "get",
+      "effects": [
+        {
+          "do": "say",
+          "text": "One slimy bar is already too many. Your fingers have filed a complaint."
+        }
+      ],
+      "req": [
+        "has:soap"
+      ],
+      "noun": "soap",
+      "anySecond": true,
+      "id": "bathroom:get-soap-again"
+    },
+    {
+      "verb": "put",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "quarters",
+      "id": "bathroom:buy-cologne"
+    },
+    {
+      "verb": "put",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "quarters",
+      "second": "machine",
+      "id": "bathroom:buy-cologne:1"
+    },
+    {
+      "verb": "put",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "quarters",
+      "second": "cologne",
+      "id": "bathroom:buy-cologne:2"
+    },
+    {
+      "verb": "put",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "quarters",
+      "second": "quarters",
+      "id": "bathroom:buy-cologne:3"
+    },
+    {
+      "verb": "put",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "machine",
+      "id": "bathroom:buy-cologne:4"
+    },
+    {
+      "verb": "put",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "machine",
+      "second": "machine",
+      "id": "bathroom:buy-cologne:5"
+    },
+    {
+      "verb": "put",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "machine",
+      "second": "cologne",
+      "id": "bathroom:buy-cologne:6"
+    },
+    {
+      "verb": "put",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "machine",
+      "second": "quarters",
+      "id": "bathroom:buy-cologne:7"
+    },
+    {
+      "verb": "put",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "cologne",
+      "id": "bathroom:buy-cologne:8"
+    },
+    {
+      "verb": "put",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "cologne",
+      "second": "machine",
+      "id": "bathroom:buy-cologne:9"
+    },
+    {
+      "verb": "put",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "cologne",
+      "second": "cologne",
+      "id": "bathroom:buy-cologne:10"
+    },
+    {
+      "verb": "put",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "cologne",
+      "second": "quarters",
+      "id": "bathroom:buy-cologne:11"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "quarters",
+      "id": "bathroom:buy-cologne:12"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "quarters",
+      "second": "machine",
+      "id": "bathroom:buy-cologne:13"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "quarters",
+      "second": "cologne",
+      "id": "bathroom:buy-cologne:14"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "quarters",
+      "second": "quarters",
+      "id": "bathroom:buy-cologne:15"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "machine",
+      "id": "bathroom:buy-cologne:16"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "machine",
+      "second": "machine",
+      "id": "bathroom:buy-cologne:17"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "machine",
+      "second": "cologne",
+      "id": "bathroom:buy-cologne:18"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "machine",
+      "second": "quarters",
+      "id": "bathroom:buy-cologne:19"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "cologne",
+      "id": "bathroom:buy-cologne:20"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "cologne",
+      "second": "machine",
+      "id": "bathroom:buy-cologne:21"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "cologne",
+      "second": "cologne",
+      "id": "bathroom:buy-cologne:22"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "cologne",
+      "second": "quarters",
+      "id": "bathroom:buy-cologne:23"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "quarters",
+      "id": "bathroom:buy-cologne:24"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "quarters",
+      "second": "machine",
+      "id": "bathroom:buy-cologne:25"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "quarters",
+      "second": "cologne",
+      "id": "bathroom:buy-cologne:26"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "quarters",
+      "second": "quarters",
+      "id": "bathroom:buy-cologne:27"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "machine",
+      "id": "bathroom:buy-cologne:28"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "machine",
+      "second": "machine",
+      "id": "bathroom:buy-cologne:29"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "machine",
+      "second": "cologne",
+      "id": "bathroom:buy-cologne:30"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "machine",
+      "second": "quarters",
+      "id": "bathroom:buy-cologne:31"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "cologne",
+      "id": "bathroom:buy-cologne:32"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "cologne",
+      "second": "machine",
+      "id": "bathroom:buy-cologne:33"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "cologne",
+      "second": "cologne",
+      "id": "bathroom:buy-cologne:34"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "take",
+          "id": "cologne"
+        },
+        {
+          "do": "score",
+          "id": "buy-cologne",
+          "points": 8
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The machine whirrs like it knows a secret. You punch Midnight Stallion. A bottle clunks into the tray. Four quarters poorer, and slightly more optimistic."
+        }
+      ],
+      "req": [
+        "has:quarters",
+        "!has:cologne",
+        "!flag:wearingCologne"
+      ],
+      "noun": "cologne",
+      "second": "quarters",
+      "id": "bathroom:buy-cologne:35"
+    },
+    {
+      "verb": "put",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The machine has no bill slot. It barely has dignity."
+        }
+      ],
+      "req": [],
+      "noun": "dollar",
+      "anySecond": true,
+      "id": "bathroom:bills-machine"
+    },
+    {
+      "verb": "put",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The machine has no bill slot. It barely has dignity."
+        }
+      ],
+      "req": [],
+      "noun": "ten",
+      "anySecond": true,
+      "id": "bathroom:bills-machine:1"
+    },
+    {
+      "verb": "put",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The machine has no bill slot. It barely has dignity."
+        }
+      ],
+      "req": [],
+      "noun": "twenty",
+      "anySecond": true,
+      "id": "bathroom:bills-machine:2"
+    },
+    {
+      "verb": "put",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The machine has no bill slot. It barely has dignity."
+        }
+      ],
+      "req": [],
+      "noun": "five",
+      "anySecond": true,
+      "id": "bathroom:bills-machine:3"
+    },
+    {
+      "verb": "put",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The machine has no bill slot. It barely has dignity."
+        }
+      ],
+      "req": [],
+      "noun": "money",
+      "anySecond": true,
+      "id": "bathroom:bills-machine:4"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The machine has no bill slot. It barely has dignity."
+        }
+      ],
+      "req": [],
+      "noun": "dollar",
+      "anySecond": true,
+      "id": "bathroom:bills-machine:5"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The machine has no bill slot. It barely has dignity."
+        }
+      ],
+      "req": [],
+      "noun": "ten",
+      "anySecond": true,
+      "id": "bathroom:bills-machine:6"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The machine has no bill slot. It barely has dignity."
+        }
+      ],
+      "req": [],
+      "noun": "twenty",
+      "anySecond": true,
+      "id": "bathroom:bills-machine:7"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The machine has no bill slot. It barely has dignity."
+        }
+      ],
+      "req": [],
+      "noun": "five",
+      "anySecond": true,
+      "id": "bathroom:bills-machine:8"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The machine has no bill slot. It barely has dignity."
+        }
+      ],
+      "req": [],
+      "noun": "money",
+      "anySecond": true,
+      "id": "bathroom:bills-machine:9"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The machine has no bill slot. It barely has dignity."
+        }
+      ],
+      "req": [],
+      "noun": "dollar",
+      "anySecond": true,
+      "id": "bathroom:bills-machine:10"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The machine has no bill slot. It barely has dignity."
+        }
+      ],
+      "req": [],
+      "noun": "ten",
+      "anySecond": true,
+      "id": "bathroom:bills-machine:11"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The machine has no bill slot. It barely has dignity."
+        }
+      ],
+      "req": [],
+      "noun": "twenty",
+      "anySecond": true,
+      "id": "bathroom:bills-machine:12"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The machine has no bill slot. It barely has dignity."
+        }
+      ],
+      "req": [],
+      "noun": "five",
+      "anySecond": true,
+      "id": "bathroom:bills-machine:13"
+    },
+    {
+      "verb": "buy",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The machine has no bill slot. It barely has dignity."
+        }
+      ],
+      "req": [],
+      "noun": "money",
+      "anySecond": true,
+      "id": "bathroom:bills-machine:14"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Nope."
+        }
+      ],
+      "req": [],
+      "noun": "urinal",
+      "anySecond": true,
+      "id": "bathroom:use-urinal"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Nope."
+        }
+      ],
+      "req": [],
+      "noun": "urinal",
+      "anySecond": true,
+      "id": "bathroom:use-urinal:1"
+    },
+    {
+      "verb": "wash",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Warm brown water. Somehow worse."
+        }
+      ],
+      "req": [],
+      "noun": "face",
+      "anySecond": true,
+      "id": "bathroom:wash"
+    },
+    {
+      "verb": "wash",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Warm brown water. Somehow worse."
+        }
+      ],
+      "req": [],
+      "noun": "sink",
+      "anySecond": true,
+      "id": "bathroom:wash:1"
+    },
+    {
+      "verb": "wash",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Warm brown water. Somehow worse."
+        }
+      ],
+      "req": [],
+      "anySecond": true,
+      "id": "bathroom:wash:2"
+    },
+    {
+      "verb": "open",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Stall one is locked. Someone inside is humming, badly. Stall two? You'd rather not."
+        }
+      ],
+      "req": [],
+      "noun": "stall",
+      "anySecond": true,
+      "id": "bathroom:open-stall"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Stall one is locked. Someone inside is humming, badly. Stall two? You'd rather not."
+        }
+      ],
+      "req": [],
+      "noun": "stall",
+      "anySecond": true,
+      "id": "bathroom:open-stall:1"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "goto",
+          "room": "bar",
+          "spawn": "fromBathroom"
+        }
+      ],
+      "req": [],
+      "noun": "bar",
+      "anySecond": true,
+      "id": "bathroom:go-bar"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "goto",
+          "room": "bar",
+          "spawn": "fromBathroom"
+        }
+      ],
+      "req": [],
+      "noun": "out",
+      "anySecond": true,
+      "id": "bathroom:go-bar:1"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "goto",
+          "room": "bar",
+          "spawn": "fromBathroom"
+        }
+      ],
+      "req": [],
+      "noun": "door",
+      "anySecond": true,
+      "id": "bathroom:go-bar:2"
+    }
+  ]
+}

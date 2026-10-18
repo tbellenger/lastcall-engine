@@ -1,0 +1,73 @@
+{
+  "id": "deck",
+  "name": "Pool Deck",
+  "look": "Night on the pool deck at Vic's lakehouse. A balcony guard walks a flashlight across the boards. There is no dry place the beam will miss. The pool might.",
+  "spawns": {
+    "default": [
+      220,
+      196
+    ],
+    "fromBilliard": [
+      220,
+      196
+    ]
+  },
+  "exits": [],
+  "hotspots": [
+    {
+      "id": "pool",
+      "rect": [
+        150,
+        90,
+        140,
+        70
+      ],
+      "nouns": [
+        "pool"
+      ],
+      "look": "Dark water, big enough to hide a man if he stays under.",
+      "stand": [
+        220,
+        198
+      ]
+    },
+    {
+      "id": "shed",
+      "rect": [
+        24,
+        90,
+        70,
+        80
+      ],
+      "nouns": [
+        "shed",
+        "chlorine"
+      ],
+      "look": "A maintenance shed by the water. The beam owns the walk to it until the balcony is empty.",
+      "stand": [
+        90,
+        200
+      ]
+    },
+    {
+      "id": "guard",
+      "rect": [
+        270,
+        16,
+        80,
+        60
+      ],
+      "nouns": [
+        "guard"
+      ],
+      "look": "A guard on the balcony, and a flashlight that does not sit still. The deck is his.",
+      "stand": [
+        280,
+        198
+      ]
+    }
+  ],
+  "actors": [],
+  "props": [],
+  "rules": []
+}

@@ -24,6 +24,11 @@
     "rngSeed": { "type": "integer", "minimum": 0 },
     "reach": { "type": "integer", "minimum": 0 },
     "intro": { "type": "array", "items": { "type": "string" } },
-    "rules": { "type": "array", "items": { "$ref": "rule.schema.json" } }
+    "rules": { "type": "array", "items": { "$ref": "rule.schema.json" } },
+    "hooks": { "type": "object" },
+    "timers": { "type": "array" },
+    "declarations": { "type": "object" },
+    "carrying": { "type": "array", "items": { "type": "string" } },
+    "deathPrompt": { "type": "string" }
   }
 }

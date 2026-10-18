@@ -108,6 +108,11 @@ fn parts(format_version: &str) -> PackageParts {
             reach: 12,
             intro: vec![],
             rules: vec![],
+            hooks: Hooks::default(),
+            timers: vec![],
+            declarations: Declarations::default(),
+            carrying: vec![],
+            death_prompt: None,
         },
         vocab: Vocab {
             ignore: vec!["the".into(), "a".into()],
@@ -123,6 +128,7 @@ fn parts(format_version: &str) -> PackageParts {
                     ranged: false,
                     meta: false,
                     default_reply: Some("You can't take that.".into()),
+                    targets: BTreeMap::new(),
                 },
                 VerbDef {
                     id: "look".into(),
@@ -130,6 +136,7 @@ fn parts(format_version: &str) -> PackageParts {
                     ranged: true,
                     meta: false,
                     default_reply: Some("You see nothing special.".into()),
+                    targets: BTreeMap::new(),
                 },
                 VerbDef {
                     id: "climb".into(),
@@ -137,6 +144,7 @@ fn parts(format_version: &str) -> PackageParts {
                     ranged: false,
                     meta: false,
                     default_reply: Some("You can't climb that.".into()),
+                    targets: BTreeMap::new(),
                 },
                 VerbDef {
                     id: "score".into(),
@@ -144,6 +152,7 @@ fn parts(format_version: &str) -> PackageParts {
                     ranged: true,
                     meta: true,
                     default_reply: None,
+                    targets: BTreeMap::new(),
                 },
                 VerbDef {
                     id: "restore".into(),
@@ -151,6 +160,7 @@ fn parts(format_version: &str) -> PackageParts {
                     ranged: true,
                     meta: true,
                     default_reply: None,
+                    targets: BTreeMap::new(),
                 },
             ],
             nouns: vec![
@@ -211,6 +221,8 @@ fn parts(format_version: &str) -> PackageParts {
                     second: None,
                     req: vec!["!flag:seen".into()],
                     once: false,
+                    any_noun: false,
+                    any_second: false,
                     effects: vec![
                         Effect::Set {
                             flag: "seen".into(),
@@ -228,6 +240,8 @@ fn parts(format_version: &str) -> PackageParts {
                         second: None,
                         req: vec!["!has:key".into()],
                         once: true,
+                        any_noun: false,
+                        any_second: false,
                         effects: vec![
                             Effect::MarkOnce {
                                 id: "take_key".into(),
@@ -249,8 +263,10 @@ fn parts(format_version: &str) -> PackageParts {
                         second: None,
                         req: vec![],
                         once: false,
+                        any_noun: false,
+                        any_second: false,
                         effects: vec![
-                            Effect::SetDead,
+                            Effect::SetDead { restore_to: None },
                             Effect::Say {
                                 text: "You slip on the wet stones.".into(),
                             },
@@ -258,6 +274,7 @@ fn parts(format_version: &str) -> PackageParts {
                     },
                 ],
                 bands,
+                pictures: vec![],
             },
             picture: RgbaImage::solid(SCREEN_W, SCREEN_H, [180, 30, 40, 255]),
             walk: GrayImage {
@@ -271,6 +288,7 @@ fn parts(format_version: &str) -> PackageParts {
                 pixels: priority,
             },
             props: None,
+            pictures: BTreeMap::new(),
         }],
         actors: vec![ActorPart {
             def: ActorDef {
@@ -279,6 +297,8 @@ fn parts(format_version: &str) -> PackageParts {
             },
             atlas: hero_atlas(),
         }],
+        script: String::new(),
+        cutscenes: vec![],
     }
 }
 
@@ -354,6 +374,100 @@ fn rejects_unknown_major_and_warns_on_newer_minor() {
     assert!(events
         .iter()
         .any(|event| matches!(event, HostEvent::Warning { .. })));
+}
+
+#[test]
+fn script_timer_and_named_restore() {
+    let mut built = parts("0.2.0");
+    built.vocab.verbs.push(VerbDef {
+        id: "shout".into(),
+        words: vec!["shout".into()],
+        ranged: true,
+        meta: false,
+        default_reply: None,
+        targets: BTreeMap::new(),
+    });
+    built.rooms[0].def.rules.push(Rule {
+        id: "start_chase".into(),
+        verb: Some("shout".into()),
+        noun: None,
+        second: None,
+        req: vec![],
+        once: false,
+        any_noun: false,
+        any_second: false,
+        effects: vec![
+            Effect::Set {
+                flag: "chase".into(),
+            },
+            Effect::Checkpoint {
+                name: "chase".into(),
+            },
+            Effect::Say {
+                text: "You run.".into(),
+            },
+        ],
+    });
+    built.game.timers.push(MoveTimer {
+        id: "chase".into(),
+        when: vec!["flag:chase".into()],
+        limit: 2,
+        var: "clock".into(),
+        skip_verbs: vec![],
+        effects: vec![
+            Effect::Say {
+                text: "They caught you.".into(),
+            },
+            Effect::SetDead {
+                restore_to: Some("chase".into()),
+            },
+        ],
+    });
+    built.script = r#"
+        fn on_command() {
+            if verb() == "wait" {
+                say("Time passes.");
+                handled();
+            }
+        }
+    "#
+    .into();
+    built.game.hooks.command = Some("on_command".into());
+    built.vocab.verbs.push(VerbDef {
+        id: "wait".into(),
+        words: vec!["wait".into()],
+        ranged: true,
+        meta: false,
+        default_reply: None,
+        targets: BTreeMap::new(),
+    });
+
+    let bytes = build_pak(&built).unwrap();
+    let mut engine = Engine::load(&bytes).unwrap();
+    let mut host = MemHost {
+        slots: BTreeMap::new(),
+    };
+    let script = r#"
+@dismiss
+shout
+@expect text You run.
+@dismiss
+wait
+@expect text Time passes.
+@dismiss
+look
+@dismiss
+look
+@expect text They caught you.
+@dismiss
+@expect death
+@restore
+@expect alive
+@expect room porch
+@expect flag chase
+"#;
+    run_walk(&mut engine, script, &mut host).unwrap();
+    assert!(!engine.is_dead());
 }
 
 fn pixel(engine: &Engine, x: i32, y: i32) -> [u8; 4] {

@@ -1,0 +1,1900 @@
+{
+  "id": "rooftop",
+  "name": "Rooftop",
+  "look": "Tar and rain. A rooftop access door leads down to the top floor. Vents tick. A water tank keeps the skyline company. The ladder Charlie climbed is still behind him.",
+  "spawns": {
+    "default": [
+      180,
+      206
+    ],
+    "fromLadder": [
+      180,
+      206
+    ]
+  },
+  "exits": [],
+  "hotspots": [
+    {
+      "id": "door",
+      "rect": [
+        70,
+        40,
+        70,
+        140
+      ],
+      "nouns": [
+        "door",
+        "lock"
+      ],
+      "look": "A rooftop access door. The lock is a pin tumbler, and it is locked.",
+      "stand": [
+        148,
+        204
+      ]
+    },
+    {
+      "id": "vents",
+      "rect": [
+        200,
+        70,
+        50,
+        40
+      ],
+      "nouns": [
+        "vent"
+      ],
+      "look": "Sheet-metal vents, ticking as the rain finds them. They do not open, and they do not lead down."
+    },
+    {
+      "id": "tank",
+      "rect": [
+        260,
+        30,
+        80,
+        90
+      ],
+      "nouns": [
+        "tank"
+      ],
+      "look": "A water tank on stilts, black against the wet sky. No door in it. The way down is the access door."
+    },
+    {
+      "id": "ladder",
+      "rect": [
+        150,
+        180,
+        60,
+        30
+      ],
+      "nouns": [
+        "ladder"
+      ],
+      "look": "The fire-escape ladder, slick and still down. The thug is somewhere under it. Down is the wrong direction."
+    }
+  ],
+  "actors": [],
+  "props": [],
+  "rules": [
+    {
+      "verb": "pick",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "lock",
+      "id": "rooftop:pick-lock"
+    },
+    {
+      "verb": "pick",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "lock",
+      "second": "door",
+      "id": "rooftop:pick-lock:1"
+    },
+    {
+      "verb": "pick",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "lock",
+      "second": "lock",
+      "id": "rooftop:pick-lock:2"
+    },
+    {
+      "verb": "pick",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "lock",
+      "second": "pick",
+      "id": "rooftop:pick-lock:3"
+    },
+    {
+      "verb": "pick",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "door",
+      "id": "rooftop:pick-lock:4"
+    },
+    {
+      "verb": "pick",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "door",
+      "second": "door",
+      "id": "rooftop:pick-lock:5"
+    },
+    {
+      "verb": "pick",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "door",
+      "second": "lock",
+      "id": "rooftop:pick-lock:6"
+    },
+    {
+      "verb": "pick",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "door",
+      "second": "pick",
+      "id": "rooftop:pick-lock:7"
+    },
+    {
+      "verb": "pick",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "pick",
+      "id": "rooftop:pick-lock:8"
+    },
+    {
+      "verb": "pick",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "pick",
+      "second": "door",
+      "id": "rooftop:pick-lock:9"
+    },
+    {
+      "verb": "pick",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "pick",
+      "second": "lock",
+      "id": "rooftop:pick-lock:10"
+    },
+    {
+      "verb": "pick",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "pick",
+      "second": "pick",
+      "id": "rooftop:pick-lock:11"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "lock",
+      "id": "rooftop:pick-lock:12"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "lock",
+      "second": "door",
+      "id": "rooftop:pick-lock:13"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "lock",
+      "second": "lock",
+      "id": "rooftop:pick-lock:14"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "lock",
+      "second": "pick",
+      "id": "rooftop:pick-lock:15"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "door",
+      "id": "rooftop:pick-lock:16"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "door",
+      "second": "door",
+      "id": "rooftop:pick-lock:17"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "door",
+      "second": "lock",
+      "id": "rooftop:pick-lock:18"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "door",
+      "second": "pick",
+      "id": "rooftop:pick-lock:19"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "pick",
+      "id": "rooftop:pick-lock:20"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "pick",
+      "second": "door",
+      "id": "rooftop:pick-lock:21"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "pick",
+      "second": "lock",
+      "id": "rooftop:pick-lock:22"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "pick",
+      "second": "pick",
+      "id": "rooftop:pick-lock:23"
+    },
+    {
+      "verb": "open",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "lock",
+      "id": "rooftop:pick-lock:24"
+    },
+    {
+      "verb": "open",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "lock",
+      "second": "door",
+      "id": "rooftop:pick-lock:25"
+    },
+    {
+      "verb": "open",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "lock",
+      "second": "lock",
+      "id": "rooftop:pick-lock:26"
+    },
+    {
+      "verb": "open",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "lock",
+      "second": "pick",
+      "id": "rooftop:pick-lock:27"
+    },
+    {
+      "verb": "open",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "door",
+      "id": "rooftop:pick-lock:28"
+    },
+    {
+      "verb": "open",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "door",
+      "second": "door",
+      "id": "rooftop:pick-lock:29"
+    },
+    {
+      "verb": "open",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "door",
+      "second": "lock",
+      "id": "rooftop:pick-lock:30"
+    },
+    {
+      "verb": "open",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "door",
+      "second": "pick",
+      "id": "rooftop:pick-lock:31"
+    },
+    {
+      "verb": "open",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "pick",
+      "id": "rooftop:pick-lock:32"
+    },
+    {
+      "verb": "open",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "pick",
+      "second": "door",
+      "id": "rooftop:pick-lock:33"
+    },
+    {
+      "verb": "open",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "pick",
+      "second": "lock",
+      "id": "rooftop:pick-lock:34"
+    },
+    {
+      "verb": "open",
+      "effects": [
+        {
+          "do": "score",
+          "id": "pick-lock",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Thanks to Uncle John, who thought lock-picking lessons were a fine Christmas present for a teenager, the lock gives in seconds."
+        },
+        {
+          "do": "say",
+          "text": "Charlie takes the stairs down through a dark top floor, crosses a lobby that is trying to look empty, and comes out under the awning."
+        },
+        {
+          "do": "goto",
+          "room": "street",
+          "spawn": "fromLobby"
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "pick",
+      "second": "pick",
+      "id": "rooftop:pick-lock:35"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "A pin-tumbler lock, the patient kind. The hair pick in Charlie's pocket was made for it."
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "door",
+      "anySecond": true,
+      "id": "rooftop:look-door-have"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "A pin-tumbler lock, the patient kind. The hair pick in Charlie's pocket was made for it."
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "lock",
+      "anySecond": true,
+      "id": "rooftop:look-door-have:1"
+    },
+    {
+      "verb": "knock",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The door is locked, not stuck. The hair pick is the polite way through."
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "door",
+      "anySecond": true,
+      "id": "rooftop:knock-door-have"
+    },
+    {
+      "verb": "knock",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The door is locked, not stuck. The hair pick is the polite way through."
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "lock",
+      "anySecond": true,
+      "id": "rooftop:knock-door-have:1"
+    },
+    {
+      "verb": "push",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The door is locked, not stuck. The hair pick is the polite way through."
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "door",
+      "anySecond": true,
+      "id": "rooftop:knock-door-have:2"
+    },
+    {
+      "verb": "push",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The door is locked, not stuck. The hair pick is the polite way through."
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "lock",
+      "anySecond": true,
+      "id": "rooftop:knock-door-have:3"
+    },
+    {
+      "verb": "open",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The goon who chased Charlie finds the ladder after all. He comes over the parapet, and the locked door stays locked. The shot is louder than the rain. A hair pick would have made a shorter night."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "club-chase"
+        }
+      ],
+      "req": [
+        "!has:pick"
+      ],
+      "noun": "door",
+      "anySecond": true,
+      "id": "rooftop:roof-door-death"
+    },
+    {
+      "verb": "open",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The goon who chased Charlie finds the ladder after all. He comes over the parapet, and the locked door stays locked. The shot is louder than the rain. A hair pick would have made a shorter night."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "club-chase"
+        }
+      ],
+      "req": [
+        "!has:pick"
+      ],
+      "noun": "lock",
+      "anySecond": true,
+      "id": "rooftop:roof-door-death:1"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The goon who chased Charlie finds the ladder after all. He comes over the parapet, and the locked door stays locked. The shot is louder than the rain. A hair pick would have made a shorter night."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "club-chase"
+        }
+      ],
+      "req": [
+        "!has:pick"
+      ],
+      "noun": "door",
+      "anySecond": true,
+      "id": "rooftop:roof-door-death:2"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The goon who chased Charlie finds the ladder after all. He comes over the parapet, and the locked door stays locked. The shot is louder than the rain. A hair pick would have made a shorter night."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "club-chase"
+        }
+      ],
+      "req": [
+        "!has:pick"
+      ],
+      "noun": "lock",
+      "anySecond": true,
+      "id": "rooftop:roof-door-death:3"
+    },
+    {
+      "verb": "pick",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The goon who chased Charlie finds the ladder after all. He comes over the parapet, and the locked door stays locked. The shot is louder than the rain. A hair pick would have made a shorter night."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "club-chase"
+        }
+      ],
+      "req": [
+        "!has:pick"
+      ],
+      "noun": "door",
+      "anySecond": true,
+      "id": "rooftop:roof-door-death:4"
+    },
+    {
+      "verb": "pick",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The goon who chased Charlie finds the ladder after all. He comes over the parapet, and the locked door stays locked. The shot is louder than the rain. A hair pick would have made a shorter night."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "club-chase"
+        }
+      ],
+      "req": [
+        "!has:pick"
+      ],
+      "noun": "lock",
+      "anySecond": true,
+      "id": "rooftop:roof-door-death:5"
+    },
+    {
+      "verb": "knock",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The goon who chased Charlie finds the ladder after all. He comes over the parapet, and the locked door stays locked. The shot is louder than the rain. A hair pick would have made a shorter night."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "club-chase"
+        }
+      ],
+      "req": [
+        "!has:pick"
+      ],
+      "noun": "door",
+      "anySecond": true,
+      "id": "rooftop:roof-door-death:6"
+    },
+    {
+      "verb": "knock",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The goon who chased Charlie finds the ladder after all. He comes over the parapet, and the locked door stays locked. The shot is louder than the rain. A hair pick would have made a shorter night."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "club-chase"
+        }
+      ],
+      "req": [
+        "!has:pick"
+      ],
+      "noun": "lock",
+      "anySecond": true,
+      "id": "rooftop:roof-door-death:7"
+    },
+    {
+      "verb": "push",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The goon who chased Charlie finds the ladder after all. He comes over the parapet, and the locked door stays locked. The shot is louder than the rain. A hair pick would have made a shorter night."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "club-chase"
+        }
+      ],
+      "req": [
+        "!has:pick"
+      ],
+      "noun": "door",
+      "anySecond": true,
+      "id": "rooftop:roof-door-death:8"
+    },
+    {
+      "verb": "push",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The goon who chased Charlie finds the ladder after all. He comes over the parapet, and the locked door stays locked. The shot is louder than the rain. A hair pick would have made a shorter night."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "club-chase"
+        }
+      ],
+      "req": [
+        "!has:pick"
+      ],
+      "noun": "lock",
+      "anySecond": true,
+      "id": "rooftop:roof-door-death:9"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The goon who chased Charlie finds the ladder after all. He comes over the parapet, and the locked door stays locked. The shot is louder than the rain. A hair pick would have made a shorter night."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "club-chase"
+        }
+      ],
+      "req": [
+        "!has:pick"
+      ],
+      "noun": "door",
+      "anySecond": true,
+      "id": "rooftop:roof-door-death:10"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The goon who chased Charlie finds the ladder after all. He comes over the parapet, and the locked door stays locked. The shot is louder than the rain. A hair pick would have made a shorter night."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "club-chase"
+        }
+      ],
+      "req": [
+        "!has:pick"
+      ],
+      "noun": "lock",
+      "anySecond": true,
+      "id": "rooftop:roof-door-death:11"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The goon who chased Charlie finds the ladder after all. He comes over the parapet, and the locked door stays locked. The shot is louder than the rain. A hair pick would have made a shorter night."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "club-chase"
+        }
+      ],
+      "req": [
+        "!has:pick"
+      ],
+      "noun": "pick",
+      "second": "door",
+      "id": "rooftop:roof-pick-death"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The goon who chased Charlie finds the ladder after all. He comes over the parapet, and the locked door stays locked. The shot is louder than the rain. A hair pick would have made a shorter night."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "club-chase"
+        }
+      ],
+      "req": [
+        "!has:pick"
+      ],
+      "noun": "pick",
+      "second": "lock",
+      "id": "rooftop:roof-pick-death:1"
+    },
+    {
+      "verb": "open",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The goon who chased Charlie finds the ladder after all. He comes over the parapet, and the locked door stays locked. The shot is louder than the rain. A hair pick would have made a shorter night."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "club-chase"
+        }
+      ],
+      "req": [
+        "!has:pick"
+      ],
+      "noun": "pick",
+      "second": "door",
+      "id": "rooftop:roof-pick-death:2"
+    },
+    {
+      "verb": "open",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The goon who chased Charlie finds the ladder after all. He comes over the parapet, and the locked door stays locked. The shot is louder than the rain. A hair pick would have made a shorter night."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "club-chase"
+        }
+      ],
+      "req": [
+        "!has:pick"
+      ],
+      "noun": "pick",
+      "second": "lock",
+      "id": "rooftop:roof-pick-death:3"
+    },
+    {
+      "verb": "pick",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The goon who chased Charlie finds the ladder after all. He comes over the parapet, and the locked door stays locked. The shot is louder than the rain. A hair pick would have made a shorter night."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "club-chase"
+        }
+      ],
+      "req": [
+        "!has:pick"
+      ],
+      "noun": "pick",
+      "second": "door",
+      "id": "rooftop:roof-pick-death:4"
+    },
+    {
+      "verb": "pick",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The goon who chased Charlie finds the ladder after all. He comes over the parapet, and the locked door stays locked. The shot is louder than the rain. A hair pick would have made a shorter night."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "club-chase"
+        }
+      ],
+      "req": [
+        "!has:pick"
+      ],
+      "noun": "pick",
+      "second": "lock",
+      "id": "rooftop:roof-pick-death:5"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "A black hair pick. Uncle John would call it a Christmas present that finally paid rent."
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "pick",
+      "anySecond": true,
+      "id": "rooftop:look-pick-roof"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Charlie's pockets have no hair pick. The access door knows."
+        }
+      ],
+      "req": [
+        "!has:pick"
+      ],
+      "noun": "pick",
+      "anySecond": true,
+      "id": "rooftop:look-pick-roof-none"
+    },
+    {
+      "verb": "get",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The hair pick is already in your pocket."
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "pick",
+      "anySecond": true,
+      "id": "rooftop:get-pick-roof"
+    },
+    {
+      "verb": "get",
+      "effects": [
+        {
+          "do": "say",
+          "text": "There is no hair pick on the tar. The one that matters was on a stage."
+        }
+      ],
+      "req": [
+        "!has:pick"
+      ],
+      "noun": "pick",
+      "anySecond": true,
+      "id": "rooftop:get-pick-roof-none"
+    },
+    {
+      "verb": "jump",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The ladder goes back to the thug. The access door is the way that does not."
+        }
+      ],
+      "req": [],
+      "noun": "ladder",
+      "anySecond": true,
+      "id": "rooftop:climb-back"
+    },
+    {
+      "verb": "jump",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The ladder goes back to the thug. The access door is the way that does not."
+        }
+      ],
+      "req": [],
+      "noun": "down",
+      "anySecond": true,
+      "id": "rooftop:climb-back:1"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The way down is the access door. It stays locked until the hair pick says otherwise."
+        }
+      ],
+      "req": [],
+      "noun": "down",
+      "anySecond": true,
+      "id": "rooftop:go-down"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The way down is the access door. It stays locked until the hair pick says otherwise."
+        }
+      ],
+      "req": [],
+      "noun": "door",
+      "anySecond": true,
+      "id": "rooftop:go-down:1"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The way down is the access door. It stays locked until the hair pick says otherwise."
+        }
+      ],
+      "req": [],
+      "noun": "out",
+      "anySecond": true,
+      "id": "rooftop:go-down:2"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The way down is the access door. It stays locked until the hair pick says otherwise."
+        }
+      ],
+      "req": [],
+      "noun": "lobby",
+      "anySecond": true,
+      "id": "rooftop:go-down:3"
+    }
+  ]
+}

@@ -9,6 +9,8 @@
     "verb": { "type": "string" },
     "noun": { "type": "string" },
     "second": { "type": "string" },
+    "anySecond": { "type": "boolean" },
+    "anyNoun": { "type": "boolean" },
     "req": { "type": "array", "items": { "type": "string" } },
     "once": { "type": "boolean" },
     "effects": {
@@ -39,6 +41,7 @@
     "checkpoint": { "type": "string" },
     "goto": { "$ref": "goto.schema.json" },
     "death": { "type": "boolean" },
+    "restoreTo": { "type": "string" },
     "ending": { "type": "string" },
     "wait": { "type": "integer", "minimum": 0 },
     "face": { "type": "string" },

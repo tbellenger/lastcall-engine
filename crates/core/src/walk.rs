@@ -62,6 +62,14 @@ fn at_command(
             Ok(())
         }
         "dismiss" => engine.dismiss_narration().map_err(|msg| fail(line_no, msg)),
+        "interrupt" => {
+            if args.is_empty() {
+                return Err(fail(line_no, "usage: @interrupt command"));
+            }
+            engine.interrupt_line(args);
+            pump_route(engine, line_no)?;
+            Ok(())
+        }
         "snapshot" => {
             if args.is_empty() || args.split_whitespace().count() != 1 {
                 return Err(fail(line_no, "usage: @snapshot name"));
@@ -81,9 +89,12 @@ fn at_command(
         }
         "restore" => {
             if args.is_empty() {
-                return engine
-                    .restore_last_checkpoint()
-                    .map_err(|err| fail(line_no, err.to_string()));
+                let restored = if engine.is_dead() {
+                    engine.restore_after_death()
+                } else {
+                    engine.restore_last_checkpoint()
+                };
+                return restored.map_err(|err| fail(line_no, err.to_string()));
             }
             let bytes = host.load_slot(args).map_err(|msg| fail(line_no, msg))?;
             engine

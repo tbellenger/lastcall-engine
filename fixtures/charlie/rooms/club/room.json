@@ -1,0 +1,7853 @@
+{
+  "id": "club",
+  "name": "The Purple Rhino",
+  "look": "The Purple Rhino, and almost empty. A mirror ball turns over a polished black-and-white dance floor. A dancer works the stage anyway. A slick bartender minds a long bar. Red booths sit empty. VIP stairs are roped off. A goon guards a door marked PRIVATE. The exit to the alley is behind you.",
+  "spawns": {
+    "default": [
+      180,
+      206
+    ],
+    "fromAlley": [
+      180,
+      206
+    ]
+  },
+  "exits": [],
+  "hotspots": [
+    {
+      "id": "dancer",
+      "rect": [
+        320,
+        28,
+        60,
+        110
+      ],
+      "nouns": [
+        "dancer",
+        "stage"
+      ],
+      "look": "A burlesque dancer, working an empty room like it's Carnegie Hall. Sequins, nerve, and no intention of stopping.",
+      "stand": [
+        340,
+        204
+      ]
+    },
+    {
+      "id": "bartender",
+      "rect": [
+        114,
+        66,
+        30,
+        46
+      ],
+      "nouns": [
+        "sal"
+      ],
+      "look": "Slick hair, slicker smile. He has the calm of a man who has seen the PRIVATE door open and decided it wasn't his business.",
+      "stand": [
+        128,
+        200
+      ]
+    },
+    {
+      "id": "guard",
+      "rect": [
+        64,
+        70,
+        56,
+        130
+      ],
+      "nouns": [
+        "guard"
+      ],
+      "look": "A goon with a neck like a fire hydrant. He is guarding a door marked PRIVATE, and he is not guarding it casually.",
+      "stand": [
+        96,
+        200
+      ]
+    },
+    {
+      "id": "booths",
+      "rect": [
+        250,
+        140,
+        80,
+        50
+      ],
+      "nouns": [
+        "booth"
+      ],
+      "look": "Red tufted booths. Nobody's drinking in them. The night is too early, or too wrong."
+    },
+    {
+      "id": "stairs",
+      "rect": [
+        8,
+        40,
+        60,
+        110
+      ],
+      "nouns": [
+        "stairs"
+      ],
+      "look": "VIP stairs, roped off in purple. Whatever's up there is above Charlie's pay grade, and his cologne."
+    },
+    {
+      "id": "floor",
+      "rect": [
+        80,
+        190,
+        160,
+        24
+      ],
+      "nouns": [
+        "floor"
+      ],
+      "look": "Polished black-and-white tiles. One wet patch from a spilled drink and somebody'd go flying."
+    },
+    {
+      "id": "bar",
+      "rect": [
+        95,
+        60,
+        100,
+        70
+      ],
+      "nouns": [
+        "bar"
+      ],
+      "look": "A long dark bar. The bottles are backlit like a choir. The bartender does not offer a hymn."
+    },
+    {
+      "id": "ball",
+      "rect": [
+        170,
+        8,
+        50,
+        36
+      ],
+      "nouns": [
+        "ball"
+      ],
+      "look": "A mirror ball, doing its one job. Little squares of light crawl the empty floor."
+    },
+    {
+      "id": "private",
+      "rect": [
+        74,
+        46,
+        40,
+        112
+      ],
+      "nouns": [
+        "private",
+        "door"
+      ],
+      "look": "A door marked PRIVATE. The guard is the fine print.",
+      "stand": [
+        96,
+        200
+      ]
+    },
+    {
+      "id": "pick",
+      "rect": [
+        296,
+        124,
+        40,
+        20
+      ],
+      "nouns": [
+        "pick"
+      ],
+      "stand": [
+        320,
+        204
+      ]
+    }
+  ],
+  "actors": [],
+  "props": [],
+  "rules": [
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Footsteps pound behind him. The floor by the door is slick and polished... if only he had something to make it slicker. The exit to the alley is behind you."
+        }
+      ],
+      "req": [
+        "flag:clubChase"
+      ],
+      "anySecond": true,
+      "id": "club:look-chase"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Footsteps pound behind him. The floor by the door is slick and polished... if only he had something to make it slicker. The exit to the alley is behind you."
+        }
+      ],
+      "req": [
+        "flag:clubChase"
+      ],
+      "noun": "around",
+      "anySecond": true,
+      "id": "club:look-chase:1"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Footsteps pound behind him. The floor by the door is slick and polished... if only he had something to make it slicker. The exit to the alley is behind you."
+        }
+      ],
+      "req": [
+        "flag:clubChase"
+      ],
+      "noun": "room",
+      "anySecond": true,
+      "id": "club:look-chase:2"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Polished black-and-white tiles, and footsteps. One slick patch and somebody'd go flying."
+        }
+      ],
+      "req": [
+        "flag:clubChase"
+      ],
+      "noun": "floor",
+      "anySecond": true,
+      "id": "club:look-floor-chase"
+    },
+    {
+      "verb": "drop",
+      "effects": [
+        {
+          "do": "give",
+          "id": "soap"
+        },
+        {
+          "do": "set",
+          "flag": "soapSlipped"
+        },
+        {
+          "do": "score",
+          "id": "slip-soap",
+          "points": 5
+        },
+        {
+          "do": "sfx",
+          "id": "step"
+        },
+        {
+          "do": "say",
+          "text": "Charlie flings the soap. It skates across the polished tile, and the thug's next step is a tragic ballet. He goes down in a heap of suit and regret. The door is clear. For a moment."
+        }
+      ],
+      "req": [
+        "has:soap",
+        "flag:clubChase",
+        "!flag:soapSlipped"
+      ],
+      "noun": "soap",
+      "id": "club:slip-soap"
+    },
+    {
+      "verb": "drop",
+      "effects": [
+        {
+          "do": "give",
+          "id": "soap"
+        },
+        {
+          "do": "set",
+          "flag": "soapSlipped"
+        },
+        {
+          "do": "score",
+          "id": "slip-soap",
+          "points": 5
+        },
+        {
+          "do": "sfx",
+          "id": "step"
+        },
+        {
+          "do": "say",
+          "text": "Charlie flings the soap. It skates across the polished tile, and the thug's next step is a tragic ballet. He goes down in a heap of suit and regret. The door is clear. For a moment."
+        }
+      ],
+      "req": [
+        "has:soap",
+        "flag:clubChase",
+        "!flag:soapSlipped"
+      ],
+      "noun": "soap",
+      "second": "floor",
+      "id": "club:slip-soap:1"
+    },
+    {
+      "verb": "drop",
+      "effects": [
+        {
+          "do": "give",
+          "id": "soap"
+        },
+        {
+          "do": "set",
+          "flag": "soapSlipped"
+        },
+        {
+          "do": "score",
+          "id": "slip-soap",
+          "points": 5
+        },
+        {
+          "do": "sfx",
+          "id": "step"
+        },
+        {
+          "do": "say",
+          "text": "Charlie flings the soap. It skates across the polished tile, and the thug's next step is a tragic ballet. He goes down in a heap of suit and regret. The door is clear. For a moment."
+        }
+      ],
+      "req": [
+        "has:soap",
+        "flag:clubChase",
+        "!flag:soapSlipped"
+      ],
+      "noun": "soap",
+      "second": "door",
+      "id": "club:slip-soap:2"
+    },
+    {
+      "verb": "drop",
+      "effects": [
+        {
+          "do": "give",
+          "id": "soap"
+        },
+        {
+          "do": "set",
+          "flag": "soapSlipped"
+        },
+        {
+          "do": "score",
+          "id": "slip-soap",
+          "points": 5
+        },
+        {
+          "do": "sfx",
+          "id": "step"
+        },
+        {
+          "do": "say",
+          "text": "Charlie flings the soap. It skates across the polished tile, and the thug's next step is a tragic ballet. He goes down in a heap of suit and regret. The door is clear. For a moment."
+        }
+      ],
+      "req": [
+        "has:soap",
+        "flag:clubChase",
+        "!flag:soapSlipped"
+      ],
+      "noun": "soap",
+      "second": "guard",
+      "id": "club:slip-soap:3"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "soap"
+        },
+        {
+          "do": "set",
+          "flag": "soapSlipped"
+        },
+        {
+          "do": "score",
+          "id": "slip-soap",
+          "points": 5
+        },
+        {
+          "do": "sfx",
+          "id": "step"
+        },
+        {
+          "do": "say",
+          "text": "Charlie flings the soap. It skates across the polished tile, and the thug's next step is a tragic ballet. He goes down in a heap of suit and regret. The door is clear. For a moment."
+        }
+      ],
+      "req": [
+        "has:soap",
+        "flag:clubChase",
+        "!flag:soapSlipped"
+      ],
+      "noun": "soap",
+      "id": "club:slip-soap:4"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "soap"
+        },
+        {
+          "do": "set",
+          "flag": "soapSlipped"
+        },
+        {
+          "do": "score",
+          "id": "slip-soap",
+          "points": 5
+        },
+        {
+          "do": "sfx",
+          "id": "step"
+        },
+        {
+          "do": "say",
+          "text": "Charlie flings the soap. It skates across the polished tile, and the thug's next step is a tragic ballet. He goes down in a heap of suit and regret. The door is clear. For a moment."
+        }
+      ],
+      "req": [
+        "has:soap",
+        "flag:clubChase",
+        "!flag:soapSlipped"
+      ],
+      "noun": "soap",
+      "second": "floor",
+      "id": "club:slip-soap:5"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "soap"
+        },
+        {
+          "do": "set",
+          "flag": "soapSlipped"
+        },
+        {
+          "do": "score",
+          "id": "slip-soap",
+          "points": 5
+        },
+        {
+          "do": "sfx",
+          "id": "step"
+        },
+        {
+          "do": "say",
+          "text": "Charlie flings the soap. It skates across the polished tile, and the thug's next step is a tragic ballet. He goes down in a heap of suit and regret. The door is clear. For a moment."
+        }
+      ],
+      "req": [
+        "has:soap",
+        "flag:clubChase",
+        "!flag:soapSlipped"
+      ],
+      "noun": "soap",
+      "second": "door",
+      "id": "club:slip-soap:6"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "soap"
+        },
+        {
+          "do": "set",
+          "flag": "soapSlipped"
+        },
+        {
+          "do": "score",
+          "id": "slip-soap",
+          "points": 5
+        },
+        {
+          "do": "sfx",
+          "id": "step"
+        },
+        {
+          "do": "say",
+          "text": "Charlie flings the soap. It skates across the polished tile, and the thug's next step is a tragic ballet. He goes down in a heap of suit and regret. The door is clear. For a moment."
+        }
+      ],
+      "req": [
+        "has:soap",
+        "flag:clubChase",
+        "!flag:soapSlipped"
+      ],
+      "noun": "soap",
+      "second": "guard",
+      "id": "club:slip-soap:7"
+    },
+    {
+      "verb": "drop",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The soap is already doing its job. The thug is not."
+        }
+      ],
+      "req": [
+        "flag:soapSlipped"
+      ],
+      "noun": "soap",
+      "anySecond": true,
+      "id": "club:slip-soap-again"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The soap is already doing its job. The thug is not."
+        }
+      ],
+      "req": [
+        "flag:soapSlipped"
+      ],
+      "noun": "soap",
+      "anySecond": true,
+      "id": "club:slip-soap-again:1"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "alleyChase"
+        },
+        {
+          "do": "set",
+          "flag": "leftClub"
+        },
+        {
+          "do": "clear",
+          "flag": "clubChase"
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Charlie bolts through the door. Behind him, a thug has a personal disagreement with the floor."
+        },
+        {
+          "do": "goto",
+          "room": "alley",
+          "spawn": "fromClub"
+        },
+        {
+          "do": "checkpoint",
+          "name": "alley-chase"
+        }
+      ],
+      "req": [
+        "flag:clubChase",
+        "flag:soapSlipped"
+      ],
+      "noun": "out",
+      "anySecond": true,
+      "id": "club:leave-slipped"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "alleyChase"
+        },
+        {
+          "do": "set",
+          "flag": "leftClub"
+        },
+        {
+          "do": "clear",
+          "flag": "clubChase"
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Charlie bolts through the door. Behind him, a thug has a personal disagreement with the floor."
+        },
+        {
+          "do": "goto",
+          "room": "alley",
+          "spawn": "fromClub"
+        },
+        {
+          "do": "checkpoint",
+          "name": "alley-chase"
+        }
+      ],
+      "req": [
+        "flag:clubChase",
+        "flag:soapSlipped"
+      ],
+      "noun": "alley",
+      "anySecond": true,
+      "id": "club:leave-slipped:1"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "alleyChase"
+        },
+        {
+          "do": "set",
+          "flag": "leftClub"
+        },
+        {
+          "do": "clear",
+          "flag": "clubChase"
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Charlie bolts through the door. Behind him, a thug has a personal disagreement with the floor."
+        },
+        {
+          "do": "goto",
+          "room": "alley",
+          "spawn": "fromClub"
+        },
+        {
+          "do": "checkpoint",
+          "name": "alley-chase"
+        }
+      ],
+      "req": [
+        "flag:clubChase",
+        "flag:soapSlipped"
+      ],
+      "noun": "door",
+      "anySecond": true,
+      "id": "club:leave-slipped:2"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "alleyChase"
+        },
+        {
+          "do": "set",
+          "flag": "leftClub"
+        },
+        {
+          "do": "clear",
+          "flag": "clubChase"
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Charlie bolts through the door. Behind him, a thug has a personal disagreement with the floor."
+        },
+        {
+          "do": "goto",
+          "room": "alley",
+          "spawn": "fromClub"
+        },
+        {
+          "do": "checkpoint",
+          "name": "alley-chase"
+        }
+      ],
+      "req": [
+        "flag:clubChase",
+        "flag:soapSlipped"
+      ],
+      "noun": "exit",
+      "anySecond": true,
+      "id": "club:leave-slipped:3"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "alleyChase"
+        },
+        {
+          "do": "set",
+          "flag": "leftClub"
+        },
+        {
+          "do": "clear",
+          "flag": "clubChase"
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Charlie bolts through the door. Behind him, a thug has a personal disagreement with the floor."
+        },
+        {
+          "do": "goto",
+          "room": "alley",
+          "spawn": "fromClub"
+        },
+        {
+          "do": "checkpoint",
+          "name": "alley-chase"
+        }
+      ],
+      "req": [
+        "flag:clubChase",
+        "flag:soapSlipped"
+      ],
+      "noun": "club",
+      "anySecond": true,
+      "id": "club:leave-slipped:4"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Charlie bolts for the door. The thug does not slip. There was nothing to slip on, and now there is a Charlie on the floor."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [
+        "flag:clubChase",
+        "!flag:soapSlipped"
+      ],
+      "noun": "out",
+      "anySecond": true,
+      "id": "club:leave-dry"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Charlie bolts for the door. The thug does not slip. There was nothing to slip on, and now there is a Charlie on the floor."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [
+        "flag:clubChase",
+        "!flag:soapSlipped"
+      ],
+      "noun": "alley",
+      "anySecond": true,
+      "id": "club:leave-dry:1"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Charlie bolts for the door. The thug does not slip. There was nothing to slip on, and now there is a Charlie on the floor."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [
+        "flag:clubChase",
+        "!flag:soapSlipped"
+      ],
+      "noun": "door",
+      "anySecond": true,
+      "id": "club:leave-dry:2"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Charlie bolts for the door. The thug does not slip. There was nothing to slip on, and now there is a Charlie on the floor."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [
+        "flag:clubChase",
+        "!flag:soapSlipped"
+      ],
+      "noun": "exit",
+      "anySecond": true,
+      "id": "club:leave-dry:3"
+    },
+    {
+      "verb": "show",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownGuard"
+        },
+        {
+          "do": "set",
+          "flag": "clubChase"
+        },
+        {
+          "do": "score",
+          "id": "show-guard",
+          "points": 4
+        },
+        {
+          "do": "score",
+          "id": "glimpse-dana",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "\"Ask for Vic? ...Back there.\" He waves Charlie toward the PRIVATE door."
+        },
+        {
+          "do": "say",
+          "text": "Charlie cracks the door. Dana Whitlock is tied to a chair, the pencil still in her bun, the red cardigan crooked. She sees him. He sees the ropes."
+        },
+        {
+          "do": "say",
+          "text": "A thug in the doorway spots the grey suit. \"Hey! You!\""
+        },
+        {
+          "do": "say",
+          "text": "Footsteps pound behind him. The floor by the door is slick and polished... if only he had something to make it slicker."
+        },
+        {
+          "do": "checkpoint",
+          "name": "club-chase"
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "matchbook",
+      "id": "club:show-guard"
+    },
+    {
+      "verb": "show",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownGuard"
+        },
+        {
+          "do": "set",
+          "flag": "clubChase"
+        },
+        {
+          "do": "score",
+          "id": "show-guard",
+          "points": 4
+        },
+        {
+          "do": "score",
+          "id": "glimpse-dana",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "\"Ask for Vic? ...Back there.\" He waves Charlie toward the PRIVATE door."
+        },
+        {
+          "do": "say",
+          "text": "Charlie cracks the door. Dana Whitlock is tied to a chair, the pencil still in her bun, the red cardigan crooked. She sees him. He sees the ropes."
+        },
+        {
+          "do": "say",
+          "text": "A thug in the doorway spots the grey suit. \"Hey! You!\""
+        },
+        {
+          "do": "say",
+          "text": "Footsteps pound behind him. The floor by the door is slick and polished... if only he had something to make it slicker."
+        },
+        {
+          "do": "checkpoint",
+          "name": "club-chase"
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "matchbook",
+      "second": "guard",
+      "id": "club:show-guard:1"
+    },
+    {
+      "verb": "show",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownGuard"
+        },
+        {
+          "do": "set",
+          "flag": "clubChase"
+        },
+        {
+          "do": "score",
+          "id": "show-guard",
+          "points": 4
+        },
+        {
+          "do": "score",
+          "id": "glimpse-dana",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "\"Ask for Vic? ...Back there.\" He waves Charlie toward the PRIVATE door."
+        },
+        {
+          "do": "say",
+          "text": "Charlie cracks the door. Dana Whitlock is tied to a chair, the pencil still in her bun, the red cardigan crooked. She sees him. He sees the ropes."
+        },
+        {
+          "do": "say",
+          "text": "A thug in the doorway spots the grey suit. \"Hey! You!\""
+        },
+        {
+          "do": "say",
+          "text": "Footsteps pound behind him. The floor by the door is slick and polished... if only he had something to make it slicker."
+        },
+        {
+          "do": "checkpoint",
+          "name": "club-chase"
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "matchbook",
+      "second": "bouncer",
+      "id": "club:show-guard:2"
+    },
+    {
+      "verb": "show",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownGuard"
+        },
+        {
+          "do": "set",
+          "flag": "clubChase"
+        },
+        {
+          "do": "score",
+          "id": "show-guard",
+          "points": 4
+        },
+        {
+          "do": "score",
+          "id": "glimpse-dana",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "\"Ask for Vic? ...Back there.\" He waves Charlie toward the PRIVATE door."
+        },
+        {
+          "do": "say",
+          "text": "Charlie cracks the door. Dana Whitlock is tied to a chair, the pencil still in her bun, the red cardigan crooked. She sees him. He sees the ropes."
+        },
+        {
+          "do": "say",
+          "text": "A thug in the doorway spots the grey suit. \"Hey! You!\""
+        },
+        {
+          "do": "say",
+          "text": "Footsteps pound behind him. The floor by the door is slick and polished... if only he had something to make it slicker."
+        },
+        {
+          "do": "checkpoint",
+          "name": "club-chase"
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "matchbook",
+      "second": "matchbook",
+      "id": "club:show-guard:3"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownGuard"
+        },
+        {
+          "do": "set",
+          "flag": "clubChase"
+        },
+        {
+          "do": "score",
+          "id": "show-guard",
+          "points": 4
+        },
+        {
+          "do": "score",
+          "id": "glimpse-dana",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "\"Ask for Vic? ...Back there.\" He waves Charlie toward the PRIVATE door."
+        },
+        {
+          "do": "say",
+          "text": "Charlie cracks the door. Dana Whitlock is tied to a chair, the pencil still in her bun, the red cardigan crooked. She sees him. He sees the ropes."
+        },
+        {
+          "do": "say",
+          "text": "A thug in the doorway spots the grey suit. \"Hey! You!\""
+        },
+        {
+          "do": "say",
+          "text": "Footsteps pound behind him. The floor by the door is slick and polished... if only he had something to make it slicker."
+        },
+        {
+          "do": "checkpoint",
+          "name": "club-chase"
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "matchbook",
+      "id": "club:show-guard:4"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownGuard"
+        },
+        {
+          "do": "set",
+          "flag": "clubChase"
+        },
+        {
+          "do": "score",
+          "id": "show-guard",
+          "points": 4
+        },
+        {
+          "do": "score",
+          "id": "glimpse-dana",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "\"Ask for Vic? ...Back there.\" He waves Charlie toward the PRIVATE door."
+        },
+        {
+          "do": "say",
+          "text": "Charlie cracks the door. Dana Whitlock is tied to a chair, the pencil still in her bun, the red cardigan crooked. She sees him. He sees the ropes."
+        },
+        {
+          "do": "say",
+          "text": "A thug in the doorway spots the grey suit. \"Hey! You!\""
+        },
+        {
+          "do": "say",
+          "text": "Footsteps pound behind him. The floor by the door is slick and polished... if only he had something to make it slicker."
+        },
+        {
+          "do": "checkpoint",
+          "name": "club-chase"
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "matchbook",
+      "second": "guard",
+      "id": "club:show-guard:5"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownGuard"
+        },
+        {
+          "do": "set",
+          "flag": "clubChase"
+        },
+        {
+          "do": "score",
+          "id": "show-guard",
+          "points": 4
+        },
+        {
+          "do": "score",
+          "id": "glimpse-dana",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "\"Ask for Vic? ...Back there.\" He waves Charlie toward the PRIVATE door."
+        },
+        {
+          "do": "say",
+          "text": "Charlie cracks the door. Dana Whitlock is tied to a chair, the pencil still in her bun, the red cardigan crooked. She sees him. He sees the ropes."
+        },
+        {
+          "do": "say",
+          "text": "A thug in the doorway spots the grey suit. \"Hey! You!\""
+        },
+        {
+          "do": "say",
+          "text": "Footsteps pound behind him. The floor by the door is slick and polished... if only he had something to make it slicker."
+        },
+        {
+          "do": "checkpoint",
+          "name": "club-chase"
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "matchbook",
+      "second": "bouncer",
+      "id": "club:show-guard:6"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownGuard"
+        },
+        {
+          "do": "set",
+          "flag": "clubChase"
+        },
+        {
+          "do": "score",
+          "id": "show-guard",
+          "points": 4
+        },
+        {
+          "do": "score",
+          "id": "glimpse-dana",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "\"Ask for Vic? ...Back there.\" He waves Charlie toward the PRIVATE door."
+        },
+        {
+          "do": "say",
+          "text": "Charlie cracks the door. Dana Whitlock is tied to a chair, the pencil still in her bun, the red cardigan crooked. She sees him. He sees the ropes."
+        },
+        {
+          "do": "say",
+          "text": "A thug in the doorway spots the grey suit. \"Hey! You!\""
+        },
+        {
+          "do": "say",
+          "text": "Footsteps pound behind him. The floor by the door is slick and polished... if only he had something to make it slicker."
+        },
+        {
+          "do": "checkpoint",
+          "name": "club-chase"
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "matchbook",
+      "second": "matchbook",
+      "id": "club:show-guard:7"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownGuard"
+        },
+        {
+          "do": "set",
+          "flag": "clubChase"
+        },
+        {
+          "do": "score",
+          "id": "show-guard",
+          "points": 4
+        },
+        {
+          "do": "score",
+          "id": "glimpse-dana",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "\"Ask for Vic? ...Back there.\" He waves Charlie toward the PRIVATE door."
+        },
+        {
+          "do": "say",
+          "text": "Charlie cracks the door. Dana Whitlock is tied to a chair, the pencil still in her bun, the red cardigan crooked. She sees him. He sees the ropes."
+        },
+        {
+          "do": "say",
+          "text": "A thug in the doorway spots the grey suit. \"Hey! You!\""
+        },
+        {
+          "do": "say",
+          "text": "Footsteps pound behind him. The floor by the door is slick and polished... if only he had something to make it slicker."
+        },
+        {
+          "do": "checkpoint",
+          "name": "club-chase"
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "matchbook",
+      "id": "club:show-guard:8"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownGuard"
+        },
+        {
+          "do": "set",
+          "flag": "clubChase"
+        },
+        {
+          "do": "score",
+          "id": "show-guard",
+          "points": 4
+        },
+        {
+          "do": "score",
+          "id": "glimpse-dana",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "\"Ask for Vic? ...Back there.\" He waves Charlie toward the PRIVATE door."
+        },
+        {
+          "do": "say",
+          "text": "Charlie cracks the door. Dana Whitlock is tied to a chair, the pencil still in her bun, the red cardigan crooked. She sees him. He sees the ropes."
+        },
+        {
+          "do": "say",
+          "text": "A thug in the doorway spots the grey suit. \"Hey! You!\""
+        },
+        {
+          "do": "say",
+          "text": "Footsteps pound behind him. The floor by the door is slick and polished... if only he had something to make it slicker."
+        },
+        {
+          "do": "checkpoint",
+          "name": "club-chase"
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "matchbook",
+      "second": "guard",
+      "id": "club:show-guard:9"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownGuard"
+        },
+        {
+          "do": "set",
+          "flag": "clubChase"
+        },
+        {
+          "do": "score",
+          "id": "show-guard",
+          "points": 4
+        },
+        {
+          "do": "score",
+          "id": "glimpse-dana",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "\"Ask for Vic? ...Back there.\" He waves Charlie toward the PRIVATE door."
+        },
+        {
+          "do": "say",
+          "text": "Charlie cracks the door. Dana Whitlock is tied to a chair, the pencil still in her bun, the red cardigan crooked. She sees him. He sees the ropes."
+        },
+        {
+          "do": "say",
+          "text": "A thug in the doorway spots the grey suit. \"Hey! You!\""
+        },
+        {
+          "do": "say",
+          "text": "Footsteps pound behind him. The floor by the door is slick and polished... if only he had something to make it slicker."
+        },
+        {
+          "do": "checkpoint",
+          "name": "club-chase"
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "matchbook",
+      "second": "bouncer",
+      "id": "club:show-guard:10"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownGuard"
+        },
+        {
+          "do": "set",
+          "flag": "clubChase"
+        },
+        {
+          "do": "score",
+          "id": "show-guard",
+          "points": 4
+        },
+        {
+          "do": "score",
+          "id": "glimpse-dana",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "\"Ask for Vic? ...Back there.\" He waves Charlie toward the PRIVATE door."
+        },
+        {
+          "do": "say",
+          "text": "Charlie cracks the door. Dana Whitlock is tied to a chair, the pencil still in her bun, the red cardigan crooked. She sees him. He sees the ropes."
+        },
+        {
+          "do": "say",
+          "text": "A thug in the doorway spots the grey suit. \"Hey! You!\""
+        },
+        {
+          "do": "say",
+          "text": "Footsteps pound behind him. The floor by the door is slick and polished... if only he had something to make it slicker."
+        },
+        {
+          "do": "checkpoint",
+          "name": "club-chase"
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "matchbook",
+      "second": "matchbook",
+      "id": "club:show-guard:11"
+    },
+    {
+      "verb": "show",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownGuard"
+        },
+        {
+          "do": "set",
+          "flag": "clubChase"
+        },
+        {
+          "do": "score",
+          "id": "show-guard",
+          "points": 4
+        },
+        {
+          "do": "score",
+          "id": "glimpse-dana",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "\"Ask for Vic? ...Back there.\" He waves Charlie toward the PRIVATE door."
+        },
+        {
+          "do": "say",
+          "text": "Charlie cracks the door. Dana Whitlock is tied to a chair, the pencil still in her bun, the red cardigan crooked. She sees him. He sees the ropes."
+        },
+        {
+          "do": "say",
+          "text": "A thug in the doorway spots the grey suit. \"Hey! You!\""
+        },
+        {
+          "do": "say",
+          "text": "Footsteps pound behind him. The floor by the door is slick and polished... if only he had something to make it slicker."
+        },
+        {
+          "do": "checkpoint",
+          "name": "club-chase"
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "guard",
+      "second": "matchbook",
+      "id": "club:show-guard-swap"
+    },
+    {
+      "verb": "show",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownGuard"
+        },
+        {
+          "do": "set",
+          "flag": "clubChase"
+        },
+        {
+          "do": "score",
+          "id": "show-guard",
+          "points": 4
+        },
+        {
+          "do": "score",
+          "id": "glimpse-dana",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "\"Ask for Vic? ...Back there.\" He waves Charlie toward the PRIVATE door."
+        },
+        {
+          "do": "say",
+          "text": "Charlie cracks the door. Dana Whitlock is tied to a chair, the pencil still in her bun, the red cardigan crooked. She sees him. He sees the ropes."
+        },
+        {
+          "do": "say",
+          "text": "A thug in the doorway spots the grey suit. \"Hey! You!\""
+        },
+        {
+          "do": "say",
+          "text": "Footsteps pound behind him. The floor by the door is slick and polished... if only he had something to make it slicker."
+        },
+        {
+          "do": "checkpoint",
+          "name": "club-chase"
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "bouncer",
+      "second": "matchbook",
+      "id": "club:show-guard-swap:1"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownGuard"
+        },
+        {
+          "do": "set",
+          "flag": "clubChase"
+        },
+        {
+          "do": "score",
+          "id": "show-guard",
+          "points": 4
+        },
+        {
+          "do": "score",
+          "id": "glimpse-dana",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "\"Ask for Vic? ...Back there.\" He waves Charlie toward the PRIVATE door."
+        },
+        {
+          "do": "say",
+          "text": "Charlie cracks the door. Dana Whitlock is tied to a chair, the pencil still in her bun, the red cardigan crooked. She sees him. He sees the ropes."
+        },
+        {
+          "do": "say",
+          "text": "A thug in the doorway spots the grey suit. \"Hey! You!\""
+        },
+        {
+          "do": "say",
+          "text": "Footsteps pound behind him. The floor by the door is slick and polished... if only he had something to make it slicker."
+        },
+        {
+          "do": "checkpoint",
+          "name": "club-chase"
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "guard",
+      "second": "matchbook",
+      "id": "club:show-guard-swap:2"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownGuard"
+        },
+        {
+          "do": "set",
+          "flag": "clubChase"
+        },
+        {
+          "do": "score",
+          "id": "show-guard",
+          "points": 4
+        },
+        {
+          "do": "score",
+          "id": "glimpse-dana",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "\"Ask for Vic? ...Back there.\" He waves Charlie toward the PRIVATE door."
+        },
+        {
+          "do": "say",
+          "text": "Charlie cracks the door. Dana Whitlock is tied to a chair, the pencil still in her bun, the red cardigan crooked. She sees him. He sees the ropes."
+        },
+        {
+          "do": "say",
+          "text": "A thug in the doorway spots the grey suit. \"Hey! You!\""
+        },
+        {
+          "do": "say",
+          "text": "Footsteps pound behind him. The floor by the door is slick and polished... if only he had something to make it slicker."
+        },
+        {
+          "do": "checkpoint",
+          "name": "club-chase"
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "bouncer",
+      "second": "matchbook",
+      "id": "club:show-guard-swap:3"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownGuard"
+        },
+        {
+          "do": "set",
+          "flag": "clubChase"
+        },
+        {
+          "do": "score",
+          "id": "show-guard",
+          "points": 4
+        },
+        {
+          "do": "score",
+          "id": "glimpse-dana",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "\"Ask for Vic? ...Back there.\" He waves Charlie toward the PRIVATE door."
+        },
+        {
+          "do": "say",
+          "text": "Charlie cracks the door. Dana Whitlock is tied to a chair, the pencil still in her bun, the red cardigan crooked. She sees him. He sees the ropes."
+        },
+        {
+          "do": "say",
+          "text": "A thug in the doorway spots the grey suit. \"Hey! You!\""
+        },
+        {
+          "do": "say",
+          "text": "Footsteps pound behind him. The floor by the door is slick and polished... if only he had something to make it slicker."
+        },
+        {
+          "do": "checkpoint",
+          "name": "club-chase"
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "guard",
+      "second": "matchbook",
+      "id": "club:show-guard-swap:4"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "set",
+          "flag": "shownGuard"
+        },
+        {
+          "do": "set",
+          "flag": "clubChase"
+        },
+        {
+          "do": "score",
+          "id": "show-guard",
+          "points": 4
+        },
+        {
+          "do": "score",
+          "id": "glimpse-dana",
+          "points": 4
+        },
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "\"Ask for Vic? ...Back there.\" He waves Charlie toward the PRIVATE door."
+        },
+        {
+          "do": "say",
+          "text": "Charlie cracks the door. Dana Whitlock is tied to a chair, the pencil still in her bun, the red cardigan crooked. She sees him. He sees the ropes."
+        },
+        {
+          "do": "say",
+          "text": "A thug in the doorway spots the grey suit. \"Hey! You!\""
+        },
+        {
+          "do": "say",
+          "text": "Footsteps pound behind him. The floor by the door is slick and polished... if only he had something to make it slicker."
+        },
+        {
+          "do": "checkpoint",
+          "name": "club-chase"
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "bouncer",
+      "second": "matchbook",
+      "id": "club:show-guard-swap:5"
+    },
+    {
+      "verb": "show",
+      "effects": [
+        {
+          "do": "say",
+          "text": "You don't have a matchbook to show. The guard is not moved by mime."
+        }
+      ],
+      "req": [
+        "!has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "matchbook",
+      "anySecond": true,
+      "id": "club:show-guard-none"
+    },
+    {
+      "verb": "show",
+      "effects": [
+        {
+          "do": "say",
+          "text": "You don't have a matchbook to show. The guard is not moved by mime."
+        }
+      ],
+      "req": [
+        "!has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "guard",
+      "anySecond": true,
+      "id": "club:show-guard-none:1"
+    },
+    {
+      "verb": "show",
+      "effects": [
+        {
+          "do": "say",
+          "text": "You don't have a matchbook to show. The guard is not moved by mime."
+        }
+      ],
+      "req": [
+        "!has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "bouncer",
+      "anySecond": true,
+      "id": "club:show-guard-none:2"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "You don't have a matchbook to show. The guard is not moved by mime."
+        }
+      ],
+      "req": [
+        "!has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "matchbook",
+      "anySecond": true,
+      "id": "club:show-guard-none:3"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "You don't have a matchbook to show. The guard is not moved by mime."
+        }
+      ],
+      "req": [
+        "!has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "guard",
+      "anySecond": true,
+      "id": "club:show-guard-none:4"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "You don't have a matchbook to show. The guard is not moved by mime."
+        }
+      ],
+      "req": [
+        "!has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "bouncer",
+      "anySecond": true,
+      "id": "club:show-guard-none:5"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "You don't have a matchbook to show. The guard is not moved by mime."
+        }
+      ],
+      "req": [
+        "!has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "matchbook",
+      "anySecond": true,
+      "id": "club:show-guard-none:6"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "You don't have a matchbook to show. The guard is not moved by mime."
+        }
+      ],
+      "req": [
+        "!has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "guard",
+      "anySecond": true,
+      "id": "club:show-guard-none:7"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "You don't have a matchbook to show. The guard is not moved by mime."
+        }
+      ],
+      "req": [
+        "!has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "bouncer",
+      "anySecond": true,
+      "id": "club:show-guard-none:8"
+    },
+    {
+      "verb": "show",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He already saw the matchbook. That is why he is running."
+        }
+      ],
+      "req": [
+        "flag:clubChase"
+      ],
+      "noun": "matchbook",
+      "anySecond": true,
+      "id": "club:show-guard-chase"
+    },
+    {
+      "verb": "show",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He already saw the matchbook. That is why he is running."
+        }
+      ],
+      "req": [
+        "flag:clubChase"
+      ],
+      "noun": "guard",
+      "anySecond": true,
+      "id": "club:show-guard-chase:1"
+    },
+    {
+      "verb": "show",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He already saw the matchbook. That is why he is running."
+        }
+      ],
+      "req": [
+        "flag:clubChase"
+      ],
+      "noun": "bouncer",
+      "anySecond": true,
+      "id": "club:show-guard-chase:2"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He already saw the matchbook. That is why he is running."
+        }
+      ],
+      "req": [
+        "flag:clubChase"
+      ],
+      "noun": "matchbook",
+      "anySecond": true,
+      "id": "club:show-guard-chase:3"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He already saw the matchbook. That is why he is running."
+        }
+      ],
+      "req": [
+        "flag:clubChase"
+      ],
+      "noun": "guard",
+      "anySecond": true,
+      "id": "club:show-guard-chase:4"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He already saw the matchbook. That is why he is running."
+        }
+      ],
+      "req": [
+        "flag:clubChase"
+      ],
+      "noun": "bouncer",
+      "anySecond": true,
+      "id": "club:show-guard-chase:5"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He already saw the matchbook. That is why he is running."
+        }
+      ],
+      "req": [
+        "flag:clubChase"
+      ],
+      "noun": "matchbook",
+      "anySecond": true,
+      "id": "club:show-guard-chase:6"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He already saw the matchbook. That is why he is running."
+        }
+      ],
+      "req": [
+        "flag:clubChase"
+      ],
+      "noun": "guard",
+      "anySecond": true,
+      "id": "club:show-guard-chase:7"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He already saw the matchbook. That is why he is running."
+        }
+      ],
+      "req": [
+        "flag:clubChase"
+      ],
+      "noun": "bouncer",
+      "anySecond": true,
+      "id": "club:show-guard-chase:8"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "say",
+          "text": "You already saw. Unfortunately, so did he."
+        }
+      ],
+      "req": [
+        "flag:clubChase"
+      ],
+      "noun": "private",
+      "anySecond": true,
+      "id": "club:private-during"
+    },
+    {
+      "verb": "open",
+      "effects": [
+        {
+          "do": "say",
+          "text": "You already saw. Unfortunately, so did he."
+        }
+      ],
+      "req": [
+        "flag:clubChase"
+      ],
+      "noun": "private",
+      "anySecond": true,
+      "id": "club:private-during:1"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The goon checks Charlie for a reason and finds a suit. \"Private means you ain't. Scram, cologne.\""
+        }
+      ],
+      "req": [
+        "!has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "private",
+      "anySecond": true,
+      "id": "club:private-no-book"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The goon checks Charlie for a reason and finds a suit. \"Private means you ain't. Scram, cologne.\""
+        }
+      ],
+      "req": [
+        "!has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "guard",
+      "anySecond": true,
+      "id": "club:private-no-book:1"
+    },
+    {
+      "verb": "open",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The goon checks Charlie for a reason and finds a suit. \"Private means you ain't. Scram, cologne.\""
+        }
+      ],
+      "req": [
+        "!has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "private",
+      "anySecond": true,
+      "id": "club:private-no-book:2"
+    },
+    {
+      "verb": "open",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The goon checks Charlie for a reason and finds a suit. \"Private means you ain't. Scram, cologne.\""
+        }
+      ],
+      "req": [
+        "!has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "guard",
+      "anySecond": true,
+      "id": "club:private-no-book:3"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The goon checks Charlie for a reason and finds a suit. \"Private means you ain't. Scram, cologne.\""
+        }
+      ],
+      "req": [
+        "!has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "private",
+      "anySecond": true,
+      "id": "club:private-no-book:4"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The goon checks Charlie for a reason and finds a suit. \"Private means you ain't. Scram, cologne.\""
+        }
+      ],
+      "req": [
+        "!has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "guard",
+      "anySecond": true,
+      "id": "club:private-no-book:5"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't move for a wave. Show him the matchbook."
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "private",
+      "anySecond": true,
+      "id": "club:private-need-show"
+    },
+    {
+      "verb": "open",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He doesn't move for a wave. Show him the matchbook."
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "private",
+      "anySecond": true,
+      "id": "club:private-need-show:1"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Words are not the password. The matchbook might be."
+        }
+      ],
+      "req": [
+        "has:matchbook",
+        "!flag:clubChase"
+      ],
+      "noun": "guard",
+      "anySecond": true,
+      "id": "club:talk-guard-book"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "say",
+          "text": "He is not in a conversational mood. He is in a catching-you mood."
+        }
+      ],
+      "req": [
+        "flag:clubChase"
+      ],
+      "noun": "guard",
+      "anySecond": true,
+      "id": "club:talk-guard-chase"
+    },
+    {
+      "verb": "touch",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The guard explains the Purple Rhino's one rule with both hands. Charlie lands in a puddle in the alley. The door locks. Dana's trail goes cold. GAME OVER."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [],
+      "noun": "dancer",
+      "anySecond": true,
+      "id": "club:touch-dancer"
+    },
+    {
+      "verb": "get",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The guard explains the Purple Rhino's one rule with both hands. Charlie lands in a puddle in the alley. The door locks. Dana's trail goes cold. GAME OVER."
+        },
+        {
+          "do": "say",
+          "text": "Restore, restart, or quit?"
+        },
+        {
+          "do": "setDead",
+          "restoreTo": "autosave"
+        }
+      ],
+      "req": [],
+      "noun": "dancer",
+      "anySecond": true,
+      "id": "club:touch-dancer:1"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "id": "club:tip-dancer-again"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "dancer",
+      "id": "club:tip-dancer-again:1"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "dollar",
+      "id": "club:tip-dancer-again:2"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "money",
+      "id": "club:tip-dancer-again:3"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "quarters",
+      "id": "club:tip-dancer-again:4"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "five",
+      "id": "club:tip-dancer-again:5"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "ten",
+      "id": "club:tip-dancer-again:6"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "twenty",
+      "id": "club:tip-dancer-again:7"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "id": "club:tip-dancer-again:8"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "dancer",
+      "id": "club:tip-dancer-again:9"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "dollar",
+      "id": "club:tip-dancer-again:10"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "money",
+      "id": "club:tip-dancer-again:11"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "quarters",
+      "id": "club:tip-dancer-again:12"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "five",
+      "id": "club:tip-dancer-again:13"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "ten",
+      "id": "club:tip-dancer-again:14"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "twenty",
+      "id": "club:tip-dancer-again:15"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "id": "club:tip-dancer-again:16"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "dancer",
+      "id": "club:tip-dancer-again:17"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "dollar",
+      "id": "club:tip-dancer-again:18"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "money",
+      "id": "club:tip-dancer-again:19"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "quarters",
+      "id": "club:tip-dancer-again:20"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "five",
+      "id": "club:tip-dancer-again:21"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "ten",
+      "id": "club:tip-dancer-again:22"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "twenty",
+      "id": "club:tip-dancer-again:23"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "dollar",
+      "second": "dancer",
+      "id": "club:tip-dancer-again-to"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "money",
+      "second": "dancer",
+      "id": "club:tip-dancer-again-to:1"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "quarters",
+      "second": "dancer",
+      "id": "club:tip-dancer-again-to:2"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "five",
+      "second": "dancer",
+      "id": "club:tip-dancer-again-to:3"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "ten",
+      "second": "dancer",
+      "id": "club:tip-dancer-again-to:4"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "twenty",
+      "second": "dancer",
+      "id": "club:tip-dancer-again-to:5"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "dollar",
+      "second": "dancer",
+      "id": "club:tip-dancer-again-to:6"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "money",
+      "second": "dancer",
+      "id": "club:tip-dancer-again-to:7"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "quarters",
+      "second": "dancer",
+      "id": "club:tip-dancer-again-to:8"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "five",
+      "second": "dancer",
+      "id": "club:tip-dancer-again-to:9"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "ten",
+      "second": "dancer",
+      "id": "club:tip-dancer-again-to:10"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "twenty",
+      "second": "dancer",
+      "id": "club:tip-dancer-again-to:11"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "dollar",
+      "second": "dancer",
+      "id": "club:tip-dancer-again-to:12"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "money",
+      "second": "dancer",
+      "id": "club:tip-dancer-again-to:13"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "quarters",
+      "second": "dancer",
+      "id": "club:tip-dancer-again-to:14"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "five",
+      "second": "dancer",
+      "id": "club:tip-dancer-again-to:15"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "ten",
+      "second": "dancer",
+      "id": "club:tip-dancer-again-to:16"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She smiles like the meter has run out. \"Once was sweet. You're still too nice to be here.\""
+        }
+      ],
+      "req": [
+        "flag:tippedDancer"
+      ],
+      "noun": "twenty",
+      "second": "dancer",
+      "id": "club:tip-dancer-again-to:17"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "id": "club:tip-dancer"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "dancer",
+      "id": "club:tip-dancer:1"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "dollar",
+      "id": "club:tip-dancer:2"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "money",
+      "id": "club:tip-dancer:3"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "quarters",
+      "id": "club:tip-dancer:4"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "five",
+      "id": "club:tip-dancer:5"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "ten",
+      "id": "club:tip-dancer:6"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "twenty",
+      "id": "club:tip-dancer:7"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "id": "club:tip-dancer:8"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "dancer",
+      "id": "club:tip-dancer:9"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "dollar",
+      "id": "club:tip-dancer:10"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "money",
+      "id": "club:tip-dancer:11"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "quarters",
+      "id": "club:tip-dancer:12"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "five",
+      "id": "club:tip-dancer:13"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "ten",
+      "id": "club:tip-dancer:14"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "twenty",
+      "id": "club:tip-dancer:15"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "id": "club:tip-dancer:16"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "dancer",
+      "id": "club:tip-dancer:17"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "dollar",
+      "id": "club:tip-dancer:18"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "money",
+      "id": "club:tip-dancer:19"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "quarters",
+      "id": "club:tip-dancer:20"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "five",
+      "id": "club:tip-dancer:21"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "ten",
+      "id": "club:tip-dancer:22"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "twenty",
+      "id": "club:tip-dancer:23"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dollar",
+      "second": "dancer",
+      "id": "club:tip-dancer-to"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "money",
+      "second": "dancer",
+      "id": "club:tip-dancer-to:1"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "quarters",
+      "second": "dancer",
+      "id": "club:tip-dancer-to:2"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "five",
+      "second": "dancer",
+      "id": "club:tip-dancer-to:3"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "ten",
+      "second": "dancer",
+      "id": "club:tip-dancer-to:4"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "twenty",
+      "second": "dancer",
+      "id": "club:tip-dancer-to:5"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dollar",
+      "second": "dancer",
+      "id": "club:tip-dancer-to:6"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "money",
+      "second": "dancer",
+      "id": "club:tip-dancer-to:7"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "quarters",
+      "second": "dancer",
+      "id": "club:tip-dancer-to:8"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "five",
+      "second": "dancer",
+      "id": "club:tip-dancer-to:9"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "ten",
+      "second": "dancer",
+      "id": "club:tip-dancer-to:10"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "twenty",
+      "second": "dancer",
+      "id": "club:tip-dancer-to:11"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dollar",
+      "second": "dancer",
+      "id": "club:tip-dancer-to:12"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "money",
+      "second": "dancer",
+      "id": "club:tip-dancer-to:13"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "quarters",
+      "second": "dancer",
+      "id": "club:tip-dancer-to:14"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "five",
+      "second": "dancer",
+      "id": "club:tip-dancer-to:15"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "ten",
+      "second": "dancer",
+      "id": "club:tip-dancer-to:16"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "dollar"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "twenty",
+      "second": "dancer",
+      "id": "club:tip-dancer-to:17"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "id": "club:tip-dancer-quarter"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "dancer",
+      "id": "club:tip-dancer-quarter:1"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "dollar",
+      "id": "club:tip-dancer-quarter:2"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "money",
+      "id": "club:tip-dancer-quarter:3"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "quarters",
+      "id": "club:tip-dancer-quarter:4"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "five",
+      "id": "club:tip-dancer-quarter:5"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "ten",
+      "id": "club:tip-dancer-quarter:6"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "twenty",
+      "id": "club:tip-dancer-quarter:7"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "id": "club:tip-dancer-quarter:8"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "dancer",
+      "id": "club:tip-dancer-quarter:9"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "dollar",
+      "id": "club:tip-dancer-quarter:10"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "money",
+      "id": "club:tip-dancer-quarter:11"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "quarters",
+      "id": "club:tip-dancer-quarter:12"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "five",
+      "id": "club:tip-dancer-quarter:13"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "ten",
+      "id": "club:tip-dancer-quarter:14"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "twenty",
+      "id": "club:tip-dancer-quarter:15"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "id": "club:tip-dancer-quarter:16"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "dancer",
+      "id": "club:tip-dancer-quarter:17"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "dollar",
+      "id": "club:tip-dancer-quarter:18"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "money",
+      "id": "club:tip-dancer-quarter:19"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "quarters",
+      "id": "club:tip-dancer-quarter:20"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "five",
+      "id": "club:tip-dancer-quarter:21"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "ten",
+      "id": "club:tip-dancer-quarter:22"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "twenty",
+      "id": "club:tip-dancer-quarter:23"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dollar",
+      "second": "dancer",
+      "id": "club:tip-dancer-quarter-to"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "money",
+      "second": "dancer",
+      "id": "club:tip-dancer-quarter-to:1"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "quarters",
+      "second": "dancer",
+      "id": "club:tip-dancer-quarter-to:2"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "five",
+      "second": "dancer",
+      "id": "club:tip-dancer-quarter-to:3"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "ten",
+      "second": "dancer",
+      "id": "club:tip-dancer-quarter-to:4"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "twenty",
+      "second": "dancer",
+      "id": "club:tip-dancer-quarter-to:5"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dollar",
+      "second": "dancer",
+      "id": "club:tip-dancer-quarter-to:6"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "money",
+      "second": "dancer",
+      "id": "club:tip-dancer-quarter-to:7"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "quarters",
+      "second": "dancer",
+      "id": "club:tip-dancer-quarter-to:8"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "five",
+      "second": "dancer",
+      "id": "club:tip-dancer-quarter-to:9"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "ten",
+      "second": "dancer",
+      "id": "club:tip-dancer-quarter-to:10"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "twenty",
+      "second": "dancer",
+      "id": "club:tip-dancer-quarter-to:11"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dollar",
+      "second": "dancer",
+      "id": "club:tip-dancer-quarter-to:12"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "money",
+      "second": "dancer",
+      "id": "club:tip-dancer-quarter-to:13"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "quarters",
+      "second": "dancer",
+      "id": "club:tip-dancer-quarter-to:14"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "five",
+      "second": "dancer",
+      "id": "club:tip-dancer-quarter-to:15"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "ten",
+      "second": "dancer",
+      "id": "club:tip-dancer-quarter-to:16"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "give",
+          "id": "quarters"
+        },
+        {
+          "do": "set",
+          "flag": "tippedDancer"
+        },
+        {
+          "do": "score",
+          "id": "tip-dancer",
+          "points": 2
+        },
+        {
+          "do": "sfx",
+          "id": "coin"
+        },
+        {
+          "do": "say",
+          "text": "The dancer leans down. \"Honey, you look way too nice to be in a place like this.\""
+        },
+        {
+          "do": "say",
+          "text": "As she straightens up, something glints on the stage edge: a hair pick."
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "twenty",
+      "second": "dancer",
+      "id": "club:tip-dancer-quarter-to:17"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "id": "club:tip-dancer-broke"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "dancer",
+      "id": "club:tip-dancer-broke:1"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "dollar",
+      "id": "club:tip-dancer-broke:2"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "money",
+      "id": "club:tip-dancer-broke:3"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "quarters",
+      "id": "club:tip-dancer-broke:4"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "five",
+      "id": "club:tip-dancer-broke:5"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "ten",
+      "id": "club:tip-dancer-broke:6"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "twenty",
+      "id": "club:tip-dancer-broke:7"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "id": "club:tip-dancer-broke:8"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "dancer",
+      "id": "club:tip-dancer-broke:9"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "dollar",
+      "id": "club:tip-dancer-broke:10"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "money",
+      "id": "club:tip-dancer-broke:11"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "quarters",
+      "id": "club:tip-dancer-broke:12"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "five",
+      "id": "club:tip-dancer-broke:13"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "ten",
+      "id": "club:tip-dancer-broke:14"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "twenty",
+      "id": "club:tip-dancer-broke:15"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "id": "club:tip-dancer-broke:16"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "dancer",
+      "id": "club:tip-dancer-broke:17"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "dollar",
+      "id": "club:tip-dancer-broke:18"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "money",
+      "id": "club:tip-dancer-broke:19"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "quarters",
+      "id": "club:tip-dancer-broke:20"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "five",
+      "id": "club:tip-dancer-broke:21"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "ten",
+      "id": "club:tip-dancer-broke:22"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "twenty",
+      "id": "club:tip-dancer-broke:23"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dollar",
+      "second": "dancer",
+      "id": "club:tip-dancer-broke-to"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "money",
+      "second": "dancer",
+      "id": "club:tip-dancer-broke-to:1"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "quarters",
+      "second": "dancer",
+      "id": "club:tip-dancer-broke-to:2"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "five",
+      "second": "dancer",
+      "id": "club:tip-dancer-broke-to:3"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "ten",
+      "second": "dancer",
+      "id": "club:tip-dancer-broke-to:4"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "twenty",
+      "second": "dancer",
+      "id": "club:tip-dancer-broke-to:5"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dollar",
+      "second": "dancer",
+      "id": "club:tip-dancer-broke-to:6"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "money",
+      "second": "dancer",
+      "id": "club:tip-dancer-broke-to:7"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "quarters",
+      "second": "dancer",
+      "id": "club:tip-dancer-broke-to:8"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "five",
+      "second": "dancer",
+      "id": "club:tip-dancer-broke-to:9"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "ten",
+      "second": "dancer",
+      "id": "club:tip-dancer-broke-to:10"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "twenty",
+      "second": "dancer",
+      "id": "club:tip-dancer-broke-to:11"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dollar",
+      "second": "dancer",
+      "id": "club:tip-dancer-broke-to:12"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "money",
+      "second": "dancer",
+      "id": "club:tip-dancer-broke-to:13"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "quarters",
+      "second": "dancer",
+      "id": "club:tip-dancer-broke-to:14"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "five",
+      "second": "dancer",
+      "id": "club:tip-dancer-broke-to:15"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "ten",
+      "second": "dancer",
+      "id": "club:tip-dancer-broke-to:16"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She glances at the empty hand and keeps dancing. \"Wallet first, honey. Then we can talk.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!has:five",
+        "!has:ten",
+        "!has:twenty",
+        "!has:quarters",
+        "!flag:tippedDancer"
+      ],
+      "noun": "twenty",
+      "second": "dancer",
+      "id": "club:tip-dancer-broke-to:17"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "id": "club:tip-dancer-hold"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "dancer",
+      "id": "club:tip-dancer-hold:1"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "dollar",
+      "id": "club:tip-dancer-hold:2"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "money",
+      "id": "club:tip-dancer-hold:3"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "quarters",
+      "id": "club:tip-dancer-hold:4"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "five",
+      "id": "club:tip-dancer-hold:5"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "ten",
+      "id": "club:tip-dancer-hold:6"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "twenty",
+      "id": "club:tip-dancer-hold:7"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "id": "club:tip-dancer-hold:8"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "dancer",
+      "id": "club:tip-dancer-hold:9"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "dollar",
+      "id": "club:tip-dancer-hold:10"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "money",
+      "id": "club:tip-dancer-hold:11"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "quarters",
+      "id": "club:tip-dancer-hold:12"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "five",
+      "id": "club:tip-dancer-hold:13"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "ten",
+      "id": "club:tip-dancer-hold:14"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "twenty",
+      "id": "club:tip-dancer-hold:15"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "id": "club:tip-dancer-hold:16"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "dancer",
+      "id": "club:tip-dancer-hold:17"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "dollar",
+      "id": "club:tip-dancer-hold:18"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "money",
+      "id": "club:tip-dancer-hold:19"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "quarters",
+      "id": "club:tip-dancer-hold:20"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "five",
+      "id": "club:tip-dancer-hold:21"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "ten",
+      "id": "club:tip-dancer-hold:22"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dancer",
+      "second": "twenty",
+      "id": "club:tip-dancer-hold:23"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dollar",
+      "second": "dancer",
+      "id": "club:tip-dancer-hold-to"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "money",
+      "second": "dancer",
+      "id": "club:tip-dancer-hold-to:1"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "quarters",
+      "second": "dancer",
+      "id": "club:tip-dancer-hold-to:2"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "five",
+      "second": "dancer",
+      "id": "club:tip-dancer-hold-to:3"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "ten",
+      "second": "dancer",
+      "id": "club:tip-dancer-hold-to:4"
+    },
+    {
+      "verb": "tip",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "twenty",
+      "second": "dancer",
+      "id": "club:tip-dancer-hold-to:5"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dollar",
+      "second": "dancer",
+      "id": "club:tip-dancer-hold-to:6"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "money",
+      "second": "dancer",
+      "id": "club:tip-dancer-hold-to:7"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "quarters",
+      "second": "dancer",
+      "id": "club:tip-dancer-hold-to:8"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "five",
+      "second": "dancer",
+      "id": "club:tip-dancer-hold-to:9"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "ten",
+      "second": "dancer",
+      "id": "club:tip-dancer-hold-to:10"
+    },
+    {
+      "verb": "give",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "twenty",
+      "second": "dancer",
+      "id": "club:tip-dancer-hold-to:11"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "dollar",
+      "second": "dancer",
+      "id": "club:tip-dancer-hold-to:12"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "money",
+      "second": "dancer",
+      "id": "club:tip-dancer-hold-to:13"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "quarters",
+      "second": "dancer",
+      "id": "club:tip-dancer-hold-to:14"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "five",
+      "second": "dancer",
+      "id": "club:tip-dancer-hold-to:15"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "ten",
+      "second": "dancer",
+      "id": "club:tip-dancer-hold-to:16"
+    },
+    {
+      "verb": "use",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She taps the bill back into his palm. \"A man like you is going to need that. A single would do.\""
+        }
+      ],
+      "req": [
+        "!has:dollar",
+        "!flag:tippedDancer"
+      ],
+      "noun": "twenty",
+      "second": "dancer",
+      "id": "club:tip-dancer-hold-to:17"
+    },
+    {
+      "verb": "get",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The hair pick is already in your pocket."
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "pick",
+      "anySecond": true,
+      "id": "club:get-pick-have"
+    },
+    {
+      "verb": "get",
+      "effects": [
+        {
+          "do": "take",
+          "id": "pick"
+        },
+        {
+          "do": "score",
+          "id": "get-pick",
+          "points": 3
+        },
+        {
+          "do": "sfx",
+          "id": "score"
+        },
+        {
+          "do": "say",
+          "text": "A black hair pick, still warm from the stage light. Charlie pockets it. Uncle John would approve."
+        }
+      ],
+      "req": [
+        "flag:tippedDancer",
+        "!has:pick"
+      ],
+      "noun": "pick",
+      "anySecond": true,
+      "id": "club:get-pick"
+    },
+    {
+      "verb": "get",
+      "effects": [
+        {
+          "do": "say",
+          "text": "You don't see a hair pick. The stage is just a stage."
+        }
+      ],
+      "req": [
+        "!flag:tippedDancer"
+      ],
+      "noun": "pick",
+      "anySecond": true,
+      "id": "club:get-pick-early"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "A black hair pick glints on the stage edge, right where she bent down."
+        }
+      ],
+      "req": [
+        "flag:tippedDancer",
+        "!has:pick"
+      ],
+      "noun": "pick",
+      "anySecond": true,
+      "id": "club:look-pick"
+    },
+    {
+      "verb": "look",
+      "effects": [
+        {
+          "do": "say",
+          "text": "A black hair pick. Uncle John would call it a Christmas present that finally paid rent."
+        }
+      ],
+      "req": [
+        "has:pick"
+      ],
+      "noun": "pick",
+      "anySecond": true,
+      "id": "club:look-pick-have"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She keeps the beat and not the conversation. The smile is professional. The exit is not."
+        }
+      ],
+      "req": [],
+      "noun": "dancer",
+      "anySecond": true,
+      "id": "club:talk-dancer"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "say",
+          "text": "She keeps the beat and not the conversation. The smile is professional. The exit is not."
+        }
+      ],
+      "req": [],
+      "noun": "stage",
+      "anySecond": true,
+      "id": "club:talk-dancer:1"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "say",
+          "text": "The bartender polishes a glass that was already polite. \"First drink's a mistake. Second's a habit. You look like a man in between.\""
+        }
+      ],
+      "req": [],
+      "noun": "sal",
+      "anySecond": true,
+      "id": "club:talk-bartender"
+    },
+    {
+      "verb": "talk",
+      "effects": [
+        {
+          "do": "say",
+          "text": "Dana isn't on the floor. If she's here, she isn't dancing."
+        }
+      ],
+      "req": [],
+      "noun": "woman",
+      "anySecond": true,
+      "id": "club:talk-woman"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "say",
+          "text": "A purple rope, tied like it means it. The stairs do not want you."
+        }
+      ],
+      "req": [],
+      "noun": "stairs",
+      "anySecond": true,
+      "id": "club:stairs-blocked"
+    },
+    {
+      "verb": "jump",
+      "effects": [
+        {
+          "do": "say",
+          "text": "A purple rope, tied like it means it. The stairs do not want you."
+        }
+      ],
+      "req": [],
+      "noun": "stairs",
+      "anySecond": true,
+      "id": "club:stairs-blocked:1"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Charlie steps back into the rain. Tank is still on the door, and the cologne still counts."
+        },
+        {
+          "do": "goto",
+          "room": "alley",
+          "spawn": "fromClub"
+        }
+      ],
+      "req": [
+        "!flag:clubChase"
+      ],
+      "noun": "out",
+      "anySecond": true,
+      "id": "club:leave-early"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Charlie steps back into the rain. Tank is still on the door, and the cologne still counts."
+        },
+        {
+          "do": "goto",
+          "room": "alley",
+          "spawn": "fromClub"
+        }
+      ],
+      "req": [
+        "!flag:clubChase"
+      ],
+      "noun": "alley",
+      "anySecond": true,
+      "id": "club:leave-early:1"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Charlie steps back into the rain. Tank is still on the door, and the cologne still counts."
+        },
+        {
+          "do": "goto",
+          "room": "alley",
+          "spawn": "fromClub"
+        }
+      ],
+      "req": [
+        "!flag:clubChase"
+      ],
+      "noun": "door",
+      "anySecond": true,
+      "id": "club:leave-early:2"
+    },
+    {
+      "verb": "go",
+      "effects": [
+        {
+          "do": "sfx",
+          "id": "door"
+        },
+        {
+          "do": "say",
+          "text": "Charlie steps back into the rain. Tank is still on the door, and the cologne still counts."
+        },
+        {
+          "do": "goto",
+          "room": "alley",
+          "spawn": "fromClub"
+        }
+      ],
+      "req": [
+        "!flag:clubChase"
+      ],
+      "noun": "exit",
+      "anySecond": true,
+      "id": "club:leave-early:3"
+    }
+  ]
+}

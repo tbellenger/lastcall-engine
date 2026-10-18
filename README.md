@@ -126,6 +126,8 @@ Download **`lastcall-advplay-linux-x86_64`** (or `LastCall-linux-x86_64.tar.gz` 
 ./advplay sample.advpak
 ```
 
-## Later
+## Charlie
 
-Phase 1 stops at the core, the packer, the sample, the browser shell, and the desktop player. Porting Charlie on top of this needs script hooks, move timers, named checkpoint restores, actor state machines, cutscene timelines, and an importer, then parity against frozen transcripts. The rules, parser, saves, priority renderer, walk tests, wasm host, and desktop player are already here, so that work is data and scripts on top of this engine rather than a new one.
+`fixtures/charlie` is Charlie: Last Call, imported from the frozen TypeScript game. `advc test fixtures/charlie` replays the golden path, the deaths, and the restores. Score 168 is the whole game. The Gatehouse sample is unchanged.
+
+`advc import-charlie <dw-root> <out-dir>` rebuilds that package. The hand-written logic lives in `tools/charlie.rhai`. What is not in this repo yet is serving the package on the existing site behind `?engine=next`.

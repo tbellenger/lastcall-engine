@@ -1,0 +1,129 @@
+{
+  "id": "billiard",
+  "name": "Billiard Room",
+  "look": "A large billiard room in Vic's lakehouse. Dark wood, a pool table, a bar cart, antlers on the wall, tall windows onto the night lake, and one door. Charlie is tied to a chair.",
+  "spawns": {
+    "default": [
+      230,
+      204
+    ],
+    "fromDeck": [
+      270,
+      208
+    ],
+    "fromHall": [
+      80,
+      204
+    ]
+  },
+  "exits": [],
+  "hotspots": [
+    {
+      "id": "door",
+      "rect": [
+        12,
+        50,
+        56,
+        138
+      ],
+      "nouns": [
+        "door"
+      ],
+      "look": "One door. It is shut. Vic used it. Charlie is not walking anywhere with his ankles tied.",
+      "stand": [
+        60,
+        200
+      ]
+    },
+    {
+      "id": "windows",
+      "rect": [
+        270,
+        30,
+        100,
+        150
+      ],
+      "nouns": [
+        "window"
+      ],
+      "look": "Tall windows onto the night lake. Trees, black water, and no skyline.",
+      "stand": [
+        310,
+        200
+      ]
+    },
+    {
+      "id": "trophy",
+      "rect": [
+        160,
+        16,
+        60,
+        40
+      ],
+      "nouns": [
+        "trophy"
+      ],
+      "look": "Antlers on a plaque. Something in these woods was slower than Vic's friends."
+    },
+    {
+      "id": "table",
+      "rect": [
+        120,
+        100,
+        140,
+        60
+      ],
+      "nouns": [
+        "table"
+      ],
+      "look": "A pool table with a green felt top. One ball has rolled close to the near edge."
+    },
+    {
+      "id": "cart",
+      "rect": [
+        300,
+        110,
+        50,
+        50
+      ],
+      "nouns": [
+        "cart"
+      ],
+      "look": "A bar cart. Bottles, glasses, and nothing Charlie can reach with his hands behind him."
+    },
+    {
+      "id": "thug",
+      "rect": [
+        80,
+        80,
+        70,
+        110
+      ],
+      "nouns": [
+        "guard",
+        "clothes"
+      ],
+      "look": "A thug leans nearby, feet planted, watching Charlie. Smoke curls off his cigarette.",
+      "stand": [
+        140,
+        200
+      ]
+    },
+    {
+      "id": "chair",
+      "rect": [
+        200,
+        120,
+        60,
+        70
+      ],
+      "nouns": [
+        "chair"
+      ],
+      "look": "A wooden chair. Charlie is tied to it, hands behind the back, ankles to the legs."
+    }
+  ],
+  "actors": [],
+  "props": [],
+  "rules": []
+}
