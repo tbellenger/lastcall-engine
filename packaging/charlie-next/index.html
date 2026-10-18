@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Charlie: Last Call</title>
+    <link rel="stylesheet" href="./player.css" />
+  </head>
+  <body class="lastcall-page">
+    <div id="player"></div>
+    <script type="module">
+      import { mountPlayer } from "./player.js";
+
+      const root = document.querySelector("#player");
+      const basePath = new URL(".", import.meta.url).href;
+      mountPlayer(root, { game: "charlie", basePath, page: true });
+    </script>
+  </body>
+</html>

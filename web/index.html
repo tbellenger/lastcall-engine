@@ -6,29 +6,8 @@
     <title>Last Call</title>
     <link rel="stylesheet" href="/src/style.css" />
   </head>
-  <body>
-    <main>
-      <div class="stage">
-        <canvas id="screen" width="384" height="216" role="img" aria-label="Game picture"></canvas>
-        <img id="title" alt="Charlie: Last Call" hidden />
-      </div>
-      <p id="live" aria-live="polite"></p>
-      <div class="bar">
-        <button type="button" data-save="1">Save 1</button>
-        <button type="button" data-load="1">Load 1</button>
-        <button type="button" data-save="2">Save 2</button>
-        <button type="button" data-load="2">Load 2</button>
-        <button type="button" data-save="3">Save 3</button>
-        <button type="button" data-load="3">Load 3</button>
-        <button type="button" data-save="4">Save 4</button>
-        <button type="button" data-load="4">Load 4</button>
-        <button type="button" data-save="5">Save 5</button>
-        <button type="button" data-load="5">Load 5</button>
-        <button type="button" id="autosave">Load autosave</button>
-        <span id="note"></span>
-      </div>
-      <input id="line" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Command line" />
-    </main>
+  <body class="lastcall-page">
+    <div id="player"></div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
