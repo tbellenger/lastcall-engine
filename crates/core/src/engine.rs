@@ -255,6 +255,29 @@ impl Engine {
         self.render();
     }
 
+    /// Place the hero at a room's default spawn, facing away, with no narration.
+    /// Used to compare a room plate against the pixel-mode reference.
+    pub fn preview_room(&mut self, room: &str) -> Result<()> {
+        self.world.cutscene = None;
+        self.world.cut_beat = 0;
+        self.world.cut_frame = 0;
+        self.world.cut_flip = 0;
+        self.world.picture.clear();
+        self.current_text = None;
+        self.input_line.clear();
+        self.queue.clear();
+        self.active = Active::Idle;
+        self.route = None;
+        self.walk_dir = None;
+        self.forced_ticks = 0;
+        self.world.actors.remove(&self.pkg.game.hero);
+        self.place(room, "default")?;
+        self.world.facing = Dir::N;
+        self.autosave_pending = false;
+        self.render();
+        Ok(())
+    }
+
     pub fn framebuffer(&self) -> &[u8] {
         &self.fb
     }
@@ -1440,6 +1463,9 @@ impl Engine {
                     continue;
                 }
             }
+            if !prop.req.is_empty() && !self.reqs_ok(&prop.req) {
+                continue;
+            }
             let dest_x = prop.pos[0];
             let dest_y = prop.pos[1];
             let foot_y = dest_y + frame.h as i32 - 1;
@@ -1453,6 +1479,7 @@ impl Engine {
                 dest_x,
                 dest_y,
                 sprite: frame.clone(),
+                occlude: None,
             });
         }
         if let Some(layer) = self.hero_layer() {
@@ -1467,13 +1494,19 @@ impl Engine {
     }
 
     fn hero_layer(&self) -> Option<Layer> {
-        let moving = self.walk_dir.is_some() || self.route.is_some() || self.forced_ticks > 0;
+        let (hidden, anim_override, _pos) = decode_pose(self.world.actors.get(&self.pkg.game.hero));
+        if hidden {
+            return None;
+        }
+        let forced = anim_override.filter(|name| name != "idle");
+        let moving = forced.is_none()
+            && (self.walk_dir.is_some() || self.route.is_some() || self.forced_ticks > 0);
         let (frame, _fps) = self.actor_frame(
             &self.pkg.game.hero,
             &self.world.costume,
             self.world.facing,
             moving,
-            None,
+            forced.as_deref(),
         )?;
         let (fx, fy) = self.hero_px();
         let room = &self.pkg.rooms[&self.world.room];
@@ -1485,6 +1518,7 @@ impl Engine {
             dest_x: fx - frame.ax,
             dest_y: fy - frame.ay,
             sprite: frame,
+            occlude: None,
         })
     }
 
@@ -1505,9 +1539,14 @@ impl Engine {
         let (frame, _) =
             self.actor_frame(&place.actor, &costume, facing, false, anim.as_deref())?;
         let pos = pos_override.unwrap_or(place.pos);
-        let priority = place.priority_override.unwrap_or_else(|| {
-            render::band_for_y(&self.pkg.rooms[&self.world.room].def.bands, pos[1])
-        });
+        let room = &self.pkg.rooms[&self.world.room];
+        let priority = place
+            .priority_override
+            .unwrap_or_else(|| render::band_for_y(&room.def.bands, pos[1]));
+        let occlude = place
+            .occlude
+            .as_ref()
+            .and_then(|name| room.occluders.get(name).cloned());
         Some(Layer {
             id: format!("actor:{}", place.id),
             priority,
@@ -1515,6 +1554,7 @@ impl Engine {
             dest_x: pos[0] - frame.ax,
             dest_y: pos[1] - frame.ay,
             sprite: frame,
+            occlude,
         })
     }
 

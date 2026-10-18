@@ -1,4 +1,5 @@
 import init, { Engine, type InitOutput } from "./wasm/lastcall_wasm.js";
+import { CharlieAudio } from "./audio";
 
 const WIDTH = 384;
 const HEIGHT = 216;
@@ -18,46 +19,34 @@ const canvas = document.querySelector<HTMLCanvasElement>("#screen");
 const live = document.querySelector<HTMLElement>("#live");
 const line = document.querySelector<HTMLInputElement>("#line");
 const note = document.querySelector<HTMLElement>("#note");
-if (!canvas || !live || !line || !note) {
+const title = document.querySelector<HTMLImageElement>("#title");
+if (!canvas || !live || !line || !note || !title) {
   throw new Error("player markup is missing");
 }
 const screen = canvas;
 const narration = live;
 const command = line;
 const status = note;
+const titleCard = title;
 const ctx = screen.getContext("2d");
 if (!ctx) {
   throw new Error("canvas is unavailable");
 }
 const context = ctx;
 
-let audio: AudioContext | null = null;
+const charlieAudio = new CharlieAudio();
+const gameName = new URLSearchParams(location.search).get("game") === "charlie" ? "charlie" : "sample";
 
 function unlock(): void {
   try {
-    if (!audio) {
-      audio = new AudioContext();
-    }
-    if (audio.state === "suspended") {
-      void audio.resume();
-    }
+    charlieAudio.unlock();
   } catch {
-    audio = null;
+    /* the browser may still be blocking audio */
   }
 }
 
-function beep(): void {
-  if (!audio) {
-    return;
-  }
-  const osc = audio.createOscillator();
-  const gain = audio.createGain();
-  osc.frequency.value = 660;
-  gain.gain.value = 0.05;
-  osc.connect(gain);
-  gain.connect(audio.destination);
-  osc.start();
-  osc.stop(audio.currentTime + 0.06);
+function hideTitle(): void {
+  titleCard.hidden = true;
 }
 
 function fit(): void {
@@ -117,9 +106,13 @@ function paint(engine: Engine, wasm: InitOutput): void {
 
 async function boot(): Promise<void> {
   const wasm = await init();
-  const response = await fetch("sample.advpak");
+  const response = await fetch(`${gameName}.advpak`);
   if (!response.ok) {
-    throw new Error("sample.advpak is missing");
+    throw new Error(`${gameName}.advpak is missing`);
+  }
+  if (gameName === "charlie") {
+    titleCard.src = "charlie-title.png";
+    titleCard.hidden = false;
   }
   return start(wasm, new Uint8Array(await response.arrayBuffer()));
 }
@@ -139,8 +132,9 @@ async function start(wasm: InitOutput, pak: Uint8Array): Promise<void> {
       if (event.type === "say") {
         narration.textContent = event.text;
       } else if (event.type === "sfx") {
-        console.log("sfx", event.id);
-        beep();
+        charlieAudio.sfx(event.id);
+      } else if (event.type === "room_changed") {
+        charlieAudio.setRoom(event.room);
       } else if (event.type === "warning") {
         status.textContent = event.message;
       } else if (event.type === "autosave") {
@@ -162,6 +156,7 @@ async function start(wasm: InitOutput, pak: Uint8Array): Promise<void> {
 
   document.addEventListener("pointerdown", (ev) => {
     unlock();
+    hideTitle();
     const target = ev.target;
     if (!(target instanceof Element)) {
       return;
@@ -182,6 +177,7 @@ async function start(wasm: InitOutput, pak: Uint8Array): Promise<void> {
 
   window.addEventListener("keydown", (ev) => {
     unlock();
+    hideTitle();
     if (ev.repeat) {
       return;
     }
@@ -227,20 +223,26 @@ async function start(wasm: InitOutput, pak: Uint8Array): Promise<void> {
     send({ type: "set_line", text: command.value });
   });
 
-  document.querySelector("#save")?.addEventListener("click", () => {
-    void idbPut("1", engine.save()).then(() => {
-      status.textContent = "Saved slot 1.";
+  document.querySelectorAll<HTMLButtonElement>("[data-save]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const slot = button.dataset.save ?? "1";
+      void idbPut(slot, engine.save()).then(() => {
+        status.textContent = `Saved slot ${slot}.`;
+      });
     });
   });
-  document.querySelector("#load")?.addEventListener("click", () => {
-    void idbGet("1").then((bytes) => {
-      if (!bytes) {
-        status.textContent = "Slot 1 is empty.";
-        return;
-      }
-      engine.restore(bytes);
-      status.textContent = "Restored slot 1.";
-      paint(engine, wasm);
+  document.querySelectorAll<HTMLButtonElement>("[data-load]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const slot = button.dataset.load ?? "1";
+      void idbGet(slot).then((bytes) => {
+        if (!bytes) {
+          status.textContent = `Slot ${slot} is empty.`;
+          return;
+        }
+        engine.restore(bytes);
+        status.textContent = `Restored slot ${slot}.`;
+        paint(engine, wasm);
+      });
     });
   });
   document.querySelector("#autosave")?.addEventListener("click", () => {

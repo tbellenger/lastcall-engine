@@ -82,7 +82,22 @@
       ]
     }
   ],
-  "actors": [],
+  "actors": [
+    {
+      "id": "dana",
+      "actor": "dana",
+      "pos": [
+        188,
+        206
+      ],
+      "facing": "s",
+      "anim": "dana_tied"
+    }
+  ],
   "props": [],
-  "rules": []
+  "rules": [],
+  "pictures": [
+    "police",
+    "dana"
+  ]
 }

@@ -1,0 +1,142 @@
+{
+  "id": "goon",
+  "costumes": {
+    "default": {
+      "sheets": [
+        {
+          "sheet": "stand_s.png",
+          "frameW": 112,
+          "frameH": 112,
+          "ax": 56,
+          "ay": 96,
+          "animations": {
+            "stand_s": {
+              "fps": 1,
+              "loop": false,
+              "frames": [
+                0
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "stand_w.png",
+          "frameW": 112,
+          "frameH": 112,
+          "ax": 56,
+          "ay": 99,
+          "animations": {
+            "stand_w": {
+              "fps": 1,
+              "loop": false,
+              "frames": [
+                0
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "stand_e.png",
+          "frameW": 112,
+          "frameH": 112,
+          "ax": 56,
+          "ay": 98,
+          "animations": {
+            "stand_e": {
+              "fps": 1,
+              "loop": false,
+              "frames": [
+                0
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "stand_n.png",
+          "frameW": 112,
+          "frameH": 112,
+          "ax": 56,
+          "ay": 96,
+          "animations": {
+            "stand_n": {
+              "fps": 1,
+              "loop": false,
+              "frames": [
+                0
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "goon_walk_east.png",
+          "frameW": 120,
+          "frameH": 120,
+          "ax": 60,
+          "ay": 102,
+          "animations": {
+            "goon_walk_east": {
+              "fps": 8,
+              "loop": true,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "goon_drop_east.png",
+          "frameW": 120,
+          "frameH": 120,
+          "ax": 60,
+          "ay": 102,
+          "animations": {
+            "goon_drop_east": {
+              "fps": 8,
+              "loop": true,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "goon_slip_west.png",
+          "frameW": 124,
+          "frameH": 124,
+          "ax": 62,
+          "ay": 105,
+          "animations": {
+            "goon_slip_west": {
+              "fps": 8,
+              "loop": true,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

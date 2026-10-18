@@ -515,6 +515,9 @@ pub struct PropDef {
     pub pos: [i32; 2],
     #[serde(default)]
     pub show_if: Option<String>,
+    /// Extra conditions. All of them must pass, along with `show_if`.
+    #[serde(default)]
+    pub req: Vec<String>,
     #[serde(default)]
     pub priority: Option<u8>,
     pub frame: FrameDef,
@@ -543,6 +546,9 @@ pub struct ActorPlace {
     pub priority_override: Option<u8>,
     #[serde(default)]
     pub states: Vec<ActorState>,
+    /// Name of a room occluder mask drawn back over this actor only.
+    #[serde(default)]
+    pub occlude: Option<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

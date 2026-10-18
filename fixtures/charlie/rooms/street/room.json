@@ -63,7 +63,17 @@
       ]
     }
   ],
-  "actors": [],
+  "actors": [
+    {
+      "id": "doorman",
+      "actor": "doorman",
+      "pos": [
+        248,
+        196
+      ],
+      "facing": "s"
+    }
+  ],
   "props": [],
   "rules": [
     {
@@ -1364,5 +1374,9 @@
       "anySecond": true,
       "id": "street:open-doors:3"
     }
+  ],
+  "pictures": [
+    "door",
+    "cosh"
   ]
 }

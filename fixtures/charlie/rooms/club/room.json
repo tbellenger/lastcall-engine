@@ -166,8 +166,58 @@
       ]
     }
   ],
-  "actors": [],
-  "props": [],
+  "actors": [
+    {
+      "id": "dancer",
+      "actor": "dancer",
+      "pos": [
+        356,
+        130
+      ],
+      "facing": "s",
+      "anim": "dancer_dance"
+    },
+    {
+      "id": "bartender",
+      "actor": "club_bartender",
+      "pos": [
+        128,
+        151
+      ],
+      "facing": "s",
+      "occlude": "counter"
+    },
+    {
+      "id": "goon",
+      "actor": "goon",
+      "pos": [
+        92,
+        194
+      ],
+      "facing": "s"
+    }
+  ],
+  "props": [
+    {
+      "id": "hairpick",
+      "pos": [
+        300,
+        128
+      ],
+      "showIf": "flag:tippedDancer",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 34,
+        "h": 14,
+        "ax": 0,
+        "ay": 0
+      },
+      "req": [
+        "!has:pick"
+      ]
+    }
+  ],
   "rules": [
     {
       "verb": "look",

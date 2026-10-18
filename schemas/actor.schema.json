@@ -10,33 +10,56 @@
     "costumes": {
       "type": "object",
       "minProperties": 1,
-      "additionalProperties": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": ["sheet", "frameW", "frameH", "ax", "ay", "animations"],
-        "properties": {
-          "sheet": { "type": "string", "minLength": 1 },
-          "frameW": { "type": "integer", "minimum": 1 },
-          "frameH": { "type": "integer", "minimum": 1 },
-          "ax": { "type": "integer", "minimum": 0 },
-          "ay": { "type": "integer", "minimum": 0 },
-          "animations": {
-            "type": "object",
-            "minProperties": 1,
-            "additionalProperties": {
-              "type": "object",
-              "additionalProperties": false,
-              "required": ["frames"],
-              "properties": {
-                "fps": { "type": "integer", "minimum": 1 },
-                "loop": { "type": "boolean" },
-                "frames": {
-                  "type": "array",
-                  "minItems": 1,
-                  "items": { "type": "integer", "minimum": 0 }
+        "additionalProperties": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "sheet": { "type": "string", "minLength": 1 },
+            "frameW": { "type": "integer", "minimum": 1 },
+            "frameH": { "type": "integer", "minimum": 1 },
+            "ax": { "type": "integer", "minimum": 0 },
+            "ay": { "type": "integer", "minimum": 0 },
+            "animations": { "$ref": "#/$defs/animations" },
+            "sheets": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["sheet", "frameW", "frameH", "ax", "ay", "animations"],
+                "properties": {
+                  "sheet": { "type": "string", "minLength": 1 },
+                  "frameW": { "type": "integer", "minimum": 1 },
+                  "frameH": { "type": "integer", "minimum": 1 },
+                  "ax": { "type": "integer", "minimum": 0 },
+                  "ay": { "type": "integer", "minimum": 0 },
+                  "animations": { "$ref": "#/$defs/animations" }
                 }
               }
             }
+          },
+          "anyOf": [
+            { "required": ["sheet", "frameW", "frameH", "ax", "ay", "animations"] },
+            { "required": ["sheets"] }
+          ]
+        }
+    }
+  },
+  "$defs": {
+    "animations": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["frames"],
+        "properties": {
+          "fps": { "type": "integer", "minimum": 1 },
+          "loop": { "type": "boolean" },
+          "frames": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "integer", "minimum": 0 }
           }
         }
       }

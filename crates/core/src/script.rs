@@ -268,6 +268,26 @@ fn register(
         });
     });
     let fx = effects.clone();
+    engine.register_fn("show_actor", move |actor: String| {
+        fx.borrow_mut().push(Effect::Pose {
+            actor,
+            anim: Some("idle".into()),
+            x: None,
+            y: None,
+            hidden: false,
+        });
+    });
+    let fx = effects.clone();
+    engine.register_fn("clear_pose", move |actor: String| {
+        fx.borrow_mut().push(Effect::Pose {
+            actor,
+            anim: None,
+            x: None,
+            y: None,
+            hidden: false,
+        });
+    });
+    let fx = effects.clone();
     engine.register_fn("play_cutscene", move |id: String| {
         fx.borrow_mut().push(Effect::Cutscene { id });
     });

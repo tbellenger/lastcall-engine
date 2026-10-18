@@ -1,0 +1,149 @@
+{
+  "id": "thug",
+  "costumes": {
+    "default": {
+      "sheets": [
+        {
+          "sheet": "stand_s.png",
+          "frameW": 112,
+          "frameH": 112,
+          "ax": 56,
+          "ay": 98,
+          "animations": {
+            "stand_s": {
+              "fps": 1,
+              "loop": false,
+              "frames": [
+                0
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "stand_w.png",
+          "frameW": 112,
+          "frameH": 112,
+          "ax": 56,
+          "ay": 99,
+          "animations": {
+            "stand_w": {
+              "fps": 1,
+              "loop": false,
+              "frames": [
+                0
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "stand_e.png",
+          "frameW": 112,
+          "frameH": 112,
+          "ax": 56,
+          "ay": 99,
+          "animations": {
+            "stand_e": {
+              "fps": 1,
+              "loop": false,
+              "frames": [
+                0
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "stand_n.png",
+          "frameW": 112,
+          "frameH": 112,
+          "ax": 56,
+          "ay": 98,
+          "animations": {
+            "stand_n": {
+              "fps": 1,
+              "loop": false,
+              "frames": [
+                0
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "thug_ko.png",
+          "frameW": 124,
+          "frameH": 124,
+          "ax": 62,
+          "ay": 104,
+          "animations": {
+            "thug_ko": {
+              "fps": 1,
+              "loop": false,
+              "frames": [
+                7
+              ]
+            },
+            "thug_ko_fall": {
+              "fps": 8,
+              "loop": false,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "thug_walk_east.png",
+          "frameW": 124,
+          "frameH": 124,
+          "ax": 62,
+          "ay": 105,
+          "animations": {
+            "thug_walk_east": {
+              "fps": 8,
+              "loop": true,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "thug_drag_east.png",
+          "frameW": 124,
+          "frameH": 124,
+          "ax": 62,
+          "ay": 105,
+          "animations": {
+            "thug_drag_east": {
+              "fps": 8,
+              "loop": true,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

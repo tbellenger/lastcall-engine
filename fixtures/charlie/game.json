@@ -14,7 +14,15 @@
   "scoreMax": 168,
   "rngSeed": 1,
   "reach": 42,
-  "intro": [],
+  "intro": [
+    "New York City. 9:47 PM. The day was sweltering, and a storm is rolling in. That explains the sweat.",
+    "Charlie has just finished eleven hours at Pemberton & Gaunt. The air conditioning died at 10 AM. His boss's patience died at 10:05.",
+    "His grey suit, crisp this morning, now has the texture of a damp dishrag. His blue eyes are bloodshot. His blond hair has given up.",
+    "He has a wallet full of bills, no coins, and one goal: something cold, in a glass, right now.",
+    "A flickering neon sign reads THE RUSTY NAIL. The N is out. Charlie doesn't care.",
+    "Thunder rolls a long way off. Rain ticks the bar windows.",
+    "You are now in control of Charlie. Good luck. You'll need a shower."
+  ],
   "carrying": [
     "twenty",
     "dollar",

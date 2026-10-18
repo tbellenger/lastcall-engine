@@ -289,6 +289,7 @@ fn parts(format_version: &str) -> PackageParts {
             },
             props: None,
             pictures: BTreeMap::new(),
+            occluders: BTreeMap::new(),
         }],
         actors: vec![ActorPart {
             def: ActorDef {

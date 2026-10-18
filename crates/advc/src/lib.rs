@@ -64,11 +64,99 @@ pub fn test_dir(dir: &Path, update_snapshots: bool) -> Result<()> {
             failures.push(err.to_string());
         }
     }
+    if let Err(err) = check_pixel_look(&bytes, dir) {
+        failures.push(err.to_string());
+    }
     if failures.is_empty() {
         Ok(())
     } else {
         Err(Error::msg(failures.join("\n")))
     }
+}
+
+fn check_pixel_look(bytes: &[u8], dir: &Path) -> Result<()> {
+    let pixel = dir.join("tests").join("pixel");
+    if !pixel.is_dir() {
+        return Ok(());
+    }
+    let mut failures = Vec::new();
+    let mut names = Vec::new();
+    for entry in fs::read_dir(&pixel)? {
+        let path = entry?.path();
+        if path.extension().and_then(|ext| ext.to_str()) == Some("png") {
+            if let Some(name) = path.file_stem().and_then(|stem| stem.to_str()) {
+                names.push((name.to_string(), path));
+            }
+        }
+    }
+    names.sort();
+    let mut engine = Engine::load(bytes).map_err(|err| Error::msg(err.to_string()))?;
+    for (room, path) in names {
+        if let Err(err) = engine.preview_room(&room) {
+            failures.push(format!("{room}: {err}"));
+            continue;
+        }
+        let fb = engine.framebuffer();
+        if let Err(err) = write_engine_shot(&room, fb) {
+            failures.push(format!("{room} shot: {err}"));
+        }
+        let previous = fs::read(&path)?;
+        let decoded = imageutil::decode_png(&previous)
+            .map_err(|err| Error::msg(err.to_string()))?
+            .into_rgba();
+        if decoded.w != SCREEN_W || decoded.h != SCREEN_H {
+            failures.push(format!("{room}: reference is not {SCREEN_W}x{SCREEN_H}"));
+            continue;
+        }
+        let top = render::BAR_H;
+        let bottom = SCREEN_H as i32 - render::BAR_H;
+        let mut off = 0usize;
+        let mut total = 0usize;
+        for y in top..bottom {
+            for x in 0..SCREEN_W as i32 {
+                let i = ((y * SCREEN_W as i32 + x) * 4) as usize;
+                let d = (fb[i] as i16 - decoded.rgba[i] as i16).unsigned_abs() as u16
+                    + (fb[i + 1] as i16 - decoded.rgba[i + 1] as i16).unsigned_abs() as u16
+                    + (fb[i + 2] as i16 - decoded.rgba[i + 2] as i16).unsigned_abs() as u16;
+                if d > 24 {
+                    off += 1;
+                }
+                total += 1;
+            }
+        }
+        if total > 0 && off * 100 / total > 2 {
+            let actual = pixel.join("_actual");
+            let _ = fs::create_dir_all(&actual);
+            let image = RgbaImage {
+                w: SCREEN_W,
+                h: SCREEN_H,
+                rgba: fb.to_vec(),
+            };
+            if let Ok(encoded) = imageutil::encode_rgba(&image) {
+                let _ = fs::write(actual.join(format!("{room}.png")), encoded);
+            }
+            failures.push(format!(
+                "{room}: {off} of {total} playfield pixels differ from the pixel reference"
+            ));
+        }
+    }
+    if failures.is_empty() {
+        Ok(())
+    } else {
+        Err(Error::msg(failures.join("\n")))
+    }
+}
+
+fn write_engine_shot(room: &str, rgba: &[u8]) -> std::result::Result<(), String> {
+    let dir = PathBuf::from("/tmp/charlie-shots");
+    fs::create_dir_all(&dir).map_err(|err| err.to_string())?;
+    let image = RgbaImage {
+        w: SCREEN_W,
+        h: SCREEN_H,
+        rgba: rgba.to_vec(),
+    };
+    let encoded = imageutil::encode_rgba(&image).map_err(|err| err.to_string())?;
+    fs::write(dir.join(format!("{room}.png")), encoded).map_err(|err| err.to_string())
 }
 
 fn run_parity(bytes: &[u8], dir: &Path, game_dir: &Path, update: bool) -> Result<()> {
@@ -542,6 +630,7 @@ fn compile_room(
     }
     check_mask_points(&source.id, &mask, &source, &on_enter, &rules)?;
     let variant_images = load_variants(folder, &source.id, &source.pictures)?;
+    let occluders = load_occluders(folder, &source.id, &source.actors)?;
 
     Ok(RoomPart {
         def: RoomDef {
@@ -572,7 +661,34 @@ fn compile_room(
         },
         props,
         pictures: variant_images,
+        occluders,
     })
+}
+
+fn load_occluders(
+    folder: &Path,
+    room_id: &str,
+    actors: &[lastcall_core::model::ActorPlace],
+) -> Result<BTreeMap<String, lastcall_core::imageutil::GrayImage>> {
+    let mut occluders = BTreeMap::new();
+    for place in actors {
+        let Some(name) = &place.occlude else {
+            continue;
+        };
+        if occluders.contains_key(name) {
+            continue;
+        }
+        let path = folder.join(format!("occlude-{name}.png"));
+        let image = load_gray(&path)
+            .map_err(|err| Error::msg(format!("room {room_id} occluder {name}: {err}")))?;
+        if image.w != SCREEN_W || image.h != SCREEN_H {
+            return Err(Error::msg(format!(
+                "room {room_id} occluder {name} is not {SCREEN_W}x{SCREEN_H}"
+            )));
+        }
+        occluders.insert(name.clone(), image);
+    }
+    Ok(occluders)
 }
 
 fn extra_effects(parts: &PackageParts) -> Vec<Effect> {
@@ -762,7 +878,7 @@ fn check_mask_points(
 
 fn compile_actor(folder: &Path, source: SourceActor) -> Result<ActorPart> {
     let mut costumes = BTreeMap::new();
-    let mut cache: BTreeMap<(String, u32), FrameDef> = BTreeMap::new();
+    let mut cache: BTreeMap<String, FrameDef> = BTreeMap::new();
     let mut blits: Vec<Blit> = Vec::new();
     let mut x = 0u32;
     let mut y = 0u32;
@@ -772,80 +888,98 @@ fn compile_actor(folder: &Path, source: SourceActor) -> Result<ActorPart> {
     const MAX_W: u32 = 1024;
 
     for (costume_id, costume) in &source.costumes {
-        let sheet = load_rgba(&folder.join(&costume.sheet))?;
-        if costume.frame_w == 0
-            || costume.frame_h == 0
-            || sheet.h != costume.frame_h
-            || sheet.w % costume.frame_w != 0
-        {
+        let strips = costume_strips(costume);
+        if strips.is_empty() || strips.iter().any(|strip| strip.sheet.is_empty()) {
             return Err(Error::msg(format!(
-                "actor {} costume {costume_id} sheet must be a horizontal strip of {}x{} frames",
-                source.id, costume.frame_w, costume.frame_h
-            )));
-        }
-        if costume.ax < 0
-            || costume.ay < 0
-            || costume.ax >= costume.frame_w as i32
-            || costume.ay >= costume.frame_h as i32
-        {
-            return Err(Error::msg(format!(
-                "actor {} costume {costume_id} anchor is outside the frame",
+                "actor {} costume {costume_id} has no sheet",
                 source.id
             )));
         }
-        let count = sheet.w / costume.frame_w;
         let mut animations = BTreeMap::new();
-        for (anim_id, anim) in &costume.animations {
-            let mut frames = Vec::new();
-            for index in &anim.frames {
-                if *index >= count {
+        for strip in &strips {
+            let sheet = load_rgba(&folder.join(&strip.sheet))?;
+            if strip.frame_w == 0
+                || strip.frame_h == 0
+                || sheet.h != strip.frame_h
+                || sheet.w % strip.frame_w != 0
+            {
+                return Err(Error::msg(format!(
+                    "actor {} costume {costume_id} sheet {} must be a horizontal strip of {}x{} frames",
+                    source.id, strip.sheet, strip.frame_w, strip.frame_h
+                )));
+            }
+            if strip.ax < 0
+                || strip.ay < 0
+                || strip.ax >= strip.frame_w as i32
+                || strip.ay >= strip.frame_h as i32
+            {
+                return Err(Error::msg(format!(
+                    "actor {} costume {costume_id} anchor is outside {}",
+                    source.id, strip.sheet
+                )));
+            }
+            let count = sheet.w / strip.frame_w;
+            for (anim_id, anim) in &strip.animations {
+                if animations.contains_key(anim_id) {
                     return Err(Error::msg(format!(
-                        "actor {} animation {anim_id} frame {index} is outside the sheet",
+                        "actor {} costume {costume_id} animation {anim_id} is listed twice",
                         source.id
                     )));
                 }
-                let key = (costume_id.clone(), *index);
-                let frame = if let Some(existing) = cache.get(&key) {
-                    existing.clone()
-                } else {
-                    if x + costume.frame_w > MAX_W {
-                        x = 0;
-                        y += row_h;
-                        row_h = 0;
+                let mut frames = Vec::new();
+                for index in &anim.frames {
+                    if *index >= count {
+                        return Err(Error::msg(format!(
+                            "actor {} animation {anim_id} frame {index} is outside the sheet",
+                            source.id
+                        )));
                     }
-                    let frame = FrameDef {
-                        x,
-                        y,
-                        w: costume.frame_w,
-                        h: costume.frame_h,
-                        ax: costume.ax,
-                        ay: costume.ay,
+                    let key = format!(
+                        "{costume_id}|{}|{index}|{}|{}|{}|{}",
+                        strip.sheet, strip.frame_w, strip.frame_h, strip.ax, strip.ay
+                    );
+                    let frame = if let Some(existing) = cache.get(&key) {
+                        existing.clone()
+                    } else {
+                        if x + strip.frame_w > MAX_W {
+                            x = 0;
+                            y += row_h;
+                            row_h = 0;
+                        }
+                        let frame = FrameDef {
+                            x,
+                            y,
+                            w: strip.frame_w,
+                            h: strip.frame_h,
+                            ax: strip.ax,
+                            ay: strip.ay,
+                        };
+                        blits.push(Blit {
+                            sheet: sheet.clone(),
+                            sx: index * strip.frame_w,
+                            dx: x,
+                            dy: y,
+                            w: strip.frame_w,
+                            h: strip.frame_h,
+                        });
+                        x += strip.frame_w;
+                        row_h = row_h.max(strip.frame_h);
+                        used_w = used_w.max(x);
+                        used_h = used_h.max(y + row_h);
+                        cache.insert(key, frame.clone());
+                        frame
                     };
-                    blits.push(Blit {
-                        sheet: sheet.clone(),
-                        sx: index * costume.frame_w,
-                        dx: x,
-                        dy: y,
-                        w: costume.frame_w,
-                        h: costume.frame_h,
-                    });
-                    x += costume.frame_w;
-                    row_h = row_h.max(costume.frame_h);
-                    used_w = used_w.max(x);
-                    used_h = used_h.max(y + row_h);
-                    cache.insert(key, frame.clone());
-                    frame
-                };
-                frames.push(frame);
+                    frames.push(frame);
+                }
+                animations.insert(
+                    anim_id.clone(),
+                    Animation {
+                        fps: anim.fps.max(1),
+                        looped: anim.looped,
+                        frames,
+                    },
+                );
             }
-            animations.insert(
-                anim_id.clone(),
-                Animation {
-                    fps: anim.fps.max(1),
-                    looped: anim.looped,
-                    frames,
-                },
-            );
         }
         costumes.insert(costume_id.clone(), Costume { animations });
     }
@@ -1728,6 +1862,39 @@ struct SourceActor {
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 struct SourceCostume {
+    #[serde(default)]
+    sheet: String,
+    #[serde(default)]
+    frame_w: u32,
+    #[serde(default)]
+    frame_h: u32,
+    #[serde(default)]
+    ax: i32,
+    #[serde(default)]
+    ay: i32,
+    #[serde(default)]
+    animations: BTreeMap<String, SourceAnim>,
+    #[serde(default)]
+    sheets: Vec<SourceStrip>,
+}
+
+fn costume_strips(costume: &SourceCostume) -> Vec<SourceStrip> {
+    if !costume.sheets.is_empty() {
+        return costume.sheets.clone();
+    }
+    vec![SourceStrip {
+        sheet: costume.sheet.clone(),
+        frame_w: costume.frame_w,
+        frame_h: costume.frame_h,
+        ax: costume.ax,
+        ay: costume.ay,
+        animations: costume.animations.clone(),
+    }]
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct SourceStrip {
     sheet: String,
     frame_w: u32,
     frame_h: u32,
@@ -1736,7 +1903,7 @@ struct SourceCostume {
     animations: BTreeMap<String, SourceAnim>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Clone, Deserialize)]
 struct SourceAnim {
     #[serde(default = "default_fps")]
     fps: u32,

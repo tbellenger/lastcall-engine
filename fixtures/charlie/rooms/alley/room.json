@@ -241,8 +241,64 @@
       ]
     }
   ],
-  "actors": [],
-  "props": [],
+  "actors": [
+    {
+      "id": "professor",
+      "actor": "professor",
+      "pos": [
+        62,
+        204
+      ],
+      "facing": "s",
+      "anim": "seated"
+    },
+    {
+      "id": "tank",
+      "actor": "tank",
+      "pos": [
+        128,
+        196
+      ],
+      "facing": "s"
+    }
+  ],
+  "props": [
+    {
+      "id": "umbrella",
+      "pos": [
+        208,
+        150
+      ],
+      "showIf": "!has:umbrella",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 14,
+        "h": 34,
+        "ax": 0,
+        "ay": 0
+      }
+    },
+    {
+      "id": "matchbook",
+      "pos": [
+        147,
+        193
+      ],
+      "showIf": "flag:matchbookHere",
+      "frame": {
+        "x": 14,
+        "y": 0,
+        "w": 6,
+        "h": 4,
+        "ax": 0,
+        "ay": 0
+      },
+      "req": [
+        "!has:matchbook"
+      ]
+    }
+  ],
   "rules": [
     {
       "verb": "look",
@@ -4781,7 +4837,7 @@
       "effects": [
         {
           "do": "say",
-          "text": "The matchbook is in your pocket, damp and useful. THE PURPLE RHINO — ASK FOR VIC. The puddle kept the ink mostly honest."
+          "text": "The matchbook is in your pocket, damp and useful. THE PURPLE RHINO \u2014 ASK FOR VIC. The puddle kept the ink mostly honest."
         }
       ],
       "req": [
@@ -4811,7 +4867,7 @@
       "effects": [
         {
           "do": "say",
-          "text": "A soggy matchbook sits in a puddle by the Purple Rhino door. THE PURPLE RHINO — ASK FOR VIC. The rain is winning, but the name is still there."
+          "text": "A soggy matchbook sits in a puddle by the Purple Rhino door. THE PURPLE RHINO \u2014 ASK FOR VIC. The rain is winning, but the name is still there."
         }
       ],
       "req": [
@@ -4827,7 +4883,7 @@
       "effects": [
         {
           "do": "say",
-          "text": "Rain in a dent by the Purple Rhino door. A soggy matchbook sits in it. THE PURPLE RHINO — ASK FOR VIC."
+          "text": "Rain in a dent by the Purple Rhino door. A soggy matchbook sits in it. THE PURPLE RHINO \u2014 ASK FOR VIC."
         }
       ],
       "req": [
@@ -4886,7 +4942,7 @@
         },
         {
           "do": "say",
-          "text": "A matchbook lies where a goon dropped it. THE PURPLE RHINO — ASK FOR VIC. You pocket it."
+          "text": "A matchbook lies where a goon dropped it. THE PURPLE RHINO \u2014 ASK FOR VIC. You pocket it."
         }
       ],
       "req": [
@@ -5004,7 +5060,7 @@
         },
         {
           "do": "say",
-          "text": "He palms the five like a magician. \"NY plate — KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
+          "text": "He palms the five like a magician. \"NY plate \u2014 KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
         }
       ],
       "req": [
@@ -5054,7 +5110,7 @@
         },
         {
           "do": "say",
-          "text": "He palms the five like a magician. \"NY plate — KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
+          "text": "He palms the five like a magician. \"NY plate \u2014 KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
         }
       ],
       "req": [
@@ -5105,7 +5161,7 @@
         },
         {
           "do": "say",
-          "text": "He palms the five like a magician. \"NY plate — KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
+          "text": "He palms the five like a magician. \"NY plate \u2014 KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
         }
       ],
       "req": [
@@ -5155,7 +5211,7 @@
         },
         {
           "do": "say",
-          "text": "He palms the five like a magician. \"NY plate — KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
+          "text": "He palms the five like a magician. \"NY plate \u2014 KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
         }
       ],
       "req": [
@@ -5206,7 +5262,7 @@
         },
         {
           "do": "say",
-          "text": "He palms the five like a magician. \"NY plate — KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
+          "text": "He palms the five like a magician. \"NY plate \u2014 KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
         }
       ],
       "req": [
@@ -5256,7 +5312,7 @@
         },
         {
           "do": "say",
-          "text": "He palms the five like a magician. \"NY plate — KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
+          "text": "He palms the five like a magician. \"NY plate \u2014 KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
         }
       ],
       "req": [
@@ -5307,7 +5363,7 @@
         },
         {
           "do": "say",
-          "text": "He palms the five like a magician. \"NY plate — KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
+          "text": "He palms the five like a magician. \"NY plate \u2014 KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
         }
       ],
       "req": [
@@ -5357,7 +5413,7 @@
         },
         {
           "do": "say",
-          "text": "He palms the five like a magician. \"NY plate — KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
+          "text": "He palms the five like a magician. \"NY plate \u2014 KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
         }
       ],
       "req": [
@@ -5408,7 +5464,7 @@
         },
         {
           "do": "say",
-          "text": "He palms the five like a magician. \"NY plate — KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
+          "text": "He palms the five like a magician. \"NY plate \u2014 KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
         }
       ],
       "req": [
@@ -5458,7 +5514,7 @@
         },
         {
           "do": "say",
-          "text": "He palms the five like a magician. \"NY plate — KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
+          "text": "He palms the five like a magician. \"NY plate \u2014 KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
         }
       ],
       "req": [
@@ -5509,7 +5565,7 @@
         },
         {
           "do": "say",
-          "text": "He palms the five like a magician. \"NY plate — KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
+          "text": "He palms the five like a magician. \"NY plate \u2014 KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
         }
       ],
       "req": [
@@ -5559,7 +5615,7 @@
         },
         {
           "do": "say",
-          "text": "He palms the five like a magician. \"NY plate — KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
+          "text": "He palms the five like a magician. \"NY plate \u2014 KTL-4471. Thought somebody'd want it.\" A folded note changes hands."
         }
       ],
       "req": [
@@ -5614,7 +5670,7 @@
         },
         {
           "do": "say",
-          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate — KTL-4471. Thought somebody'd want it.\""
+          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate \u2014 KTL-4471. Thought somebody'd want it.\""
         }
       ],
       "req": [
@@ -5669,7 +5725,7 @@
         },
         {
           "do": "say",
-          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate — KTL-4471. Thought somebody'd want it.\""
+          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate \u2014 KTL-4471. Thought somebody'd want it.\""
         }
       ],
       "req": [
@@ -5725,7 +5781,7 @@
         },
         {
           "do": "say",
-          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate — KTL-4471. Thought somebody'd want it.\""
+          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate \u2014 KTL-4471. Thought somebody'd want it.\""
         }
       ],
       "req": [
@@ -5780,7 +5836,7 @@
         },
         {
           "do": "say",
-          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate — KTL-4471. Thought somebody'd want it.\""
+          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate \u2014 KTL-4471. Thought somebody'd want it.\""
         }
       ],
       "req": [
@@ -5836,7 +5892,7 @@
         },
         {
           "do": "say",
-          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate — KTL-4471. Thought somebody'd want it.\""
+          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate \u2014 KTL-4471. Thought somebody'd want it.\""
         }
       ],
       "req": [
@@ -5891,7 +5947,7 @@
         },
         {
           "do": "say",
-          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate — KTL-4471. Thought somebody'd want it.\""
+          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate \u2014 KTL-4471. Thought somebody'd want it.\""
         }
       ],
       "req": [
@@ -5947,7 +6003,7 @@
         },
         {
           "do": "say",
-          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate — KTL-4471. Thought somebody'd want it.\""
+          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate \u2014 KTL-4471. Thought somebody'd want it.\""
         }
       ],
       "req": [
@@ -6002,7 +6058,7 @@
         },
         {
           "do": "say",
-          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate — KTL-4471. Thought somebody'd want it.\""
+          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate \u2014 KTL-4471. Thought somebody'd want it.\""
         }
       ],
       "req": [
@@ -6058,7 +6114,7 @@
         },
         {
           "do": "say",
-          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate — KTL-4471. Thought somebody'd want it.\""
+          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate \u2014 KTL-4471. Thought somebody'd want it.\""
         }
       ],
       "req": [
@@ -6113,7 +6169,7 @@
         },
         {
           "do": "say",
-          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate — KTL-4471. Thought somebody'd want it.\""
+          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate \u2014 KTL-4471. Thought somebody'd want it.\""
         }
       ],
       "req": [
@@ -6169,7 +6225,7 @@
         },
         {
           "do": "say",
-          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate — KTL-4471. Thought somebody'd want it.\""
+          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate \u2014 KTL-4471. Thought somebody'd want it.\""
         }
       ],
       "req": [
@@ -6224,7 +6280,7 @@
         },
         {
           "do": "say",
-          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate — KTL-4471. Thought somebody'd want it.\""
+          "text": "He takes a five out of the ten and presses the rest back with a folded note. \"NY plate \u2014 KTL-4471. Thought somebody'd want it.\""
         }
       ],
       "req": [

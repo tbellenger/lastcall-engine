@@ -222,14 +222,36 @@
       "nouns": [
         "jar"
       ],
-      "look": "An empty pickle jar labelled TIPS — KARMA IS REAL.",
+      "look": "An empty pickle jar labelled TIPS \u2014 KARMA IS REAL.",
       "stand": [
         200,
         188
       ]
     }
   ],
-  "actors": [],
+  "actors": [
+    {
+      "id": "sal",
+      "actor": "sal",
+      "pos": [
+        78,
+        168
+      ],
+      "facing": "s",
+      "anim": "wipe",
+      "occlude": "counter"
+    },
+    {
+      "id": "earl",
+      "actor": "earl",
+      "pos": [
+        168,
+        203
+      ],
+      "facing": "s",
+      "anim": "seated_idle"
+    }
+  ],
   "props": [],
   "rules": [
     {
@@ -4002,7 +4024,7 @@
       "effects": [
         {
           "do": "say",
-          "text": "A1 Warm Asphalt. A2 Pickle Jar Blues. A3 Neon Debt. A4 Quarterless. B1 Sweat Equity. B2 Gents Sign. B3 Anchor Tattoo. B4 Dishrag Waltz. B5 Karma Jar. B6 August Ninth. B7 Brooklyn Moon — The Vespers. B8 Last Call. C1 Subway July. C2 Rhino Rope. C3 Tyre Iron. C4 Humid City. D1 Restraining Order. D2 Crisp This Morning. D3 Bloodshot. D4 The N Is Out. All of them original. One of them matters."
+          "text": "A1 Warm Asphalt. A2 Pickle Jar Blues. A3 Neon Debt. A4 Quarterless. B1 Sweat Equity. B2 Gents Sign. B3 Anchor Tattoo. B4 Dishrag Waltz. B5 Karma Jar. B6 August Ninth. B7 Brooklyn Moon \u2014 The Vespers. B8 Last Call. C1 Subway July. C2 Rhino Rope. C3 Tyre Iron. C4 Humid City. D1 Restraining Order. D2 Crisp This Morning. D3 Bloodshot. D4 The N Is Out. All of them original. One of them matters."
         }
       ],
       "req": [],

@@ -2,126 +2,485 @@
   "id": "charlie",
   "costumes": {
     "default": {
-      "sheet": "sheet.png",
-      "frameW": 16,
-      "frameH": 24,
-      "ax": 8,
-      "ay": 23,
-      "animations": {
-        "stand_s": {
-          "fps": 1,
-          "frames": [
-            0
-          ]
+      "sheets": [
+        {
+          "sheet": "stand_s.png",
+          "frameW": 146,
+          "frameH": 146,
+          "ax": 73,
+          "ay": 134,
+          "animations": {
+            "stand_s": {
+              "fps": 1,
+              "loop": false,
+              "frames": [
+                0
+              ]
+            }
+          }
         },
-        "walk_s": {
-          "fps": 8,
-          "frames": [
-            1,
-            2
-          ]
+        {
+          "sheet": "stand_w.png",
+          "frameW": 146,
+          "frameH": 146,
+          "ax": 73,
+          "ay": 138,
+          "animations": {
+            "stand_w": {
+              "fps": 1,
+              "loop": false,
+              "frames": [
+                0
+              ]
+            }
+          }
         },
-        "stand_n": {
-          "fps": 1,
-          "frames": [
-            3
-          ]
+        {
+          "sheet": "stand_e.png",
+          "frameW": 146,
+          "frameH": 146,
+          "ax": 73,
+          "ay": 138,
+          "animations": {
+            "stand_e": {
+              "fps": 1,
+              "loop": false,
+              "frames": [
+                0
+              ]
+            }
+          }
         },
-        "walk_n": {
-          "fps": 8,
-          "frames": [
-            4,
-            5
-          ]
+        {
+          "sheet": "stand_n.png",
+          "frameW": 146,
+          "frameH": 146,
+          "ax": 73,
+          "ay": 135,
+          "animations": {
+            "stand_n": {
+              "fps": 1,
+              "loop": false,
+              "frames": [
+                0
+              ]
+            }
+          }
         },
-        "stand_e": {
-          "fps": 1,
-          "frames": [
-            6
-          ]
+        {
+          "sheet": "walk_w.png",
+          "frameW": 146,
+          "frameH": 146,
+          "ax": 73,
+          "ay": 138,
+          "animations": {
+            "walk_w": {
+              "fps": 8,
+              "loop": true,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            }
+          }
         },
-        "walk_e": {
-          "fps": 8,
-          "frames": [
-            7,
-            8
-          ]
+        {
+          "sheet": "walk_e.png",
+          "frameW": 146,
+          "frameH": 146,
+          "ax": 73,
+          "ay": 139,
+          "animations": {
+            "walk_e": {
+              "fps": 8,
+              "loop": true,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            }
+          }
         },
-        "stand_w": {
-          "fps": 1,
-          "frames": [
-            9
-          ]
+        {
+          "sheet": "walk_n.png",
+          "frameW": 146,
+          "frameH": 146,
+          "ax": 73,
+          "ay": 138,
+          "animations": {
+            "walk_n": {
+              "fps": 8,
+              "loop": true,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            }
+          }
         },
-        "walk_w": {
-          "fps": 8,
-          "frames": [
-            10,
-            11
-          ]
+        {
+          "sheet": "walk_s.png",
+          "frameW": 172,
+          "frameH": 172,
+          "ax": 86,
+          "ay": 144,
+          "animations": {
+            "walk_s": {
+              "fps": 8,
+              "loop": true,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "charlie_run_west.png",
+          "frameW": 182,
+          "frameH": 182,
+          "ax": 91,
+          "ay": 156,
+          "animations": {
+            "charlie_run_west": {
+              "fps": 8,
+              "loop": true,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "charlie_crouch_east.png",
+          "frameW": 182,
+          "frameH": 182,
+          "ax": 91,
+          "ay": 156,
+          "animations": {
+            "charlie_crouch_east": {
+              "fps": 8,
+              "loop": true,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "charlie_ladder.png",
+          "frameW": 177,
+          "frameH": 177,
+          "ax": 88,
+          "ay": 151,
+          "animations": {
+            "charlie_ladder": {
+              "fps": 8,
+              "loop": true,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "charlie_collapse.png",
+          "frameW": 182,
+          "frameH": 182,
+          "ax": 91,
+          "ay": 156,
+          "animations": {
+            "charlie_collapse": {
+              "fps": 8,
+              "loop": true,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "charlie_tied.png",
+          "frameW": 172,
+          "frameH": 172,
+          "ax": 86,
+          "ay": 147,
+          "animations": {
+            "charlie_tied": {
+              "fps": 8,
+              "loop": true,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "charlie_dragged_east.png",
+          "frameW": 182,
+          "frameH": 182,
+          "ax": 91,
+          "ay": 156,
+          "animations": {
+            "charlie_dragged_east": {
+              "fps": 8,
+              "loop": true,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            }
+          }
+        },
+        {
+          "sheet": "bar_sit_east.png",
+          "frameW": 182,
+          "frameH": 182,
+          "ax": 91,
+          "ay": 156,
+          "animations": {
+            "bar_sit_east": {
+              "fps": 8,
+              "loop": true,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            }
+          }
         }
-      }
+      ]
     },
     "dry": {
-      "sheet": "sheet-dry.png",
-      "frameW": 16,
-      "frameH": 24,
-      "ax": 8,
-      "ay": 23,
-      "animations": {
-        "stand_s": {
-          "fps": 1,
-          "frames": [
-            0
-          ]
+      "sheets": [
+        {
+          "sheet": "dry_stand_s.png",
+          "frameW": 146,
+          "frameH": 146,
+          "ax": 73,
+          "ay": 134,
+          "animations": {
+            "stand_s": {
+              "fps": 1,
+              "loop": false,
+              "frames": [
+                0
+              ]
+            }
+          }
         },
-        "walk_s": {
-          "fps": 8,
-          "frames": [
-            1,
-            2
-          ]
+        {
+          "sheet": "dry_stand_w.png",
+          "frameW": 146,
+          "frameH": 146,
+          "ax": 73,
+          "ay": 138,
+          "animations": {
+            "stand_w": {
+              "fps": 1,
+              "loop": false,
+              "frames": [
+                0
+              ]
+            }
+          }
         },
-        "stand_n": {
-          "fps": 1,
-          "frames": [
-            3
-          ]
+        {
+          "sheet": "dry_stand_e.png",
+          "frameW": 146,
+          "frameH": 146,
+          "ax": 73,
+          "ay": 138,
+          "animations": {
+            "stand_e": {
+              "fps": 1,
+              "loop": false,
+              "frames": [
+                0
+              ]
+            }
+          }
         },
-        "walk_n": {
-          "fps": 8,
-          "frames": [
-            4,
-            5
-          ]
+        {
+          "sheet": "dry_stand_n.png",
+          "frameW": 146,
+          "frameH": 146,
+          "ax": 73,
+          "ay": 135,
+          "animations": {
+            "stand_n": {
+              "fps": 1,
+              "loop": false,
+              "frames": [
+                0
+              ]
+            }
+          }
         },
-        "stand_e": {
-          "fps": 1,
-          "frames": [
-            6
-          ]
+        {
+          "sheet": "dry_walk_w.png",
+          "frameW": 146,
+          "frameH": 146,
+          "ax": 73,
+          "ay": 138,
+          "animations": {
+            "walk_w": {
+              "fps": 8,
+              "loop": true,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            }
+          }
         },
-        "walk_e": {
-          "fps": 8,
-          "frames": [
-            7,
-            8
-          ]
+        {
+          "sheet": "dry_walk_e.png",
+          "frameW": 146,
+          "frameH": 146,
+          "ax": 73,
+          "ay": 139,
+          "animations": {
+            "walk_e": {
+              "fps": 8,
+              "loop": true,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            }
+          }
         },
-        "stand_w": {
-          "fps": 1,
-          "frames": [
-            9
-          ]
+        {
+          "sheet": "dry_walk_n.png",
+          "frameW": 146,
+          "frameH": 146,
+          "ax": 73,
+          "ay": 138,
+          "animations": {
+            "walk_n": {
+              "fps": 8,
+              "loop": true,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            }
+          }
         },
-        "walk_w": {
-          "fps": 8,
-          "frames": [
-            10,
-            11
-          ]
+        {
+          "sheet": "dry_walk_s.png",
+          "frameW": 172,
+          "frameH": 172,
+          "ax": 86,
+          "ay": 144,
+          "animations": {
+            "walk_s": {
+              "fps": 8,
+              "loop": true,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            }
+          }
         }
-      }
+      ]
     }
   }
 }

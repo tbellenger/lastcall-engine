@@ -128,6 +128,6 @@ Download **`lastcall-advplay-linux-x86_64`** (or `LastCall-linux-x86_64.tar.gz` 
 
 ## Charlie
 
-`fixtures/charlie` is Charlie: Last Call, imported from the frozen TypeScript game. `advc test fixtures/charlie` replays the golden path, the deaths, and the restores. Score 168 is the whole game. The Gatehouse sample is unchanged.
+`fixtures/charlie` is Charlie: Last Call, imported from the frozen TypeScript game. `advc test fixtures/charlie` replays the golden path, the deaths, and the restores. Score 168 is the whole game. The room plates, scaled sprites, occlusion masks, and flipbooks are the pixel-mode art. The web shell loads that package with `?game=charlie` (five save slots, a title card, and synthesized audio). The Gatehouse sample is unchanged.
 
 `advc import-charlie <dw-root> <out-dir>` rebuilds that package. The hand-written logic lives in `tools/charlie.rhai`. What is not in this repo yet is serving the package on the existing site behind `?engine=next`.

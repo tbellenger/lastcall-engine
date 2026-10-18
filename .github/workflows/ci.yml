@@ -46,6 +46,8 @@ jobs:
           cache-dependency-path: web/package-lock.json
       - name: Pack sample into the web shell
         run: cargo run -p advc --release -- pack fixtures/sample -o web/public/sample.advpak
+      - name: Pack Charlie into the web shell
+        run: cargo run -p advc --release -- pack fixtures/charlie -o web/public/charlie.advpak
       - name: Web typecheck and build
         working-directory: web
         run: |

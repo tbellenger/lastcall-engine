@@ -1,11 +1,15 @@
 // Turn the Charlie: Last Call room files into a lastcall-engine authoring folder.
 // Usage: node tools/import-charlie.mjs <dw-root> <out-dir>
+import { spawnSync } from "child_process";
 import fs from "fs";
+import os from "os";
 import path from "path";
 import zlib from "zlib";
 
 const dw = process.argv[2];
 const out = process.argv[3];
+const pixelFlag = process.argv.find((arg) => arg.startsWith("--pixel="));
+const pixelRoot = pixelFlag ? pixelFlag.slice("--pixel=".length) : process.env.CHARLIE_PIXEL;
 if (!dw || !out) {
   console.error("usage: node tools/import-charlie.mjs <dw-root> <out-dir>");
   process.exit(1);
@@ -631,6 +635,23 @@ function dynamicLook(docs) {
 `;
 }
 
+const INTRO_LINES = [
+  "New York City. 9:47 PM. The day was sweltering, and a storm is rolling in. That explains the sweat.",
+  "Charlie has just finished eleven hours at Pemberton & Gaunt. The air conditioning died at 10 AM. His boss's patience died at 10:05.",
+  "His grey suit, crisp this morning, now has the texture of a damp dishrag. His blue eyes are bloodshot. His blond hair has given up.",
+  "He has a wallet full of bills, no coins, and one goal: something cold, in a glass, right now.",
+  "A flickering neon sign reads THE RUSTY NAIL. The N is out. Charlie doesn't care.",
+  "Thunder rolls a long way off. Rain ticks the bar windows.",
+  "You are now in control of Charlie. Good luck. You'll need a shower.",
+];
+
+let parityBackup = null;
+const parityDir = path.join(out, "tests", "parity");
+if (fs.existsSync(parityDir)) {
+  parityBackup = fs.mkdtempSync(path.join(os.tmpdir(), "charlie-parity-"));
+  fs.cpSync(parityDir, path.join(parityBackup, "parity"), { recursive: true });
+}
+
 fs.rmSync(out, { recursive: true, force: true });
 fs.mkdirSync(out, { recursive: true });
 
@@ -666,7 +687,7 @@ const game = {
   scoreMax: 168,
   rngSeed: 1,
   reach: 42,
-  intro: [],
+  intro: INTRO_LINES,
   carrying: ["twenty", "dollar", "dollar", "dollar"],
   deathPrompt: prompt,
   hooks: {
@@ -850,8 +871,21 @@ fs.writeFileSync(
 fs.mkdirSync(path.join(out, "tests"), { recursive: true });
 fs.writeFileSync(
   path.join(out, "tests", "boot.walk"),
-  "score\n@dismiss\n@expect score 0\n@expect room bar\n",
+  `${INTRO_LINES.map(() => "@dismiss").join("\n")}\nscore\n@dismiss\n@expect score 0\n@expect room bar\n`,
 );
+
+if (pixelRoot) {
+  const art = path.join(path.dirname(new URL(import.meta.url).pathname), "import-art.py");
+  const result = spawnSync("python3", [art, pixelRoot, out], { stdio: "inherit" });
+  if (result.status !== 0) {
+    process.exit(result.status ?? 1);
+  }
+}
+
+if (parityBackup) {
+  fs.cpSync(path.join(parityBackup, "parity"), path.join(out, "tests", "parity"), { recursive: true });
+  fs.rmSync(parityBackup, { recursive: true, force: true });
+}
 
 console.log(`imported charlie → ${out}`);
 console.log(`rules ${ruleIds.size}, scores ${scores.size}, total ${total}`);
