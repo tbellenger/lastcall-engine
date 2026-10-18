@@ -60,6 +60,24 @@ jobs:
           npx playwright install --with-deps chromium
           npm run test:e2e
 
+  web-bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: Swatinem/rust-cache@v2
+      - name: wasm-bindgen
+        run: cargo install wasm-bindgen-cli --version 0.2.100 --locked
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Charlie web bundle
+        run: bash scripts/build-web-bundle.sh
+
   parity:
     runs-on: ubuntu-latest
     steps:

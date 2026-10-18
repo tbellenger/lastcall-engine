@@ -13,6 +13,8 @@ web/public/*.advpak
 node_modules/
 web/node_modules/
 web/dist/
+web/dist-bundle/
+/dist/
 web/.vite/
 playwright-report/
 test-results/
