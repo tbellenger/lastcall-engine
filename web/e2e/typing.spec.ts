@@ -1,6 +1,9 @@
 import { expect, test } from "@playwright/test";
 
-test.use({ baseURL: "http://127.0.0.1:4174" });
+test.use({
+  baseURL: "http://127.0.0.1:4174",
+  viewport: { width: 1280, height: 1400 },
+});
 
 async function clickBox(page: import("@playwright/test").Page, selector: string, dx = 0.5, dy = 0.5) {
   const box = await page.locator(selector).boundingBox();
@@ -49,6 +52,7 @@ test("typing works after a real click on the picture and under it", async ({ pag
   await page.keyboard.type("z");
   await expect(line).toHaveValue("xz");
 
+  await page.locator("#site-search").scrollIntoViewIfNeeded();
   await clickBox(page, "#site-search");
   await page.keyboard.type("abc");
   await expect(page.locator("#site-search")).toHaveValue("abc");
