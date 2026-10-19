@@ -13,6 +13,7 @@ Licence: MIT OR Apache-2.0. See `LICENSE-MIT` and `LICENSE-APACHE`.
 | `crates/wasm` | wasm-bindgen exports used by the browser shell |
 | `crates/advplay` | Native player (`winit` + `softbuffer`, `rodio` for a short beep) |
 | `web` | Vite + TypeScript shell |
+| `studio` | Room editor (load, overlay, edit, save) |
 | `fixtures/sample` | Original two-room game, The Gatehouse |
 | `schemas` | JSON Schemas for the authoring files and the package manifest |
 | `docs/format-v0.md` | Package format v0 |
@@ -74,6 +75,22 @@ sudo apt install libgtk-3-dev libasound2-dev libxkbcommon-dev libwayland-dev lib
 ```
 
 Runtime packages are `libgtk-3-0`, `libx11-6`, `libxkbcommon0`, and `libasound2` (or `libasound2t64`).
+
+## Studio
+
+Studio is the room editor. It loads a `.advpak` or an authoring folder with the same parser as `advc validate`, draws the walk mask, priority bands, hotspots, exits, and spawns, and writes the same files back.
+
+```bash
+npm run studio
+```
+
+That builds the Studio wasm (`scripts/build-studio.sh`) and starts Vite at <http://127.0.0.1:5180>. The same command is `cargo run -p advc -- studio`, or `bash scripts/studio.sh`.
+
+Open a built package (Charlie's `charlie.advpak`, or The Gatehouse `sample.advpak`) by the Open button or by dropping the file. Open folder uses the File System Access API when the browser has it, and otherwise a directory upload. A zipped authoring folder works too.
+
+The picture stays 384×216 and is scaled by an integer factor with nearest-neighbour filtering. Layer buttons show the walk area, priority bands, hotspots, stand points, exits, and spawns. Drag vertices, rects, and band lines; they snap to whole pixels. Undo and redo are Ctrl+Z and Ctrl+Shift+Z. Ghost drops the hero sprite and walks it with the core A* pathfinder on the edited mask, using the same priority occlusion as the engine.
+
+Save writes a project folder back in place when it was opened with the directory picker. Otherwise it downloads a project zip, or a `.advpak`. Saving runs the same checks as `advc validate`. An unedited package downloads as the original bytes.
 
 ## Sample game
 

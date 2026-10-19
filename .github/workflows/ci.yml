@@ -28,7 +28,7 @@ jobs:
       - name: Clippy
         run: cargo clippy --workspace --all-targets -- -D warnings
       - name: Clippy wasm
-        run: cargo clippy -p lastcall-wasm --target wasm32-unknown-unknown -- -D warnings
+        run: cargo clippy -p lastcall-wasm -p lastcall-studio --target wasm32-unknown-unknown -- -D warnings
       - name: Test
         run: cargo test --workspace
       - name: Sample package
@@ -39,6 +39,8 @@ jobs:
         run: cargo install wasm-bindgen-cli --version 0.2.100 --locked
       - name: Build wasm
         run: bash scripts/build-wasm.sh
+      - name: Build studio wasm
+        run: bash scripts/build-studio.sh
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -48,6 +50,12 @@ jobs:
         run: cargo run -p advc --release -- pack fixtures/sample -o web/public/sample.advpak
       - name: Pack Charlie into the web shell
         run: cargo run -p advc --release -- pack fixtures/charlie -o web/public/charlie.advpak
+      - name: Studio typecheck and build
+        working-directory: studio
+        run: |
+          npm ci
+          npm run typecheck
+          npm run build
       - name: Web typecheck and build
         working-directory: web
         run: |

@@ -6,6 +6,7 @@ Cargo.lock.bak
 # wasm / pack
 *.wasm
 web/src/wasm/
+studio/src/wasm/
 web/public/*.advpak
 *.advpak
 
@@ -13,6 +14,8 @@ web/public/*.advpak
 node_modules/
 web/node_modules/
 web/dist/
+studio/node_modules/
+studio/dist/
 web/dist-bundle/
 /dist/
 web/.vite/

@@ -467,13 +467,13 @@ pub struct Rule {
     pub effects: Vec<Effect>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Band {
     pub y: i32,
     pub priority: u8,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ExitDef {
     pub id: String,
@@ -494,7 +494,7 @@ pub struct ExitDef {
     pub approach: Option<[i32; 2]>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct HotspotDef {
     pub id: String,
     pub rect: [i32; 4],
@@ -620,7 +620,7 @@ pub struct ActorDef {
 }
 
 /// Source walk polygon. Not stored in the package; the packer rasterises it.
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Polygon {
     pub points: Vec<[i32; 2]>,
     #[serde(default)]
