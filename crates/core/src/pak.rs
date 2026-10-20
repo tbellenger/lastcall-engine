@@ -185,9 +185,34 @@ pub fn build_pak(parts: &PackageParts) -> Result<Vec<u8>> {
         );
     }
 
+    let mut plain = BTreeMap::new();
+    for (path, (bytes, _)) in files {
+        plain.insert(path, bytes);
+    }
+    write_package(
+        &plain,
+        &parts.game.format_version,
+        &parts.game.engine_min,
+        &parts.game.id,
+        &parts.game.version,
+    )
+}
+
+/// Zip package entries and write `manifest.json` with the format content hash.
+/// PNG entries are stored uncompressed. Every other entry is deflated.
+pub fn write_package(
+    files: &BTreeMap<String, Vec<u8>>,
+    format_version: &str,
+    engine_min: &str,
+    game_id: &str,
+    game_version: &str,
+) -> Result<Vec<u8>> {
     let mut resources = Vec::new();
     let mut hasher = Sha256::new();
-    for (path, (bytes, _)) in &files {
+    for (path, bytes) in files {
+        if path == "manifest.json" {
+            continue;
+        }
         let digest = sha256_hex(bytes);
         hasher.update(path.as_bytes());
         hasher.update([0]);
@@ -202,10 +227,10 @@ pub fn build_pak(parts: &PackageParts) -> Result<Vec<u8>> {
         });
     }
     let manifest = Manifest {
-        format_version: parts.game.format_version.clone(),
-        engine_min: parts.game.engine_min.clone(),
-        game_id: parts.game.id.clone(),
-        game_version: parts.game.version.clone(),
+        format_version: format_version.to_string(),
+        engine_min: engine_min.to_string(),
+        game_id: game_id.to_string(),
+        game_version: game_version.to_string(),
         content_hash: hex_bytes(&hasher.finalize()),
         resources,
     };
@@ -214,7 +239,11 @@ pub fn build_pak(parts: &PackageParts) -> Result<Vec<u8>> {
     let mut zip = ZipWriter::new(Cursor::new(Vec::new()));
     let stored = SimpleFileOptions::default().compression_method(CompressionMethod::Stored);
     let deflated = SimpleFileOptions::default().compression_method(CompressionMethod::Deflated);
-    let mut names: Vec<String> = files.keys().cloned().collect();
+    let mut names: Vec<String> = files
+        .keys()
+        .filter(|path| path.as_str() != "manifest.json")
+        .cloned()
+        .collect();
     names.push("manifest.json".into());
     names.sort();
     for name in names {
@@ -222,15 +251,38 @@ pub fn build_pak(parts: &PackageParts) -> Result<Vec<u8>> {
             zip.start_file(&name, deflated)?;
             zip.write_all(&manifest_bytes)?;
         } else {
-            let (bytes, is_stored) = &files[&name];
-            zip.start_file(&name, if *is_stored { stored } else { deflated })?;
+            let bytes = &files[&name];
+            let options = if name.ends_with(".png") {
+                stored
+            } else {
+                deflated
+            };
+            zip.start_file(&name, options)?;
             zip.write_all(bytes)?;
         }
     }
     Ok(zip.finish()?.into_inner())
 }
 
-pub fn load_pak(bytes: &[u8]) -> Result<Package> {
+/// Zip files as a plain archive. PNG entries are stored; everything else is deflated.
+/// This is a project download, not a package: it does not write `manifest.json`.
+pub fn zip_files(files: &BTreeMap<String, Vec<u8>>) -> Result<Vec<u8>> {
+    let mut zip = ZipWriter::new(Cursor::new(Vec::new()));
+    let stored = SimpleFileOptions::default().compression_method(CompressionMethod::Stored);
+    let deflated = SimpleFileOptions::default().compression_method(CompressionMethod::Deflated);
+    for (name, bytes) in files {
+        let options = if name.ends_with(".png") {
+            stored
+        } else {
+            deflated
+        };
+        zip.start_file(name, options)?;
+        zip.write_all(bytes)?;
+    }
+    Ok(zip.finish()?.into_inner())
+}
+
+pub fn read_entries(bytes: &[u8]) -> Result<BTreeMap<String, Vec<u8>>> {
     let mut archive = ZipArchive::new(Cursor::new(bytes))?;
     let mut files: BTreeMap<String, Vec<u8>> = BTreeMap::new();
     for i in 0..archive.len() {
@@ -243,6 +295,11 @@ pub fn load_pak(bytes: &[u8]) -> Result<Package> {
         file.read_to_end(&mut buf)?;
         files.insert(name, buf);
     }
+    Ok(files)
+}
+
+pub fn load_pak(bytes: &[u8]) -> Result<Package> {
+    let files = read_entries(bytes)?;
     let manifest_bytes = files
         .get("manifest.json")
         .ok_or_else(|| Error::msg("package is missing manifest.json"))?;

@@ -18,6 +18,13 @@ use std::collections::{BTreeMap, BTreeSet};
 use std::fs;
 use std::path::{Path, PathBuf};
 
+mod studio;
+mod tree;
+pub use studio::Session;
+pub use tree::{DiskTree, MemTree, ReadTree};
+
+use tree::{base_name, join_rel};
+
 pub fn validate_dir(dir: &Path) -> Result<PackageParts> {
     let parts = load_dir(dir)?;
     let bytes = pak::build_pak(&parts)?;
@@ -466,6 +473,10 @@ struct ParityStep {
 }
 
 fn load_dir(dir: &Path) -> Result<PackageParts> {
+    load_tree(&DiskTree::new(dir))
+}
+
+pub fn load_tree(tree: &dyn ReadTree) -> Result<PackageParts> {
     let game_schema = compiled_schema("game.schema.json")?;
     let vocab_schema = compiled_schema("vocab.schema.json")?;
     let items_schema = compiled_schema("items.schema.json")?;
@@ -474,7 +485,7 @@ fn load_dir(dir: &Path) -> Result<PackageParts> {
     let priority_schema = compiled_schema("priority.schema.json")?;
     let actor_schema = compiled_schema("actor.schema.json")?;
 
-    let game_value = read_json(&dir.join("game.json"))?;
+    let game_value = read_json(tree, "game.json")?;
     check_schema("game.json", &game_schema, &game_value)?;
     let source_game: SourceGame = serde_json::from_value(game_value)
         .map_err(|err| Error::msg(format!("game.json: {err}")))?;
@@ -496,77 +507,69 @@ fn load_dir(dir: &Path) -> Result<PackageParts> {
         );
     }
 
-    let vocab_value = read_json(&dir.join("vocab.json"))?;
+    let vocab_value = read_json(tree, "vocab.json")?;
     check_schema("vocab.json", &vocab_schema, &vocab_value)?;
     let vocab: Vocab = serde_json::from_value(vocab_value)
         .map_err(|err| Error::msg(format!("vocab.json: {err}")))?;
     VocabIndex::build(&vocab).map_err(Error::msg)?;
 
-    let items_value = read_json(&dir.join("items.json"))?;
+    let items_value = read_json(tree, "items.json")?;
     check_schema("items.json", &items_schema, &items_value)?;
     let items: Vec<ItemDef> = serde_json::from_value(items_value)
         .map_err(|err| Error::msg(format!("items.json: {err}")))?;
 
     let mut actors = Vec::new();
-    let actors_root = dir.join("actors");
-    if actors_root.is_dir() {
-        let mut folders = child_dirs(&actors_root)?;
-        folders.sort();
+    if tree.is_dir("actors") {
+        let folders = list_dirs(tree, "actors")?;
         for folder in folders {
-            let path = folder.join("actor.json");
-            if !path.is_file() {
+            let path = join_rel(&folder, "actor.json");
+            if !tree.is_file(&path) {
                 continue;
             }
-            let value = read_json(&path)?;
-            check_schema(&path.display().to_string(), &actor_schema, &value)?;
+            let value = read_json(tree, &path)?;
+            check_schema(&path, &actor_schema, &value)?;
             let source: SourceActor = serde_json::from_value(value)
-                .map_err(|err| Error::msg(format!("{}: {err}", path.display())))?;
-            let folder_name = folder.file_name().and_then(|s| s.to_str()).unwrap_or("");
+                .map_err(|err| Error::msg(format!("{path}: {err}")))?;
+            let folder_name = base_name(&folder);
             if source.id != folder_name {
                 return Err(Error::msg(format!(
                     "actor folder {folder_name} does not match id {}",
                     source.id
                 )));
             }
-            actors.push(compile_actor(&folder, source)?);
+            actors.push(compile_actor(tree, &folder, source)?);
         }
     }
 
     let mut rooms = Vec::new();
     let mut room_sources = Vec::new();
-    let rooms_root = dir.join("rooms");
-    let mut folders = child_dirs(&rooms_root)?;
-    folders.sort();
+    let folders = list_dirs(tree, "rooms")?;
     for folder in folders {
-        let path = folder.join("room.json");
-        if !path.is_file() {
+        let path = join_rel(&folder, "room.json");
+        if !tree.is_file(&path) {
             continue;
         }
-        let value = read_json(&path)?;
-        check_schema(&path.display().to_string(), &room_schema, &value)?;
-        let source: SourceRoom = serde_json::from_value(value)
-            .map_err(|err| Error::msg(format!("{}: {err}", path.display())))?;
-        let folder_name = folder.file_name().and_then(|s| s.to_str()).unwrap_or("");
+        let value = read_json(tree, &path)?;
+        check_schema(&path, &room_schema, &value)?;
+        let source: SourceRoom =
+            serde_json::from_value(value).map_err(|err| Error::msg(format!("{path}: {err}")))?;
+        let folder_name = base_name(&folder);
         if source.id != folder_name {
             return Err(Error::msg(format!(
                 "room folder {folder_name} does not match id {}",
                 source.id
             )));
         }
-        let walk_path = folder.join("walk.json");
-        let walk_value = read_json(&walk_path)?;
-        check_schema(&walk_path.display().to_string(), &walk_schema, &walk_value)?;
+        let walk_path = join_rel(&folder, "walk.json");
+        let walk_value = read_json(tree, &walk_path)?;
+        check_schema(&walk_path, &walk_schema, &walk_value)?;
         let walk: WalkDef = serde_json::from_value(walk_value)
-            .map_err(|err| Error::msg(format!("{}: {err}", walk_path.display())))?;
-        let pri_path = folder.join("priority.json");
-        let pri_value = read_json(&pri_path)?;
-        check_schema(
-            &pri_path.display().to_string(),
-            &priority_schema,
-            &pri_value,
-        )?;
+            .map_err(|err| Error::msg(format!("{walk_path}: {err}")))?;
+        let pri_path = join_rel(&folder, "priority.json");
+        let pri_value = read_json(tree, &pri_path)?;
+        check_schema(&pri_path, &priority_schema, &pri_value)?;
         let priority: PriorityDef = serde_json::from_value(pri_value)
-            .map_err(|err| Error::msg(format!("{}: {err}", pri_path.display())))?;
+            .map_err(|err| Error::msg(format!("{pri_path}: {err}")))?;
         room_sources.push((folder, source, walk, priority));
     }
 
@@ -597,11 +600,16 @@ fn load_dir(dir: &Path) -> Result<PackageParts> {
     };
 
     for (folder, source, walk, priority) in room_sources {
-        rooms.push(compile_room(&folder, source, walk, priority)?);
+        rooms.push(compile_room(tree, &folder, source, walk, priority)?);
     }
 
-    let script = fs::read_to_string(dir.join("scripts").join("game.rhai")).unwrap_or_default();
-    let cutscenes = load_cutscenes(dir)?;
+    let script = if tree.is_file("scripts/game.rhai") {
+        let bytes = tree.read("scripts/game.rhai")?;
+        String::from_utf8(bytes).map_err(|err| Error::msg(format!("scripts/game.rhai: {err}")))?
+    } else {
+        String::new()
+    };
+    let cutscenes = load_cutscenes(tree)?;
     let parts = PackageParts {
         game,
         vocab,
@@ -616,12 +624,13 @@ fn load_dir(dir: &Path) -> Result<PackageParts> {
 }
 
 fn compile_room(
-    folder: &Path,
+    tree: &dyn ReadTree,
+    folder: &str,
     source: SourceRoom,
     walk_def: WalkDef,
     mut priority: PriorityDef,
 ) -> Result<RoomPart> {
-    let picture = load_rgba(&folder.join("picture.png"))?;
+    let picture = load_rgba(tree, &join_rel(folder, "picture.png"))?;
     if picture.w != SCREEN_W || picture.h != SCREEN_H {
         return Err(Error::msg(format!(
             "room {} picture is {}x{}, expected {SCREEN_W}x{SCREEN_H}",
@@ -629,9 +638,9 @@ fn compile_room(
         )));
     }
     priority.bands.sort_by_key(|band| band.y);
-    let paint_path = folder.join("priority.png");
-    let paint = if paint_path.is_file() {
-        let image = load_gray(&paint_path)?;
+    let paint_path = join_rel(folder, "priority.png");
+    let paint = if tree.is_file(&paint_path) {
+        let image = load_gray(tree, &paint_path)?;
         if image.w != SCREEN_W || image.h != SCREEN_H {
             return Err(Error::msg(format!(
                 "room {} priority paint is not {SCREEN_W}x{SCREEN_H}",
@@ -652,14 +661,14 @@ fn compile_room(
     let props = if source.props.is_empty() {
         None
     } else {
-        let path = folder.join("props.png");
-        if !path.is_file() {
+        let path = join_rel(folder, "props.png");
+        if !tree.is_file(&path) {
             return Err(Error::msg(format!(
                 "room {} has props but no props.png",
                 source.id
             )));
         }
-        let atlas = load_rgba(&path)?;
+        let atlas = load_rgba(tree, &path)?;
         for prop in &source.props {
             imageutil::crop(
                 &atlas,
@@ -684,8 +693,8 @@ fn compile_room(
         rules.push(compile_rule(rule, &format!("{}:{index}", source.id))?);
     }
     check_mask_points(&source.id, &mask, &source, &on_enter, &rules)?;
-    let variant_images = load_variants(folder, &source.id, &source.pictures)?;
-    let occluders = load_occluders(folder, &source.id, &source.actors)?;
+    let variant_images = load_variants(tree, folder, &source.id, &source.pictures)?;
+    let occluders = load_occluders(tree, folder, &source.id, &source.actors)?;
 
     Ok(RoomPart {
         def: RoomDef {
@@ -721,7 +730,8 @@ fn compile_room(
 }
 
 fn load_occluders(
-    folder: &Path,
+    tree: &dyn ReadTree,
+    folder: &str,
     room_id: &str,
     actors: &[lastcall_core::model::ActorPlace],
 ) -> Result<BTreeMap<String, lastcall_core::imageutil::GrayImage>> {
@@ -733,8 +743,8 @@ fn load_occluders(
         if occluders.contains_key(name) {
             continue;
         }
-        let path = folder.join(format!("occlude-{name}.png"));
-        let image = load_gray(&path)
+        let path = join_rel(folder, &format!("occlude-{name}.png"));
+        let image = load_gray(tree, &path)
             .map_err(|err| Error::msg(format!("room {room_id} occluder {name}: {err}")))?;
         if image.w != SCREEN_W || image.h != SCREEN_H {
             return Err(Error::msg(format!(
@@ -764,14 +774,15 @@ fn extra_effects(parts: &PackageParts) -> Vec<Effect> {
 }
 
 fn load_variants(
-    folder: &Path,
+    tree: &dyn ReadTree,
+    folder: &str,
     room_id: &str,
     names: &[String],
 ) -> Result<BTreeMap<String, lastcall_core::imageutil::RgbaImage>> {
     let mut pictures = BTreeMap::new();
     for name in names {
-        let path = folder.join(format!("variant-{name}.png"));
-        let image = load_rgba(&path)
+        let path = join_rel(folder, &format!("variant-{name}.png"));
+        let image = load_rgba(tree, &path)
             .map_err(|err| Error::msg(format!("room {room_id} variant {name}: {err}")))?;
         if image.w != SCREEN_W || image.h != SCREEN_H {
             return Err(Error::msg(format!(
@@ -783,42 +794,38 @@ fn load_variants(
     Ok(pictures)
 }
 
-fn load_cutscenes(dir: &Path) -> Result<Vec<lastcall_core::pak::CutscenePart>> {
-    let root = dir.join("cutscenes");
-    if !root.is_dir() {
+fn load_cutscenes(tree: &dyn ReadTree) -> Result<Vec<lastcall_core::pak::CutscenePart>> {
+    if !tree.is_dir("cutscenes") {
         return Ok(Vec::new());
     }
     let mut names = Vec::new();
-    for entry in fs::read_dir(&root)? {
-        let path = entry?.path();
-        if path.extension().and_then(|ext| ext.to_str()) == Some("json") {
-            names.push(path);
+    for name in tree.list("cutscenes")? {
+        if name.ends_with(".json") {
+            names.push(join_rel("cutscenes", &name));
         }
     }
     names.sort();
     let mut cutscenes = Vec::new();
     for path in names {
-        let value = read_json(&path)?;
-        let mut def: lastcall_core::model::CutsceneDef = serde_json::from_value(value)
-            .map_err(|err| Error::msg(format!("{}: {err}", path.display())))?;
-        let folder = root.join(&def.id);
+        let value = read_json(tree, &path)?;
+        let mut def: lastcall_core::model::CutsceneDef =
+            serde_json::from_value(value).map_err(|err| Error::msg(format!("{path}: {err}")))?;
+        let folder = join_rel("cutscenes", &def.id);
         let mut frames = Vec::new();
-        if folder.is_dir() {
+        if tree.is_dir(&folder) {
             let mut pngs = Vec::new();
-            for entry in fs::read_dir(&folder)? {
-                let png = entry?.path();
-                if png.extension().and_then(|ext| ext.to_str()) == Some("png") {
-                    pngs.push(png);
+            for name in tree.list(&folder)? {
+                if name.ends_with(".png") {
+                    pngs.push(join_rel(&folder, &name));
                 }
             }
             pngs.sort();
             for png in pngs {
-                let image = load_rgba(&png)?;
+                let image = load_rgba(tree, &png)?;
                 if image.w != SCREEN_W || image.h != SCREEN_H {
                     return Err(Error::msg(format!(
-                        "cutscene {} frame {} is not {SCREEN_W}x{SCREEN_H}",
-                        def.id,
-                        png.display()
+                        "cutscene {} frame {png} is not {SCREEN_W}x{SCREEN_H}",
+                        def.id
                     )));
                 }
                 frames.push(image);
@@ -931,7 +938,7 @@ fn check_mask_points(
     Ok(())
 }
 
-fn compile_actor(folder: &Path, source: SourceActor) -> Result<ActorPart> {
+fn compile_actor(tree: &dyn ReadTree, folder: &str, source: SourceActor) -> Result<ActorPart> {
     let mut costumes = BTreeMap::new();
     let mut cache: BTreeMap<String, FrameDef> = BTreeMap::new();
     let mut blits: Vec<Blit> = Vec::new();
@@ -952,7 +959,7 @@ fn compile_actor(folder: &Path, source: SourceActor) -> Result<ActorPart> {
         }
         let mut animations = BTreeMap::new();
         for strip in &strips {
-            let sheet = load_rgba(&folder.join(&strip.sheet))?;
+            let sheet = load_rgba(tree, &join_rel(folder, &strip.sheet))?;
             if strip.frame_w == 0
                 || strip.frame_h == 0
                 || sheet.h != strip.frame_h
@@ -1603,38 +1610,38 @@ fn diff_image(golden: &RgbaImage, actual: &[u8], w: u32, h: u32) -> Result<Vec<u
     imageutil::encode_rgba(&RgbaImage { w, h, rgba })
 }
 
-fn load_rgba(path: &Path) -> Result<RgbaImage> {
-    let bytes = fs::read(path).map_err(|err| Error::msg(format!("{}: {err}", path.display())))?;
+fn load_rgba(tree: &dyn ReadTree, path: &str) -> Result<RgbaImage> {
+    let bytes = tree.read(path)?;
     imageutil::decode_png(&bytes)
         .map(|decoded| decoded.into_rgba())
-        .map_err(|err| Error::msg(format!("{}: {err}", path.display())))
+        .map_err(|err| Error::msg(format!("{path}: {err}")))
 }
 
-fn load_gray(path: &Path) -> Result<lastcall_core::imageutil::GrayImage> {
-    let bytes = fs::read(path).map_err(|err| Error::msg(format!("{}: {err}", path.display())))?;
+fn load_gray(tree: &dyn ReadTree, path: &str) -> Result<lastcall_core::imageutil::GrayImage> {
+    let bytes = tree.read(path)?;
     imageutil::decode_png(&bytes)
         .map(|decoded| decoded.into_gray())
-        .map_err(|err| Error::msg(format!("{}: {err}", path.display())))
+        .map_err(|err| Error::msg(format!("{path}: {err}")))
 }
 
-fn child_dirs(path: &Path) -> Result<Vec<PathBuf>> {
-    if !path.is_dir() {
-        return Err(Error::msg(format!("missing directory {}", path.display())));
+fn list_dirs(tree: &dyn ReadTree, path: &str) -> Result<Vec<String>> {
+    if !tree.is_dir(path) {
+        return Err(Error::msg(format!("missing directory {path}")));
     }
     let mut out = Vec::new();
-    for entry in fs::read_dir(path)? {
-        let entry = entry?;
-        if entry.path().is_dir() {
-            out.push(entry.path());
+    for name in tree.list(path)? {
+        let child = join_rel(path, &name);
+        if tree.is_dir(&child) {
+            out.push(child);
         }
     }
     Ok(out)
 }
 
-fn read_json(path: &Path) -> Result<Value> {
-    let text =
-        fs::read_to_string(path).map_err(|err| Error::msg(format!("{}: {err}", path.display())))?;
-    serde_json::from_str(&text).map_err(|err| Error::msg(format!("{}: {err}", path.display())))
+fn read_json(tree: &dyn ReadTree, path: &str) -> Result<Value> {
+    let bytes = tree.read(path)?;
+    let text = String::from_utf8(bytes).map_err(|err| Error::msg(format!("{path}: {err}")))?;
+    serde_json::from_str(&text).map_err(|err| Error::msg(format!("{path}: {err}")))
 }
 
 fn compiled_schema(name: &str) -> Result<Value> {

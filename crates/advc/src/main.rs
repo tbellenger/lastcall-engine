@@ -41,6 +41,17 @@ fn run() -> Result<(), String> {
                 return Err(format!("import-charlie failed ({status})"));
             }
         }
+        "studio" => {
+            let root = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../..");
+            let status = std::process::Command::new("bash")
+                .arg(root.join("scripts/studio.sh"))
+                .current_dir(&root)
+                .status()
+                .map_err(|err| format!("studio: {err}"))?;
+            if !status.success() {
+                return Err(format!("studio exited ({status})"));
+            }
+        }
         "test" => {
             let dir = args.next().ok_or_else(usage)?;
             let mut update = false;
@@ -61,6 +72,6 @@ fn run() -> Result<(), String> {
 }
 
 fn usage() -> String {
-    "usage:\n  advc validate <game-dir>\n  advc pack <game-dir> -o <file.advpak>\n  advc test <game-dir> [--update-snapshots]\n  advc import-charlie <dw-root> <game-dir>"
+    "usage:\n  advc validate <game-dir>\n  advc pack <game-dir> -o <file.advpak>\n  advc test <game-dir> [--update-snapshots]\n  advc studio\n  advc import-charlie <dw-root> <game-dir>"
         .into()
 }

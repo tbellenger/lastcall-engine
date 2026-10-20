@@ -94,6 +94,11 @@ fn blit_background(fb: &mut [u8], width: i32, height: i32, background: &RgbaImag
     }
 }
 
+/// Draw one sprite with the same alpha and priority test the compositor uses.
+pub fn paint_sprite(fb: &mut [u8], width: i32, height: i32, priority: &[u8], layer: &Layer) {
+    blit_sprite(fb, width, height, priority, layer);
+}
+
 fn blit_sprite(fb: &mut [u8], width: i32, height: i32, priority: &[u8], layer: &Layer) {
     let sprite = &layer.sprite;
     for row in 0..sprite.h as i32 {

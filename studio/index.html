@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Studio</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <strong>Studio</strong>
+        <span id="title">No game open</span>
+        <button id="open" type="button">Open</button>
+        <button id="open-folder" type="button">Open folder</button>
+        <span class="grow"></span>
+        <button id="undo" type="button" disabled>Undo</button>
+        <button id="redo" type="button" disabled>Redo</button>
+        <button id="ghost" type="button">Ghost</button>
+        <button id="save" type="button" disabled>Save</button>
+        <button id="download-pak" type="button" disabled>Download pak</button>
+      </header>
+      <div id="toolbar">
+        <span class="label">Layers</span>
+        <button type="button" class="layer on" data-layer="walk">Walk</button>
+        <button type="button" class="layer on" data-layer="priority">Priority</button>
+        <button type="button" class="layer on" data-layer="hotspots">Hotspots</button>
+        <button type="button" class="layer on" data-layer="stands">Stands</button>
+        <button type="button" class="layer on" data-layer="exits">Exits</button>
+        <button type="button" class="layer on" data-layer="spawns">Spawns</button>
+        <span class="label">Edit</span>
+        <button type="button" class="tool on" data-tool="select">Select</button>
+        <button type="button" class="tool" data-tool="polygon">Polygon</button>
+        <button type="button" class="tool" data-tool="vertex">Vertex</button>
+        <button type="button" class="tool" data-tool="hotspot">Hotspot</button>
+        <button type="button" class="tool" data-tool="exit">Exit</button>
+        <button type="button" class="tool" data-tool="band">Band</button>
+        <button type="button" class="tool" data-tool="spawn">Spawn</button>
+        <button id="del" type="button">Delete</button>
+      </div>
+      <div id="body">
+        <aside id="rooms"></aside>
+        <main id="stage">
+          <canvas id="view" width="384" height="216"></canvas>
+          <div id="hover" hidden></div>
+        </main>
+        <aside id="inspector"></aside>
+      </div>
+      <footer id="status">Drop a .advpak or a project folder.</footer>
+    </div>
+    <input id="file" type="file" accept=".advpak,.zip,application/zip" hidden />
+    <input id="dir" type="file" hidden />
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
